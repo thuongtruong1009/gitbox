@@ -1,19 +1,22 @@
 <template>
   <div id="app">
     <Main />
-    <Accessibility />
+    <Accessibilities @childSendName="parentGetName($event)" />
+    <Repositories />
   </div>
 </template>
 
 <script>
 import Main from "./components/Main.vue";
-import Accessibility from "./components/Accessibility.vue";
+import Accessibilities from "./components/Accessibilities.vue";
+import Repositories from "./components/Repositories.vue";
 
 export default {
   name: "App",
   components: {
     Main,
-    Accessibility,
+    Accessibilities,
+    Repositories,
   },
 };
 </script>
