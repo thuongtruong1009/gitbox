@@ -1,26 +1,16 @@
 <template>
-  <section class="container">
+  <section class="container" v-if="this.isHaveName">
     <div class="lang-stat">
       <div class="lang">
-        <img
-          src="https://github-readme-stats.vercel.app/api/top-langs/?username=thuongtruong1009&&layout=compact&bg_color=0,73FA79,73FDFF,7A81FF&theme=graywhite&langs_count=12"
-        />
+        <img :src="this.langURL" />
       </div>
-      <div class="stat">
-        <img
-          src="https://github-readme-stats.vercel.app/api?username=thuongtruong1009&count_private=true&show_icons=true&line_height=21&bg_color=0,EC6C6C,FFD479,FFFC79,73FA79&theme=graywhite&include_all_commits=true"
-        />
-      </div>
+      <div class="stat"><img :src="this.statURL" /></div>
     </div>
     <div class="graph">
-      <img
-        src="https://activity-graph.herokuapp.com/graph?username=thuongtruong1009&theme=react-dark&hide_border=true&area=true"
-      />
+      <img :src="this.graphURL" />
     </div>
     <div class="trophy">
-      <img
-        src="https://github-profile-trophy.vercel.app/?username=thuongtruong1009&column=8&margin-w=15&margin-h=15&no-bg=false&no-frame=false&theme=juicyfresh"
-      />
+      <img :src="this.trophyURL" />
     </div>
     <!------------------------------------------------------------------------------------------------------------------------------------>
     <div class="decorate">
@@ -28,161 +18,8 @@
         src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
         width="30px"
         height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-      />
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
+        v-for="index in footerDecorates"
+        :key="index"
       />
     </div>
 
@@ -191,7 +28,42 @@
 </template>
 
 <script>
-export default {};
+import { eventBus } from "../main.js";
+export default {
+  data() {
+    return {
+      footerDecorates: Array(33),
+      langURL: "",
+      statURL: "",
+      graphURL: "",
+      trophyURL: "",
+      isHaveName: false,
+    };
+  },
+  created() {
+    eventBus.$on("childSendName", (transfer) => {
+      if (transfer != "") {
+        this.isHaveName = true;
+        this.langURL =
+          "https://github-readme-stats.vercel.app/api/top-langs/?username=" +
+          transfer +
+          "&&layout=compact&bg_color=0,73FA79,73FDFF,7A81FF&theme=graywhite&langs_count=12";
+        this.statURL =
+          "https://github-readme-stats.vercel.app/api?username=" +
+          transfer +
+          "&count_private=true&show_icons=true&line_height=21&bg_color=0,EC6C6C,FFD479,FFFC79,73FA79&theme=graywhite&include_all_commits=true";
+        this.graphURL =
+          "https://activity-graph.herokuapp.com/graph?username=" +
+          transfer +
+          "&theme=react-dark&hide_border=true&area=true";
+        this.trophyURL =
+          "https://github-profile-trophy.vercel.app/?username=" +
+          transfer +
+          "&column=8&margin-w=15&margin-h=15&no-bg=false&no-frame=false&theme=juicyfresh";
+      }
+    });
+  },
+};
 </script>
 
 <style scoped>
@@ -202,6 +74,7 @@ export default {};
   width: 100%;
   justify-content: center;
 }
+
 .lang-stat {
   display: flex;
   grid-gap: 20px;
@@ -214,5 +87,8 @@ export default {};
 .graph > img {
   width: 700px;
   height: 300px;
+}
+.decorate {
+  display: flex;
 }
 </style>
