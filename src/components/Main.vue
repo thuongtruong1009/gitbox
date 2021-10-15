@@ -1,14 +1,16 @@
 <template>
   <section class="container">
     <input
-      type="text"
+      class="form-control rounded"
+      type="search"
       v-model="name"
       v-on:keydown.13="onSubmit"
       name="name"
-      placeholder="Typing Github @user..."
+      placeholder="typing Github @user..."
       onfocus="this.placeholder = ''"
-      onblur="this.placeholder = 'Typing Github @user...'"
+      onblur="this.placeholder = 'typing Github @user...'"
     />
+
     <p class="loading" v-if="isLoading">
       Searching GitHub profile for "{{ name }}"...
     </p>
@@ -55,6 +57,7 @@
 
 <script>
 import axios from "axios";
+import { eventBus } from "../main.js";
 export default {
   data() {
     return {
@@ -68,6 +71,8 @@ export default {
     onSubmit: function () {
       if (this.name != "") {
         this.isLoading = true;
+
+        eventBus.$emit("childSendName", this.name);
 
         axios
           .get("https://api.github.com/users/" + this.name)
