@@ -3,5 +3,5 @@
     SEARCHING GITHUB USERNAME
 </h1>
 <div align="center">
-    <img src="./images reference/Hacktoberfest.jpg" width="700"/>
+    <img src="https://hacktoberfest.digitalocean.com/_nuxt/img/logo-hacktoberfest-full2.aa1e9d9.svg" width="700"/>
 </div>
