@@ -4,26 +4,17 @@
       <div class="lang">
         <img :src="this.langURL" />
       </div>
-      <div class="stat"><img :src="this.statURL" /></div>
+      <div class="stat">
+        <img :src="this.statURL" />
+      </div>
     </div>
     <div class="graph">
       <img :src="this.graphURL" />
+      <img :src="this.streakURL" />
     </div>
     <div class="trophy">
       <img :src="this.trophyURL" />
     </div>
-    <!------------------------------------------------------------------------------------------------------------------------------------>
-    <div class="decorate">
-      <img
-        src="https://media.giphy.com/media/26BREDkItN0Yy3i6Y/giphy.gif"
-        width="30px"
-        height="30px"
-        v-for="index in footerDecorates"
-        :key="index"
-      />
-    </div>
-
-    <p>Last view on: 22/09/2021</p>
   </section>
 </template>
 
@@ -32,10 +23,10 @@ import { eventBus } from "../main.js";
 export default {
   data() {
     return {
-      footerDecorates: Array(33),
       langURL: "",
       statURL: "",
       graphURL: "",
+      streakURL: "",
       trophyURL: "",
       isHaveName: false,
     };
@@ -60,6 +51,10 @@ export default {
           "https://github-profile-trophy.vercel.app/?username=" +
           transfer +
           "&column=8&margin-w=15&margin-h=15&no-bg=false&no-frame=false&theme=juicyfresh";
+        this.streakURL =
+          "https://github-readme-streak-stats.herokuapp.com/?user=" +
+          transfer +
+          "&theme=chartreuse-dark&hide_border=false";
       }
     });
   },
@@ -74,7 +69,10 @@ export default {
   width: 100%;
   justify-content: center;
 }
-
+.lang-stat {
+  display: flex;
+  justify-content: center;
+}
 .lang-stat {
   display: flex;
   grid-gap: 20px;
@@ -83,12 +81,22 @@ export default {
   width: 350px;
   height: 100%;
 }
-
-.graph > img {
-  width: 700px;
-  height: 300px;
-}
-.decorate {
+.graph {
   display: flex;
+  justify-content: center;
+  grid-gap: 10px;
+  margin: 20px 0;
+}
+.graph > img:nth-child(1) {
+  width: 600px;
+  border-radius: 20px;
+}
+.graph > img:nth-child(2) {
+  width: 450px;
+}
+.trophy {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 </style>
