@@ -3,6 +3,8 @@
     <Main />
     <Accessibilities @childSendName="parentGetName($event)" />
     <Repositories />
+    <SideBar />
+    <Footer />
   </div>
 </template>
 
@@ -10,6 +12,8 @@
 import Main from "./components/Main.vue";
 import Accessibilities from "./components/Accessibilities.vue";
 import Repositories from "./components/Repositories.vue";
+import SideBar from "./components/SideBar.vue";
+import Footer from "./components/Footer.vue";
 
 export default {
   name: "App",
@@ -17,6 +21,8 @@ export default {
     Main,
     Accessibilities,
     Repositories,
+    SideBar,
+    Footer,
   },
 };
 </script>
