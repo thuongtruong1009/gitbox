@@ -12,7 +12,7 @@
     />
 
     <p class="loading" v-if="isLoading">
-      Searching GitHub profile for "{{ name }}"...
+      Not found GitHub profile for "{{ name }}"...
     </p>
     <div class="main" v-if="result">
       <div class="main-avatar">
@@ -73,7 +73,7 @@ export default {
         this.isLoading = true;
 
         eventBus.$emit("childSendName", this.name);
-
+        eventBus.$emit("childSendTime", new Date());
         axios
           .get("https://api.github.com/users/" + this.name)
           .then((response) => {
