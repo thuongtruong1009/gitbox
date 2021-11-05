@@ -6,8 +6,9 @@
           <th>ID</th>
           <th>Repository</th>
           <th>Desciption</th>
+          <th>Star</th>
           <th>Language</th>
-          <th>Size</th>
+          <th>Size (kb)</th>
         </tr>
       </thead>
       <tbody>
@@ -17,8 +18,9 @@
             <a :href="repo.html_url">{{ repo.name }}</a>
           </td>
           <td>{{ repo.description }}</td>
+          <td>{{ repo.stargazers_count }}</td>
           <td>{{ repo.language }}</td>
-          <td>{{ repo.size }} kb</td>
+          <td>{{ repo.size }}</td>
         </tr>
       </tbody>
     </table>
