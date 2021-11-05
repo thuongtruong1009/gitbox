@@ -6,9 +6,9 @@
       v-model="name"
       v-on:keydown.13="onSubmit"
       name="name"
-      placeholder="typing Github @user..."
+      placeholder="typing Github @username..."
       onfocus="this.placeholder = ''"
-      onblur="this.placeholder = 'typing Github @user...'"
+      onblur="this.placeholder = 'typing Github @username...'"
     />
 
     <p class="loading" v-if="isLoading">
