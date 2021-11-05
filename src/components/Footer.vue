@@ -19,7 +19,7 @@ export default {
   data() {
     return {
       footerDecorates: Array(36),
-      time: "",
+      time: new Date(),
     };
   },
   created() {
