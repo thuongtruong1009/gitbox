@@ -1,16 +1,16 @@
 <template>
   <section class="container" v-if="this.isHaveName">
     <div class="lang-stat">
-      <div class="lang">
-        <img :src="this.langURL" />
+      <div class="streak">
+        <img :src="this.streakURL" />
       </div>
       <div class="stat">
         <img :src="this.statURL" />
       </div>
     </div>
-    <div class="graph">
+    <div class="graph-lang">
       <img :src="this.graphURL" />
-      <img :src="this.streakURL" />
+      <img :src="this.langURL" />
     </div>
     <div class="trophy">
       <img :src="this.trophyURL" />
@@ -77,22 +77,22 @@ export default {
   display: flex;
   grid-gap: 20px;
 }
-.lang > img {
-  width: 350px;
+.streak > img {
+  width: 430px;
   height: 100%;
 }
-.graph {
+.graph-lang {
   display: flex;
   justify-content: center;
   grid-gap: 10px;
   margin: 20px 0;
 }
-.graph > img:nth-child(1) {
+.graph-lang > img:nth-child(1) {
   width: 600px;
   border-radius: 20px;
 }
-.graph > img:nth-child(2) {
-  width: 450px;
+.graph-lang > img:nth-child(2) {
+  width: 350px;
 }
 .trophy {
   display: flex;

@@ -40,6 +40,11 @@
           </div>
 
           <div>
+            <h1>Star</h1>
+            <h2>{{ this.stars.length }}</h2>
+          </div>
+
+          <div>
             <h1>Gist</h1>
             <h2>{{ result.public_gists }}</h2>
           </div>
@@ -49,6 +54,10 @@
           <h5><span>Company: </span>{{ result.company }}</h5>
           <h5><span>Location: </span>{{ result.location }}</h5>
           <h5><span>Join at: </span>{{ result.created_at }}</h5>
+          <h5 class="main-infor-org">
+            <span>Organizations: </span>
+            <img v-for="org in orgs" :key="org.id" :src="org.avatar_url" />
+          </h5>
         </div>
       </div>
     </div>
@@ -58,6 +67,7 @@
 <script>
 import axios from "axios";
 import { eventBus } from "../main.js";
+
 export default {
   data() {
     return {
@@ -65,6 +75,8 @@ export default {
       result: "",
       error: "",
       isLoading: false,
+      orgs: "",
+      stars: "",
     };
   },
   methods: {
@@ -86,6 +98,19 @@ export default {
             this.error = error;
             this.loading = false;
           });
+        ///////////////////////////////////////////////////////////////
+        axios
+          .get("https://api.github.com/users/" + this.name + "/orgs")
+          .then((response) => {
+            this.orgs = response.data;
+          });
+        ///////////////////////////////////////////////////////////////
+        axios
+          .get("https://api.github.com/users/" + this.name + "/starred")
+          .then((response) => {
+            this.stars = response.data;
+            console.log(this.stars.length);
+          });
       } else {
         this.result = "";
         this.error = "";
@@ -98,7 +123,7 @@ export default {
 
 <style scoped>
 .container {
-  width: 800px;
+  width: 850px;
   padding: 20px 0;
   border: 1px dashed orange;
   border-radius: 15px;
@@ -185,5 +210,16 @@ input {
 }
 .main-infor-label > h5 > span {
   font-weight: bold;
+}
+.main-infor-org {
+  display: flex;
+  width: 100%;
+  grid-gap: 10px;
+}
+.main-infor-org > img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
 }
 </style>

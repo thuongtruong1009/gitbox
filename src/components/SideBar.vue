@@ -1,8 +1,8 @@
 <template>
   <section>
-    <a :href="this.author"><img src="../assets/logo.png" /></a>
+    <a :href="this.github"><img src="../assets/logo.png" /></a>
     <div class="nav-side">
-      <a href="https://github.com/github.com/thuongtruong1009/">
+      <a :href="this.github">
         <i
           class="fab fa-github-square"
           data-bs-toggle="tooltip"
@@ -10,7 +10,7 @@
           title="Github profile"
         ></i
       ></a>
-      <a href="https://github.com/github.com/thuongtruong1009/">
+      <a :href="this.email">
         <i
           class="far fa-envelope"
           data-bs-toggle="tooltip"
@@ -18,7 +18,7 @@
           title="Send email"
         ></i
       ></a>
-      <a href="https://github.com/github.com/thuongtruong1009/">
+      <a :href="this.issue">
         <i
           class="fas fa-exclamation-circle"
           data-bs-toggle="tooltip"
@@ -26,7 +26,7 @@
           title="Report issues"
         ></i
       ></a>
-      <a href="https://github.com/github.com/thuongtruong1009/">
+      <a :href="this.discuss">
         <i
           class="far fa-comment"
           data-bs-toggle="tooltip"
@@ -34,7 +34,7 @@
           title="New discuss"
         ></i
       ></a>
-      <a href="https://github.com/github.com/thuongtruong1009/">
+      <a :href="this.request">
         <i
           class="far fa-question-circle"
           data-bs-toggle="tooltip"
@@ -50,7 +50,11 @@
 export default {
   data() {
     return {
-      author: "https://github.com/thuongtruong1009",
+      github: "https://github.com/thuongtruong1009",
+      email: "mailto:ititiu19228@student.hcmiu.edu.vn",
+      issue: "https://github.com/thuongtruong1009/Snake-Game-OOP/issues",
+      discuss: "https://github.com/thuongtruong1009/Snake-Game-OOP/discuss",
+      request: "https://github.com/thuongtruong1009/Snake-Game-OOP/pulls",
     };
   },
 };
