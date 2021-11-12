@@ -1,3 +1,3 @@
 module.exports = {
-    publicPath: '/searching-github-user/'
+    publicPath: '/searching-github-username/'
 }
