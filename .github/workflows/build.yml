@@ -12,5 +12,3 @@ jobs:
         username: 'thuongtruong1009'
         reponame: 'searching-github-username'
         token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged
-    - name: Vue to Github Pages
-      uses: xRealNeon/VuePagesAction@1.0.1
