@@ -2,14 +2,6 @@
   <section>
     <a :href="this.github"><img src="../assets/logo.png" /></a>
     <div class="nav-side">
-      <a :href="this.github">
-        <i
-          class="fab fa-github-square"
-          data-bs-toggle="tooltip"
-          data-bs-placement="right"
-          title="Github profile"
-        ></i
-      ></a>
       <a :href="this.email">
         <i
           class="far fa-envelope"
@@ -62,7 +54,7 @@ export default {
 
 <style scoped>
 section > a > img {
-  position: absolute;
+  position: fixed;
   width: 130px;
   height: 130px;
   top: 0;
@@ -71,7 +63,7 @@ section > a > img {
   filter: hue-rotate(240deg);
 }
 .nav-side {
-  position: absolute;
+  position: fixed;
   top: 40px;
   left: 0;
   display: grid;
