@@ -109,7 +109,6 @@ export default {
           .get("https://api.github.com/users/" + this.name + "/starred")
           .then((response) => {
             this.stars = response.data;
-            console.log(this.stars.length);
           });
       } else {
         this.result = "";
