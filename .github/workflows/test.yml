@@ -18,6 +18,6 @@ jobs:
 
       - uses: getsentry/action-git-diff-suggestions@main
         with:
-          message: eslint
+          message: 'test lint PR'
 
       - run: yarn test
