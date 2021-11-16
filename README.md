@@ -7,6 +7,9 @@
 </div>
 
 ## Project setup
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ef5ad93a612a4dd4b8b363511e7ff483)](https://app.codacy.com/gh/thuongtruong1009/searching-github-username?utm_source=github.com&utm_medium=referral&utm_content=thuongtruong1009/searching-github-username&utm_campaign=Badge_Grade_Settings)
+
 ```
 npm install
 ```
