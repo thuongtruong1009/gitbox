@@ -13,7 +13,7 @@ module.exports = function(config) {
         port: 9876, // Port chạy debug
         colors: true,
         logLevel: config.LOG_INFO,
-        autoWatch: true, // True nghĩa là tự lắng nghe các file thay đổi để chạy lại
+        autoWatch: false, // True nghĩa là tự lắng nghe các file thay đổi để chạy lại
         // browsers: ['Chrome', 'Firefox'],
         // Bạn muốn hiểu Headless là gì thì có thể đọc ở đây: https://developers.google.com/web/updates/2017/04/headless-chrome
         browsers: ['ChromeHeadless', 'FirefoxHeadless'],

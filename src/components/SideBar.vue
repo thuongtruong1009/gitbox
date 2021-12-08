@@ -42,11 +42,11 @@
 export default {
   data() {
     return {
-      github: "https://github.com/thuongtruong1009",
+      github: "https://github.com/thuongtruong1009/searching-github-username/fork",
       email: "mailto:ititiu19228@student.hcmiu.edu.vn",
-      issue: "https://github.com/thuongtruong1009/Snake-Game-OOP/issues",
-      discuss: "https://github.com/thuongtruong1009/Snake-Game-OOP/discuss",
-      request: "https://github.com/thuongtruong1009/Snake-Game-OOP/pulls",
+      issue: "https://github.com/thuongtruong1009/searching-github-username/issues",
+      discuss: "https://github.com/thuongtruong1009/searching-github-username/discussions/new",
+      request: "https://github.com/thuongtruong1009/searching-github-username/pulls",
     };
   },
 };
@@ -54,9 +54,9 @@ export default {
 
 <style scoped>
 section > a > img {
-  position: fixed;
-  width: 130px;
-  height: 130px;
+  position: absolute;
+  max-width: 10%;
+  max-height: 20%;
   top: 0;
   right: 0;
   cursor: pointer;
