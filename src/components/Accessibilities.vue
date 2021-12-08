@@ -1,5 +1,8 @@
 <template>
   <section class="container" v-if="this.isHaveName">
+    <div class="contributing-chart">
+       <img :src="this.contributingChartURL" alt="Name Your Github chart">
+    </div>
     <div class="lang-stat">
       <div class="streak">
         <img :src="this.streakURL" />
@@ -28,6 +31,7 @@ export default {
       graphURL: "",
       streakURL: "",
       trophyURL: "",
+      contributingChartURL: "",
       isHaveName: false,
     };
   },
@@ -55,6 +59,7 @@ export default {
           "https://github-readme-streak-stats.herokuapp.com/?user=" +
           transfer +
           "&theme=chartreuse-dark&hide_border=false";
+        this.contributingChartURL="http://ghchart.rshah.org/"+transfer;
       }
     });
   },
@@ -66,8 +71,23 @@ export default {
   padding: 0;
   display: grid;
   margin-top: 30px;
+  margin-bottom: 30px;
   width: 100%;
   justify-content: center;
+  grid-gap: 15px;
+}
+.contributing-chart{
+  display: flex;
+  justify-content: center;
+  justify-self: center;
+  align-items: center;
+  background: black;
+  border-radius: 15px;
+  width: 70vw;
+}
+.contributing-chart>img{
+  width: 95%;
+  height: 95%;
 }
 .lang-stat {
   display: flex;
@@ -85,7 +105,6 @@ export default {
   display: flex;
   justify-content: center;
   grid-gap: 10px;
-  margin: 20px 0;
 }
 .graph-lang > img:nth-child(1) {
   width: 600px;
@@ -97,6 +116,7 @@ export default {
 .trophy {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  justify-self: center;
 }
+
 </style>

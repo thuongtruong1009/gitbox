@@ -26,4 +26,15 @@ export default {
   },
 };
 </script>
+<style>
+#app {
+  background-image: url("https://www.speedtest.net/global-index/public/images/globe@2x.png");
+  background-size: 110%;
+  background-repeat: no-repeat;
+  background-position: center 15%;
+  width: 99.8%;
+  height: 100%;
+  overflow-y: scroll;
+}
+</style>
 
