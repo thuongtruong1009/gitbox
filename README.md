@@ -1,11 +1,12 @@
 [![CircleCI](https://circleci.com/gh/circleci/circleci-docs.svg?style=svg)](https://circleci.com/gh/circleci/circleci-docs)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a2df4efc50df4576abab67ff747ba0be)](https://app.codacy.com/gh/thuongtruong1009/Snake-Game-OOP?utm_source=github.com&utm_medium=referral&utm_content=thuongtruong1009/Snake-Game-OOP&utm_campaign=Badge_Grade_Settings)
-![CI](https://github.com/thuongtruong1009/snake-game-oop/actions/workflows/ci.yml/badge.svg)
-[![CodeFactor](https://www.codefactor.io/repository/github/thuongtruong1009/snake-game-oop/badge)](https://www.codefactor.io/repository/github/thuongtruong1009/snake-game-oop)
-![GitHub commit checks state](https://img.shields.io/github/checks-status/thuongtruong1009/Snake-Game-OOP/main)
-<img src="https://img.shields.io/badge/License-ECL 2.0-pink" onclick="https://github.com/thuongtruong1009/snake-game-oop/blob/main/LICENSE">
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/thuongtruong1009/Snake-Game-OOP?color=87CEFA)
-![Lines of code](https://img.shields.io/tokei/lines/github/thuongtruong1009/Snake-Game-OOP?color=%236495ED)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a2df4efc50df4576abab67ff747ba0be)](https://app.codacy.com/gh/thuongtruong1009/searching-github-username?utm_source=github.com&utm_medium=referral&utm_content=thuongtruong1009/searching-github-username&utm_campaign=Badge_Grade_Settings)
+![CI](https://github.com/thuongtruong1009/searching-github-username/actions/workflows/ci.yml/badge.svg)
+[![CodeFactor](https://www.codefactor.io/repository/github/thuongtruong1009/searching-github-username/badge)](https://www.codefactor.io/repository/github/thuongtruong1009/snake-game-oop)
+![GitHub commit checks state](https://img.shields.io/github/checks-status/thuongtruong1009/searching-github-username/main)
+<img src="https://img.shields.io/badge/License-ECL 2.0-pink" onclick="https://github.com/thuongtruong1009/searching-github-username/blob/main/LICENSE">
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/thuongtruong1009/searching-github-username?color=87CEFA)
+![Lines of code](https://img.shields.io/tokei/lines/github/thuongtruong1009/searching-github-username?color=%236495ED)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/7232c6c2-bf24-464c-b334-45e6e74842aa/deploy-status)](https://app.netlify.com/sites/gitonsearch/deploys)
 
 <h1 align="center">
     <img src="./public/favicon.ico"/>
