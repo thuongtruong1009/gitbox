@@ -11,7 +11,7 @@
         onfocus="this.placeholder = ''"
         onblur="this.placeholder = 'typing Github @username...'"
       />
-      <img src="@/assets/git.png" :style="{width: '45px', height: '45px', cursor:'pointer', borderRadius: '50%'}"/>
+      <img src="@/assets/git.png" :style="{width: '45px', height: '45px', cursor:'pointer', borderRadius: '50%'}" @click="onSubmit" />
     </form>
 
     <p class="loading" v-if="isLoading">Not found GitHub profile for "{{ name }}"...</p>
