@@ -1,6 +1,6 @@
 <template>
   <section>
-    <a :href="this.github"><img src="../assets/logo.png" /></a>
+    <a :href="this.github"><img src="/assets/logo.png" /></a>
     <div class="nav-side">
       <a :href="this.email">
         <i
@@ -23,7 +23,7 @@
           class="far fa-comment"
           data-bs-toggle="tooltip"
           data-bs-placement="right"
-          title="New discuss"
+          title="Join discuss"
         ></i
       ></a>
       <a :href="this.request">
@@ -44,7 +44,7 @@ export default {
     return {
       github: "https://github.com/thuongtruong1009/searching-github-username/fork",
       email: "mailto:ititiu19228@student.hcmiu.edu.vn",
-      issue: "https://github.com/thuongtruong1009/searching-github-username/issues",
+      issue: "https://github.com/thuongtruong1009/searching-github-username/issues/new",
       discuss: "https://github.com/thuongtruong1009/searching-github-username/discussions/new",
       request: "https://github.com/thuongtruong1009/searching-github-username/pulls",
     };
@@ -64,12 +64,13 @@ section > a > img {
 }
 .nav-side {
   position: fixed;
-  top: 40px;
+  z-index: 2;
+  top: 200px;
   left: 0;
   display: grid;
   grid-gap: 25px;
   padding: 10px;
-  background: rgba(0, 0, 255, 0.226);
+  background: rgba(40, 167, 88, 0.993);
   border-top-right-radius: 9px;
   border-bottom-right-radius: 9px;
 }
@@ -77,7 +78,7 @@ section > a > img {
   transform: scale(1.4);
   cursor: pointer;
   transition: 0.3s;
-  color: rgb(29, 29, 29);
+  color: black;
 }
 .nav-side > a > i:hover {
   transform: scale(1.8);

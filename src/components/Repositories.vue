@@ -3,14 +3,14 @@
     <table class="table table-striped" v-if="isHaveName">
       <thead>
         <tr class="table-danger">
-          <th>ID</th>
-          <th>Repository</th>
-          <th>Desciption</th>
-          <th>Fork</th>
-          <th>Download</th>
-          <th>Star</th>
-          <th>Language</th>
-          <th>Size (kb)</th>
+          <th>ID<ion-icon name="funnel"></ion-icon></th>
+          <th>Repository<br/><ion-icon name="folder-outline"></ion-icon></th>
+          <th>Desciption<br/><ion-icon name="newspaper-outline"></ion-icon></th>
+          <th>Fork<i class="fas fa-code-branch"></i></th>
+          <th>Download<ion-icon name="download-outline"></ion-icon></th>
+          <th>Star<ion-icon name="star-outline"></ion-icon></th>
+          <th>Language<ion-icon name="language-outline"></ion-icon></th>
+          <th>Size (kb)<ion-icon name="barbell-outline"></ion-icon></th>
         </tr>
       </thead>
       <tbody>
@@ -22,12 +22,12 @@
           <td>{{ repo.description }}</td>
           <td>
             <a :href="`${repo.html_url}/fork`">
-              <img src="@/assets/fork.svg" />
+              <i class="fas fa-code-branch"></i>
             </a>
           </td>
           <td>
             <a :href="`${repo.html_url}/archive/HEAD.zip`">
-              <img src="@/assets/download.png" />
+              <img src="/assets/download.png" />
             </a>
           </td>
           <td>{{ repo.stargazers_count }}</td>
@@ -71,7 +71,8 @@ export default {
 th,
 td {
   border: 1px solid gray;
-}img{
+}
+img{
   width: 26px;
   height: 26px;
   transition: 0.3s;
