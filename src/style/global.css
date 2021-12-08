@@ -1,0 +1,23 @@
+body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background: rgba(24, 24, 24, 0.932);
+    min-width: 100vw;
+    min-height: 100vh;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+ ::-webkit-scrollbar,
+ ::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+ ::-webkit-scrollbar-thumb {
+    background: #785a28;
+    border-radius: 300px;
+}

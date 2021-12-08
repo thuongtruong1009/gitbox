@@ -1,26 +1,27 @@
 <template>
-  <section class="container">
-    <input
-      class="form-control rounded"
-      type="search"
-      v-model="name"
-      v-on:keydown.13="onSubmit"
-      name="name"
-      placeholder="typing Github @username..."
-      onfocus="this.placeholder = ''"
-      onblur="this.placeholder = 'typing Github @username...'"
-    />
+  <div class="container">
+    <form class="d-flex justify-center align-center gap-3">
+      <input
+        class="form-control rounded"
+        type="search"
+        v-model="name"
+        v-on:keydown.13="onSubmit"
+        name="name"
+        placeholder="typing Github @username..."
+        onfocus="this.placeholder = ''"
+        onblur="this.placeholder = 'typing Github @username...'"
+      />
+      <img src="@/assets/git.png" :style="{width: '45px', height: '45px', cursor:'pointer', borderRadius: '50%'}"/>
+    </form>
 
-    <p class="loading" v-if="isLoading">
-      Not found GitHub profile for "{{ name }}"...
-    </p>
+    <p class="loading" v-if="isLoading">Not found GitHub profile for "{{ name }}"...</p>
     <div class="main" v-if="result">
       <div class="main-avatar">
         <img :src="result.avatar_url" />
         <h1>{{ result.name }}</h1>
-        <a href="result.html_url"
-          ><h4>@{{ result.login }}</h4></a
-        >
+        <a href="result.html_url">
+          <h4>@{{ result.login }}</h4>
+        </a>
       </div>
       <div class="main-infor">
         <div class="main-infor-statical">
@@ -50,18 +51,30 @@
           </div>
         </div>
         <div class="main-infor-label">
-          <h5><span>Bio: </span>{{ result.bio }}</h5>
-          <h5><span>Company: </span>{{ result.company }}</h5>
-          <h5><span>Location: </span>{{ result.location }}</h5>
-          <h5><span>Join at: </span>{{ result.created_at }}</h5>
+          <h5>
+            <span>Bio:</span>
+            {{ result.bio }}
+          </h5>
+          <h5>
+            <span>Company:</span>
+            {{ result.company }}
+          </h5>
+          <h5>
+            <span>Location:</span>
+            {{ result.location }}
+          </h5>
+          <h5>
+            <span>Join at:</span>
+            {{ regexpTime(result.created_at) }}
+          </h5>
           <h5 class="main-infor-org">
-            <span>Organizations: </span>
+            <span>Organizations:</span>
             <img v-for="org in orgs" :key="org.id" :src="org.avatar_url" />
           </h5>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
@@ -109,6 +122,7 @@ export default {
           .get("https://api.github.com/users/" + this.name + "/starred")
           .then((response) => {
             this.stars = response.data;
+            console.log(this.stars.length);
           });
       } else {
         this.result = "";
@@ -116,6 +130,9 @@ export default {
         this.loading = false;
       }
     },
+    regexpTime(time) {
+      return time.slice(0, 10);
+    }
   },
 };
 </script>
@@ -126,12 +143,12 @@ export default {
   padding: 20px 0;
   border: 1px dashed orange;
   border-radius: 15px;
-  background: rgba(212, 212, 212, 0.205);
+  background: white;
 }
 input {
   width: 300px;
   height: 40px;
-  margin: 10px 0 35px 35%;
+  margin: 5px 0 35px 35%;
   padding-left: 10px;
   outline: none;
   border: 1px solid gray;
@@ -206,14 +223,20 @@ input {
 .main-infor-label > h5 {
   padding: 2px 0 2px 15px;
   word-wrap: wrap;
+  line-height: 1.6rem;
 }
 .main-infor-label > h5 > span {
   font-weight: bold;
 }
 .main-infor-org {
   display: flex;
-  width: 100%;
+  width: 95%;
   grid-gap: 10px;
+  overflow-x: hidden;
+}
+.main-infor-org:hover {
+  overflow-x: scroll;
+  cursor: pointer;
 }
 .main-infor-org > img {
   width: 30px;
