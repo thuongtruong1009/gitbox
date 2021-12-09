@@ -1,6 +1,6 @@
 <template>
   <section>
-    <a :href="this.github"><img src="/public/assets/logo.png" /></a>
+    <a :href="this.github"><img src="assets/logo.png" /></a>
     <div class="nav-side">
       <a :href="this.email">
         <i

@@ -10,7 +10,7 @@
           <th>Download<ion-icon name="download-outline"></ion-icon></th>
           <th>Star<ion-icon name="star-outline"></ion-icon></th>
           <th>Language<ion-icon name="language-outline"></ion-icon></th>
-          <th>Size (kb)<ion-icon name="barbell-outline"></ion-icon></th>
+          <th>Size(kb)<ion-icon name="barbell-outline"></ion-icon></th>
         </tr>
       </thead>
       <tbody>
@@ -27,7 +27,7 @@
           </td>
           <td>
             <a :href="`${repo.html_url}/archive/HEAD.zip`">
-              <img src="/public/assets/download.png" />
+              <img src="assets/download.png" />
             </a>
           </td>
           <td>{{ repo.stargazers_count }}</td>

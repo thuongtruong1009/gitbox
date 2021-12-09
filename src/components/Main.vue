@@ -1,6 +1,9 @@
 <template>
     <div class="container py-3">
-        <form @submit.prevent="onSubmit" class="d-flex justify-content-center align-items-center gap-3 my-3 ml-3">
+        <form
+            @submit.prevent="onSubmit"
+            class="d-flex justify-content-center align-items-center gap-3 my-3 ml-3"
+        >
             <input
                 class="form-control rounded"
                 type="search"
@@ -11,10 +14,7 @@
                 onfocus="this.placeholder = ''"
                 onblur="this.placeholder = 'typing Github @username...'"
             />
-            <img
-                src="/public/assets/git.png"
-                @click="onSubmit"
-            />
+            <img src="assets/git.png" @click="onSubmit" />
         </form>
 
         <p class="loading" v-if="isLoading">Not found GitHub profile for "{{ name }}"...</p>
@@ -29,62 +29,77 @@
             <div class="main-infor">
                 <div class="main-infor-statical">
                     <div>
-                        <h1><ion-icon name="people-outline"></ion-icon> Followers</h1>
+                        <h1 @click="modalOpen = true"><ion-icon name="people-outline"></ion-icon>Followers</h1>
                         <h2>{{ result.followers }}</h2>
                     </div>
-
                     <div>
-                        <h1><ion-icon name="person-add-outline"></ion-icon> Following</h1>
+                        <h1><ion-icon name="person-add-outline"></ion-icon>Following</h1>
                         <h2>{{ result.following }}</h2>
                     </div>
-
                     <div>
-                        <h1><ion-icon name="folder-open-outline"></ion-icon> Repository</h1>
+                        <h1><ion-icon name="folder-open-outline"></ion-icon>Repository</h1>
                         <h2>{{ result.public_repos }}</h2>
                     </div>
-
                     <div>
-                        <h1><ion-icon name="star-outline"></ion-icon> Star</h1>
+                        <h1><ion-icon name="star-outline"></ion-icon>Star</h1>
                         <h2>{{ this.stars.length }}</h2>
                     </div>
-
                     <div>
-                        <h1><ion-icon name="git-network-outline"></ion-icon> Gist</h1>
+                        <h1><ion-icon name="git-network-outline"></ion-icon>Gist</h1>
                         <h2>{{ result.public_gists }}</h2>
                     </div>
                 </div>
                 <div class="main-infor-label">
+                    <h5><span><ion-icon name="eye-outline"></ion-icon>Bio:</span>{{ result.bio }}</h5>
                     <h5>
-                        <span><ion-icon name="eye-outline"></ion-icon> Bio:</span>
-                        {{ result.bio }}
-                    </h5>
-                    <h5>
-                        <span><ion-icon name="home-outline"></ion-icon> Company:</span>
+                        <span>
+                            <ion-icon name="home-outline"></ion-icon>Company:
+                        </span>
                         {{ result.company }}
                     </h5>
                     <h5>
-                        <span><ion-icon name="location-outline"></ion-icon> Location:</span>
+                        <span>
+                            <ion-icon name="location-outline"></ion-icon>Location:
+                        </span>
                         {{ result.location }}
                     </h5>
                     <h5>
-                        <span><ion-icon name="time-outline"></ion-icon> Join at:</span>
+                        <span>
+                            <ion-icon name="time-outline"></ion-icon>Join at:
+                        </span>
                         {{ regexpTime(result.created_at) }}
                     </h5>
                     <h5 class="main-infor-org">
-                        <span><ion-icon name="logo-github"></ion-icon> Organizations:</span>
+                        <span>
+                            <ion-icon name="logo-github"></ion-icon>Organizations:
+                        </span>
                         <img v-for="org in orgs" :key="org.id" :src="org.avatar_url" />
                     </h5>
                 </div>
             </div>
         </div>
+        <teleport to="body" v-show="modalOpen">
+            <div v-if="modalOpen" class="modal">
+                <div>
+                    <Followers />
+                    <button @click="modalOpen = false">
+                        <ion-icon name="close-outline"></ion-icon>Close
+                    </button>
+                </div>
+            </div>
+        </teleport>
     </div>
 </template>
 
 <script>
 import axios from "axios";
 import { eventBus } from "../main.js";
+import Followers from "./layouts/Followers.vue"
 
 export default {
+    components: {
+        Followers
+    },
     data() {
         return {
             name: "",
@@ -93,6 +108,7 @@ export default {
             isLoading: false,
             orgs: "",
             stars: "",
+            modalOpen: false
         };
     },
     methods: {
@@ -102,12 +118,12 @@ export default {
 
                 eventBus.$emit("childSendName", this.name);
                 eventBus.$emit("childSendTime", new Date());
-                axios
-                    .get("https://api.github.com/users/" + this.name)
+                axios.get("https://api.github.com/users/" + this.name)
                     .then((response) => {
                         this.result = response.data;
 
                         this.isLoading = false;
+                        console.log(response.json());
                     })
                     .catch((error) => {
                         this.result = "";
@@ -156,7 +172,7 @@ form > input {
     border-radius: 10px;
     transition: 0.3s linear;
 }
-form > input:hover{
+form > input:hover {
     width: 360px;
 }
 form > img {
@@ -167,7 +183,7 @@ form > img {
     box-shadow: 1px 1px 1px gray;
     transition: 0.1s linear;
 }
-form > img:hover{
+form > img:hover {
     box-shadow: 2px 2px 4px gray;
 }
 .loading {
@@ -197,7 +213,7 @@ form > img:hover{
     justify-self: center;
     margin-bottom: 10px;
 }
-.main-avatar:after{
+.main-avatar:after {
     content: url("https://media.giphy.com/media/JP6cspn7JlVimeUhfW/giphy.gif");
     position: absolute;
     transform: scale(0.32);
@@ -267,5 +283,38 @@ form > img:hover{
     height: 30px;
     border-radius: 50%;
     cursor: pointer;
+}
+/**********************************************************************/
+.modal {
+    position: absolute;
+    top: 100px;
+    right: 0;
+    bottom: 0;
+    left: -150px;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    padding: 5px;
+}
+
+.modal > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    width: 700px;
+    height: 500px;
+    padding: 5px;
+    border-radius: 12px;
+    border: 2px solid green;
+}
+.modal > div > button {
+    outline: none;
+    border: none;
+    border-radius: 7px;
 }
 </style>

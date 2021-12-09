@@ -1,11 +1,11 @@
 <template>
-  <div id="app">
-    <Main />
-    <Accessibilities @childSendName="parentGetName($event)" />
-    <Repositories />
-    <SideBar />
-    <Footer />
-  </div>
+    <div id="app">
+        <Main />
+        <Accessibilities @childSendName="parentGetName($event)" />
+        <Repositories />
+        <SideBar />
+        <Footer />
+    </div>
 </template>
 
 <script>
@@ -16,25 +16,25 @@ import SideBar from "./components/SideBar.vue";
 import Footer from "./components/Footer.vue";
 
 export default {
-  name: "App",
-  components: {
-    Main,
-    Accessibilities,
-    Repositories,
-    SideBar,
-    Footer,
-  },
+    name: "App",
+    components: {
+        Main,
+        Accessibilities,
+        Repositories,
+        SideBar,
+        Footer,
+    },
 };
 </script>
 <style>
 #app {
-  background-image: url("/public/assets/globe.png");
-  background-size: 115%;
-  background-repeat: no-repeat;
-  background-position: center 0%;
-  width: 99.8%;
-  height: 100%;
-  overflow-y: scroll;
+    background-image: url("/public/assets/globe.png");
+    background-size: 115%;
+    background-repeat: no-repeat;
+    background-position: center 0%;
+    width: 99.8%;
+    height: 100%;
+    overflow-y: scroll;
 }
 </style>
 
