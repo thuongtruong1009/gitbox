@@ -29,63 +29,51 @@
             <div class="main-infor">
                 <div class="main-infor-statical">
                     <div>
-                        <h1 @click="modalOpen = true"><ion-icon name="people-outline"></ion-icon>Followers</h1>
+                        <h1 @click="modalOpen = true"><ion-icon name="people-outline"></ion-icon> Followers</h1>
                         <h2>{{ result.followers }}</h2>
                     </div>
                     <div>
-                        <h1><ion-icon name="person-add-outline"></ion-icon>Following</h1>
+                        <h1><ion-icon name="person-add-outline"></ion-icon> Following</h1>
                         <h2>{{ result.following }}</h2>
                     </div>
                     <div>
-                        <h1><ion-icon name="folder-open-outline"></ion-icon>Repository</h1>
+                        <h1><ion-icon name="folder-open-outline"></ion-icon> Repository</h1>
                         <h2>{{ result.public_repos }}</h2>
                     </div>
                     <div>
-                        <h1><ion-icon name="star-outline"></ion-icon>Star</h1>
+                        <h1><ion-icon name="star-outline"></ion-icon> Star</h1>
                         <h2>{{ this.stars.length }}</h2>
                     </div>
                     <div>
-                        <h1><ion-icon name="git-network-outline"></ion-icon>Gist</h1>
+                        <h1><ion-icon name="git-network-outline"></ion-icon> Gist</h1>
                         <h2>{{ result.public_gists }}</h2>
                     </div>
                 </div>
                 <div class="main-infor-label">
-                    <h5><span><ion-icon name="eye-outline"></ion-icon>Bio:</span>{{ result.bio }}</h5>
+                    <h5><span><ion-icon name="eye-outline"></ion-icon> Bio:</span>{{ result.bio }}</h5>
                     <h5>
-                        <span>
-                            <ion-icon name="home-outline"></ion-icon>Company:
-                        </span>
+                        <span><ion-icon name="home-outline"></ion-icon> Company:</span>
                         {{ result.company }}
                     </h5>
                     <h5>
-                        <span>
-                            <ion-icon name="location-outline"></ion-icon>Location:
-                        </span>
+                        <span><ion-icon name="location-outline"></ion-icon> Location:</span>
                         {{ result.location }}
                     </h5>
                     <h5>
-                        <span>
-                            <ion-icon name="time-outline"></ion-icon>Join at:
-                        </span>
+                        <span><ion-icon name="time-outline"></ion-icon> Join at:</span>
                         {{ regexpTime(result.created_at) }}
                     </h5>
                     <h5 class="main-infor-org">
-                        <span>
-                            <ion-icon name="logo-github"></ion-icon>Organizations:
-                        </span>
+                        <span><ion-icon name="logo-github"></ion-icon>Organizations:</span>
                         <img v-for="org in orgs" :key="org.id" :src="org.avatar_url" />
                     </h5>
                 </div>
             </div>
         </div>
-        <teleport to="body" v-show="modalOpen">
+        <teleport to="body">
             <div v-if="modalOpen" class="modal">
-                <div>
-                    <Followers />
-                    <button @click="modalOpen = false">
-                        <ion-icon name="close-outline"></ion-icon>Close
-                    </button>
-                </div>
+                <div><Followers /></div>
+                <button @click="modalOpen = false"><ion-icon name="close-outline"></ion-icon>Close</button>
             </div>
         </teleport>
     </div>
@@ -94,7 +82,7 @@
 <script>
 import axios from "axios";
 import { eventBus } from "../main.js";
-import Followers from "./layouts/Followers.vue"
+import Followers from "@/layouts/Followers.vue"
 
 export default {
     components: {
@@ -123,7 +111,7 @@ export default {
                         this.result = response.data;
 
                         this.isLoading = false;
-                        console.log(response.json());
+                        console.log(response);
                     })
                     .catch((error) => {
                         this.result = "";
@@ -274,6 +262,9 @@ form > img:hover {
     grid-gap: 10px;
     overflow-x: hidden;
 }
+.main-infor-org>span{
+    display: flex;
+}
 .main-infor-org:hover {
     overflow-x: scroll;
     cursor: pointer;
@@ -290,7 +281,7 @@ form > img:hover {
     top: 100px;
     right: 0;
     bottom: 0;
-    left: -150px;
+    left: 0;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
@@ -308,13 +299,14 @@ form > img:hover {
     background-color: white;
     width: 700px;
     height: 500px;
-    padding: 5px;
     border-radius: 12px;
     border: 2px solid green;
+    overflow-y:scroll;
 }
-.modal > div > button {
+.modal > button {
     outline: none;
     border: none;
-    border-radius: 7px;
+    border-radius: 5px;
+    background: pink;
 }
 </style>
