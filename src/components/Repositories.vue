@@ -27,7 +27,7 @@
           </td>
           <td>
             <a :href="`${repo.html_url}/archive/HEAD.zip`">
-              <img src="/assets/download.png" />
+              <img src="/public/assets/download.png" />
             </a>
           </td>
           <td>{{ repo.stargazers_count }}</td>

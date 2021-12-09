@@ -12,7 +12,7 @@
                 onblur="this.placeholder = 'typing Github @username...'"
             />
             <img
-                src="/assets/git.png"
+                src="/public/assets/git.png"
                 @click="onSubmit"
             />
         </form>

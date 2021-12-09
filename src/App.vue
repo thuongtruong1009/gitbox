@@ -28,7 +28,7 @@ export default {
 </script>
 <style>
 #app {
-  background-image: url("/assets/globe.png");
+  background-image: url("/public/assets/globe.png");
   background-size: 115%;
   background-repeat: no-repeat;
   background-position: center 0%;
