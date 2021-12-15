@@ -3,14 +3,14 @@
     <table class="table table-striped" v-if="isHaveName">
       <thead>
         <tr class="table-danger">
-          <th>ID<ion-icon name="funnel"></ion-icon></th>
+          <th>ID<br/><ion-icon name="funnel"></ion-icon></th>
           <th>Repository<br/><ion-icon name="folder-outline"></ion-icon></th>
           <th>Desciption<br/><ion-icon name="newspaper-outline"></ion-icon></th>
-          <th>Fork<i class="fas fa-code-branch"></i></th>
-          <th>Download<ion-icon name="download-outline"></ion-icon></th>
-          <th>Star<ion-icon name="star-outline"></ion-icon></th>
-          <th>Language<ion-icon name="language-outline"></ion-icon></th>
-          <th>Size (kb)<ion-icon name="barbell-outline"></ion-icon></th>
+          <th>Fork<br/><i class="fas fa-code-branch"></i></th>
+          <th>Download<br/><ion-icon name="download-outline"></ion-icon></th>
+          <th>Star<br/><ion-icon name="star-outline"></ion-icon></th>
+          <th>Language<br/><ion-icon name="language-outline"></ion-icon></th>
+          <th>Size (kb)<br/><ion-icon name="barbell-outline"></ion-icon></th>
         </tr>
       </thead>
       <tbody>
@@ -27,7 +27,7 @@
           </td>
           <td>
             <a :href="`${repo.html_url}/archive/HEAD.zip`">
-              <img src="/public/assets/download.png" />
+              <img src="assets/download.png" />
             </a>
           </td>
           <td>{{ repo.stargazers_count }}</td>
