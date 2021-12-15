@@ -12,9 +12,9 @@
     <img src="./public/favicon.ico"/>
     SEARCHING GITHUB USERNAME
 </h1>
-<div align="center">
+<!-- <div align="center">
     <img src="./images reference/view_demo.jpeg" width="800"/>
-</div>
+</div> -->
 
 <!-- https://hacktoberfest.digitalocean.com/_nuxt/img/logo-hacktoberfest-full2.aa1e9d9.svg -->
 
