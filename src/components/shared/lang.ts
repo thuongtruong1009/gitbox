@@ -1,4 +1,4 @@
-const langColor = { 
+const langColor:any = { 
     "Vue": "#3FB27F",
     "HTML": "#E34C26",
     "CSS": "#563D7C",

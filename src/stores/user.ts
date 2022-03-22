@@ -7,10 +7,10 @@ export const userStore = defineStore('user', () => {
 
   const isLoading = ref(false)
 
-  const userData = reactive([])
-  const orgsData = reactive([])
-  const starredData = reactive([])
-  const reposData = reactive([])
+  const userData = reactive<any>([])
+  const orgsData = reactive<any>([])
+  const starredData = reactive<any>([])
+  const reposData = reactive<any>([])
 
   return{
     userName, contributions, isLoading, userData, orgsData, starredData, reposData
