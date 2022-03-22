@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Vue
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - id: Build-Deploy-Vue
       uses: thefrustrateddev/vue-deploy-github-pages@v1.0.0
       with:
