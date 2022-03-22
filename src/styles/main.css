@@ -1,0 +1,11 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    user-select: none;
+    overflow-x: hidden;
+}
+input, button, textarea, select, option{
+    border: none;
+    outline: none;
+}
