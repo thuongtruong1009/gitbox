@@ -10,7 +10,7 @@
     "test-normal": "mocha --require @babel/register --exit test/**/*-Test.js"
   },
   "dependencies": {
-    "@popperjs/core": "^2.11.2",
+    "@popperjs/core": "^2.11.4",
     "axios": "^0.24.0",
     "bootstrap": "^5.1.1",
     "bulma": "^0.9.3",
