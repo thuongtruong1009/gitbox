@@ -2,7 +2,7 @@
   <div>
     <button
       type="button"
-      class="text-white  z-20 text-sm p-2.5 max-h-10 max-w-10 overflow-hidden"
+      class="text-white z-20 text-sm p-2.5 max-h-10 max-w-10 overflow-hidden"
       @click="onThemeChange"
     >
       <Transition name="slide-up" class="inline-block">

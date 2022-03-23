@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gitbox</title>
-  </head>
-  <body>
+    <script>
+        (function() {
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+            const setting = localStorage.getItem("color-theme")
+            if (setting === 'dark' || (prefersDark && setting !== 'light'))
+                document.documentElement.classList.toggle('dark', true)
+        })()
+    </script>
+</head>
+
+<body>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
-  </body>
+</body>
+
 </html>

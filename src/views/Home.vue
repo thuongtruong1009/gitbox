@@ -7,7 +7,7 @@ import CPluginStatic from '../components/CPluginStatic.vue';
 
 <template>
     <div class="home-view">
-        <div class="statics bg-gradient-to-r from-[#5B79A2] to-[#2F456A] p-5">
+        <div class="statics dark:bg-[#181818] bg-gradient-to-r from-[#5B79A2] to-[#2F456A] p-5">
             <div class="flex justify-center items-start gap-3">
                 <CInforBox />
                 <CMetricsBox />

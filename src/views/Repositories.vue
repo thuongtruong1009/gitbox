@@ -39,7 +39,7 @@ const reposComputed = computed(() =>{
 
 <template>
     <CLoading v-if="store.isLoading === true" />
-    <div class="repositories_view p-5 max-w-238 mx-auto" v-if="store.isLoading === false">
+    <div class="repositories_view p-5 max-w-238 mx-auto dark:bg-black" v-if="store.isLoading === false">
         <div class="filter_tab flex justify-between items-center py-5 w-full">
             <select
                 name="filter"

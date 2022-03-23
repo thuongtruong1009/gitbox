@@ -14,7 +14,7 @@ const getStarredLength = computed(() =>{
 </script>
 
 <template>
-    <div class="metrics-box-container flex gap-2 w-auto p-1">
+    <div class="metrics-box-container flex gap-2 w-auto p-1 dark:bg-black">
         <div class="follower cell">
             <IFollower class="w-20" />
             <h2>{{store.userData.followers }}</h2>
