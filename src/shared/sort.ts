@@ -22,6 +22,7 @@ export const dateSort = (array: any[], field: any) => {
     return byDate.sort((a: any, b: any) =>  a.field - b.field);   //field: 1354412087000 =  Sat, Dec 1 2012
 }
 
+//https://www.javascripttutorial.net/array/javascript-sort-an-array-of-objects/
 
 //Sort ESCMA 2017
 // let obj = {"you": 100, "me": 75, "foo": 116, "bar": 15};
