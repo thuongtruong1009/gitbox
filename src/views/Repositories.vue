@@ -2,7 +2,7 @@
 import { userStore } from '../stores/user';
 import { computed, ref } from 'vue';
 import langColor from '../shared/lang';
-import {alphaSort, numberSort} from '../shared/sort'
+import {alphaSort} from '../shared/sort'
 import CLoading from '../components/CLoading.vue';
 import IMultiLine from '../components/icons/IMultiLine.vue';
 import ISingleLine from '../components/icons/ISingleLine.vue'
