@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { userStore } from '../stores/user';
-import langColor from '../components/shared/lang';
+import { computed, ref } from 'vue';
+import langColor from '../shared/lang';
+import {alphaSort} from '../shared/sort'
 import CLoading from '../components/CLoading.vue';
 import IMultiLine from '../components/icons/IMultiLine.vue';
 import ISingleLine from '../components/icons/ISingleLine.vue'
@@ -11,6 +13,28 @@ import IClone from '../components/icons/IClone.vue';
 import IGenerate from '../components/icons/IGenerate.vue'
 
 const store = userStore()
+
+const filterMode = ref('default')
+const reposComputed = computed(() =>{
+    if(filterMode.value === 'default'){
+        return alphaSort(store.reposData, "name");
+    }
+    else if(filterMode.value === 'most_stars'){
+        return (store.reposData.sort((a:any, b:any) => a.stargazers_count - b.stargazers_count)).reverse();
+    }
+    else if(filterMode.value === 'fewest_star'){
+        return (store.reposData.sort((a:any, b:any) => a.stargazers_count - b.stargazers_count));
+    }
+    else if(filterMode.value === 'most_fork'){
+        return (store.reposData.sort((a:any, b:any) => a.forks_count - b.forks_count)).reverse();
+    }
+    else if(filterMode.value === 'fewest_fork'){
+        return (store.reposData.sort((a:any, b:any) => a.forks_count - b.forks_count));
+    }
+    else if(filterMode.value === 'z_a'){
+        return alphaSort(store.reposData, "name").reverse();
+    }
+})
 </script>
 
 <template>
@@ -20,14 +44,14 @@ const store = userStore()
             <select
                 name="filter"
                 id="filter"
-                class="pl-3 py-2 rounded-3xl bg-[#F6F6F6] w-50 max-w-50 text-sm text-[#9595A1] cursor-pointer mr-3"
+                class="pl-3 py-2 rounded-3xl bg-[#F6F6F6] w-50 max-w-50 text-sm text-[#9595A1] cursor-pointer mr-3" v-model="filterMode"
             >
-                <option>Best matches</option>
+                <option value="default">Default matches</option>
                 <option value="most_stars">Most stars</option>
                 <option value="fewest_star">Fewest stars</option>
                 <option value="most_fork">Most forks</option>
                 <option value="fewest_fork">Fewest forks</option>
-                <option value="a_z">Alphabet A to Z</option>
+                <option value="z_a">Alphabet Z to A</option>
             </select>
             <div class="flex items-center gap-5">
                 <div class="flex gap-2 text-[#9595A1]">
@@ -53,7 +77,7 @@ const store = userStore()
         <div class="repositories_list w-full">
             <div
                 class="repo flex justify-between items-start bg-[#F6F6F6] border-1 border-solid border-light-700/50 mt-2 rounded-xl py-2 px-5"
-                v-for="repo in store.reposData"
+                v-for="repo in reposComputed"
                 :key="repo.id"
             >
                 <div class="flex">
