@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import { activityStore } from '../stores/activity'
 import { userStore } from '../stores/user';
 import CLoading from '../components/CLoading.vue';
@@ -12,6 +13,25 @@ const useActivityStore = activityStore()
 const userUserStore = userStore()
 
 const getDateItem = (date: any) => (date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds())
+
+// const typeEventColor = ref('#28A745')
+// function temp(type:any) {
+//     if (type === 'PushEvent') {
+//         typeEventColor.value = '#1AAB8B'
+//     }
+//     else if (type === 'PullRequestEvent') {
+//         typeEventColor.value = '#28A745'
+//     }
+//     else if (type === 'StarEvent') {
+//         typeEventColor.value = '#8B60ED'
+//     }
+//     else if (type === 'CreateEvent' || type === 'DeleteEvent' || type === 'IssuesEvent') {
+//         typeEventColor.value = '#F19A1A'
+//     }
+//     return typeEventColor.value
+// }
+
+// <h3 class="px-2.75 py-0.75 rounded-2xl w-max text-white text-xs font-medium flex items-center bg-[#8B60ED]" v-if="active.type === 'WatchEvent' || active.type === 'StarEvent'">{{ active.type }}</h3>
 
 </script>
 
@@ -32,8 +52,11 @@ const getDateItem = (date: any) => (date.getHours() + ':' + date.getMinutes() + 
                     <div class="bg-white p-5 mb-3 rounded-2xl">
                         <div>
                             <h3
-                                class="px-2.75 py-0.75 bg-[#28A745] rounded-2xl w-max text-white text-xs font-medium flex items-center"
+                                class="px-2.75 py-0.75 rounded-2xl w-max text-white text-xs font-medium flex items-center bg-[#28A745]" v-if="active.type === 'PullRequestEvent'"
                             >{{ active.type }}</h3>
+                            <h3 class="px-2.75 py-0.75 rounded-2xl w-max text-white text-xs font-medium flex items-center bg-[#1AAB8B]" v-if="active.type === 'PushEvent'">{{ active.type }}</h3>
+                            <h3 class="px-2.75 py-0.75 rounded-2xl w-max text-white text-xs font-medium flex items-center bg-[#F19A1A]" v-if="active.type === 'CreateEvent' || active.type === 'DeleteEvent' || active.type === 'IssuesEvent'">{{ active.type }}</h3>
+                            <h3 class="px-2.75 py-0.75 rounded-2xl w-max text-white text-xs font-medium flex items-center bg-[#8B60ED]" v-if="active.type === 'WatchEvent' || active.type === 'StarEvent'">{{ active.type }}</h3>
                             <h2 class="my-3 text-lg font-medium">
                                 <a
                                     :href="`https://github.com/${active.actor.login}`"
@@ -93,13 +116,17 @@ const getDateItem = (date: any) => (date.getHours() + ':' + date.getMinutes() + 
                     </div>
                 </div>
                 <!-- <div class="time-dot absolute top-0 rounded-full bg-[#4e5ed3] border-1 border-solid border-[#4e5ed3] w-4 h-4 -left-2 z-2"></div> -->
-               <div class="time-dot absolute top-0 -left-4 z-2 shadow-sm shadow-gray-300 bg-white rounded-full p-2.5 text-lg">
+                <div
+                    class="time-dot absolute top-0 -left-4 z-2 shadow-sm shadow-gray-300 bg-white rounded-full p-2.5 text-lg"
+                >
                     <IPush v-if="active.type === 'PushEvent'" />
                     <IPROpen v-if="active.type === 'PullRequestEvent'" />
-                    <!-- <IStar v-if="active.type === " /> -->
+                    <IStar v-if="active.type === 'StarEvent'" />
                     <IWatch v-if="active.type === 'WatchEvent'" />
-                    <IMessage v-if="active.type === 'CreateEvent' || active.type === 'DeleteEvent' || active.type === 'IssuesEvent'" />
-               </div>
+                    <IMessage
+                        v-if="active.type === 'CreateEvent' || active.type === 'DeleteEvent' || active.type === 'IssuesEvent'"
+                    />
+                </div>
                 <div
                     class="time-line absolute top-0 left-0 w-2 h-full z-1 border-l-1 border-dashed border-l-[#6CB2EB]"
                 ></div>
