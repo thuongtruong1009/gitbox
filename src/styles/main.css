@@ -47,7 +47,7 @@
     --color-text: var(--vt-c-text-dark-2);
   }
 } */
-*{
+ html{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -58,3 +58,12 @@ input, button, textarea, select, option{
     border: none;
     outline: none;
 }
+/* html {
+  font-size: 14px;
+}
+
+body {
+  background: #f6f9fc;
+  font-family: "Open Sans", sans-serif;
+  color: #525f7f;
+} */

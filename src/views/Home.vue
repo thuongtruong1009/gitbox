@@ -3,6 +3,7 @@ import CMetricsBox from '../components/CMetricsBox.vue';
 import CInforBox from '../components/CInforBox.vue'
 import CContributionsChart from '../components/CContributionsChart.vue'
 import CPluginStatic from '../components/CPluginStatic.vue';
+import CTimeLine from '../components/CTimeLine.vue';
 </script>
 
 <template>

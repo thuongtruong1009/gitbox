@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import CTimeLine from '../components/CTimeLine.vue';
+</script>
+
 <template>
-    <h1>About view</h1>
+    <CTimeLine />
 </template>
