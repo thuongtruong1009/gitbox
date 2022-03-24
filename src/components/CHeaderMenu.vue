@@ -31,6 +31,7 @@ const saveNameInput = () => {
             store.reposData = res[3]
             activities.activitiesData = res[4]
             store.isLoading = false
+            console.log(res)
         })
     }
 }

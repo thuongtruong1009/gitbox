@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import {activityStore} from '../stores/activity'
+import { userStore } from '../stores/user';
+import CLoading from '../components/CLoading.vue';
 
 const useActivityStore = activityStore()
+const userUserStore = userStore()
 
 </script>
 
 <template>
-    <div
+<CLoading v-if="userUserStore.isLoading === true" />
+    <div v-if="userUserStore.isLoading === false"
         class="activities-container flex flex-col justify-center items-center bg-[#F7F8FC] dark:bg-[#181818]"
     >
         <h1 class="my-3">Activity</h1>
@@ -18,26 +22,26 @@ const useActivityStore = activityStore()
                             class="px-2.75 py-0.75 bg-[#28A745] rounded-2xl w-max text-white text-xs font-medium flex items-center"
                         >{{ active.type }}</h3>
                         <h2 class="my-3 text-lg font-medium">
-                            <a href="#" class="text-[#3490DC]">{{ active.actor.login }}</a> {{ active.type }}
+                            <a :href="`https://github.com/${active.actor.login}`" class="text-[#3490DC]">{{ active.actor.login }}</a> {{ active.type }}
                             <a
-                                href="#"
+                                :href="`https://github.com/${active.actor.login}${active.repo.name}`"
                                 class="font-normal text-[#3490DC]"
-                            >thuongtruong1009/gitbox</a>
+                            >{{ active.repo.name }}</a>
                         </h2>
                     </div>
                     <div class="flex items-start gap-5">
                         <div>
                             <img
-                                src="https://avatars.githubusercontent.com/u/71834167?&s=72"
+                                :src="active.actor.avatar_url"
                                 alt="avatar"
-                                class="rounded-lg"
+                                class="rounded-lg w-18"
                             />
                         </div>
                         <div class="w-full">
                             <div class="flex justify-between items-start">
                                 <div>
                                     <div class="flex items-center gap-3">
-                                        <h4 class="text-md font-medium">thuongtruong1009</h4>
+                                        <h4 class="text-md font-medium">{{ active.actor.login }}</h4>
                                         <h4
                                             class="rounded-2xl text-xs text-gray-500 px-2 py-0.5 border-1 border-solid border-gray-300 bg-[#F7F7F7]"
                                         >OWNER</h4>
@@ -45,20 +49,21 @@ const useActivityStore = activityStore()
                                     <p
                                         class="text-gray-400 font-medium"
                                         style="font-size: 0.65em"
-                                    >createdAt 4 hours ago</p>
+                                    >created at {{active.created_at}}</p>
                                 </div>
                                 <div class="flex gap-2">
                                     <p v-for="i in 4" :key="i" class="rounded-md text-white font-medium py-0.5 px-2 bg-[#78F49A]" style="font-size: 0.65em">JavaScript</p>
                                 </div>
                             </div>
                             <div class="bg-[#F7F8FC] py-3 px-5 rounded-lg mt-4">
-                                <h4>feat: activities data tab</h4>
+                                <!-- <h4>{{ active.payload.commits.message }}</h4> more PR-->
+                                <h4>Oke</h4>
                             </div>
                         </div>
                     </div>
                     <p class="text-xs mt-3">
                         commit sha:
-                        <a href="" class="text-[#3490DC] underline decoration-gray-400">{{ active.payload.commits[0].sha }}</a>
+                        <a href="" class="text-[#3490DC] underline decoration-gray-400">123455</a>
                     </p>
                 </div>
                 <div class="time-dot"></div>
