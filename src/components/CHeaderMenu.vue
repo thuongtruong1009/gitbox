@@ -2,12 +2,15 @@
 import { RouterLink, RouterView } from "vue-router";
 import { onMounted, ref } from 'vue'
 import { userStore } from "../stores/user";
+import {activityStore} from "../stores/activity"
 import ILogo from "./icons/ILogo.vue"
 import ISearch from "./icons/ISearch.vue";
 
 import CDarkMode from "@/components/CDarkMode.vue"
 
 const store = userStore()
+const activities = activityStore()
+
 const getNameInput = ref('')
 const saveNameInput = () => {
     if (getNameInput.value) {
@@ -18,14 +21,17 @@ const saveNameInput = () => {
         const fetchOrgs = fetch("https://api.github.com/users/" + getNameInput.value + "/orgs").then((res) => res.json())
         const fetchStarred = fetch("https://api.github.com/users/" + getNameInput.value + "/starred").then((res) => res.json())
         const fetchRepos = fetch("https://api.github.com/users/" + getNameInput.value + "/repos").then((res) => res.json())
+        const fetchEvents = fetch("https://api.github.com/users/" + getNameInput.value + "/events/public").then((res) => res.json())
 
-        const apiData = Promise.all([fetchUser, fetchOrgs, fetchStarred, fetchRepos])
+        const apiData = Promise.all([fetchUser, fetchOrgs, fetchStarred, fetchRepos, fetchEvents])
         apiData.then((res) => {
             store.userData = res[0]
             store.orgsData = res[1]
             store.starredData = res[2]
             store.reposData = res[3]
+            activities.activitiesData = res[4]
             store.isLoading = false
+            console.log(res)
         })
     }
 }
@@ -35,7 +41,7 @@ defineProps<{ msg: string }>()
 
 <template>
     <div
-        class="header-container flex justify-between items-center bg-gradient-to-r from-[#5B79A2] to-[#2F456A] px-10 py-4 shadow-md shadow-gray-400"
+        class="header-container flex justify-between items-center bg-gradient-to-r from-[#5B79A2] to-[#2F456A] px-10 py-4 shadow-md shadow-gray-400 dark:bg-[#181818]"
     >
         <div class="logo text-white cursor-pointer flex items-end gap-2 text-2xl font-semibold">
             <ILogo />
@@ -45,6 +51,7 @@ defineProps<{ msg: string }>()
             <RouterLink to="/">Home</RouterLink>
             <RouterLink to="/repositories">Repositories</RouterLink>
             <RouterLink to="/">Users</RouterLink>
+            <RouterLink to="/activities">Activities</RouterLink>
             <RouterLink to="/about">About</RouterLink>
         </div>
         <div class="flex items-center gap-3">
