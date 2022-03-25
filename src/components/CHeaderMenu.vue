@@ -22,14 +22,16 @@ const saveNameInput = () => {
         const fetchStarred = fetch("https://api.github.com/users/" + getNameInput.value + "/starred").then((res) => res.json())
         const fetchRepos = fetch("https://api.github.com/users/" + getNameInput.value + "/repos").then((res) => res.json())
         const fetchEvents = fetch("https://api.github.com/users/" + getNameInput.value + "/events/public").then((res) => res.json())
+        const fetchFollowers = fetch("https://api.github.com/users/" + getNameInput.value + "/followers").then((res) => res.json())
 
-        const apiData = Promise.all([fetchUser, fetchOrgs, fetchStarred, fetchRepos, fetchEvents])
+        const apiData = Promise.all([fetchUser, fetchOrgs, fetchStarred, fetchRepos, fetchEvents, fetchFollowers])
         apiData.then((res) => {
             store.userData = res[0]
             store.orgsData = res[1]
             store.starredData = res[2]
             store.reposData = res[3]
             activities.activitiesData = res[4]
+            store.followersData = res[5]
             store.isLoading = false
             console.log(res)
         })
@@ -50,7 +52,7 @@ defineProps<{ msg: string }>()
         <div class="menu-tab flex gap-10 font-medium text-md text-[#98A4B5]">
             <RouterLink to="/">Home</RouterLink>
             <RouterLink to="/repositories">Repositories</RouterLink>
-            <RouterLink to="/">Users</RouterLink>
+            <RouterLink to="/users">Users</RouterLink>
             <RouterLink to="/activities">Activities</RouterLink>
             <RouterLink to="/about">About</RouterLink>
         </div>

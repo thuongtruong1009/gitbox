@@ -58,12 +58,15 @@ input, button, textarea, select, option{
     border: none;
     outline: none;
 }
-/* html {
-  font-size: 14px;
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
 }
-
-body {
-  background: #f6f9fc;
-  font-family: "Open Sans", sans-serif;
-  color: #525f7f;
-} */
+::-webkit-scrollbar,
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #F48B8A;
+  border-radius: 300px;
+}
