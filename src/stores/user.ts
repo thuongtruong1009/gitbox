@@ -11,8 +11,9 @@ export const userStore = defineStore('user', () => {
   const orgsData = reactive<any>([])
   const starredData = reactive<any>([])
   const reposData = reactive<any>([])
+  const followersData = reactive<any>([])
 
   return{
-    userName, contributions, isLoading, userData, orgsData, starredData, reposData
+    userName, contributions, isLoading, userData, orgsData, starredData, reposData, followersData
   }
 })
