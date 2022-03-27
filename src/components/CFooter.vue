@@ -1,7 +1,14 @@
+<script setup lang="ts">
+import IFork from './icons/footer/IFork.vue';
+import IStars from './icons/footer/IStar.vue';
+import IGenerate from './icons/footer/IGenerate.vue';
+
+</script>
+
 <template>
-    <footer class="footer_container">
-        <div class="footer">
-            <div class="bubbles">
+    <footer class="footer_container grid overflow-hidden min-h-60">
+        <div class="footer z-1 relative grid min-h-36">
+            <div class="bubbles absolute top-0 left-0 right-0 h-4">
                 <div
                     class="bubble"
                     style="--size:5.209669396332411rem; --distance:9.941031722875909rem; --position:78.06589163916831%; --time:3.8263551785454384s; --delay:-2.9816056091310736s;"
@@ -515,51 +522,31 @@
                     style="--size:3.18711339556802rem; --distance:6.298098135490076rem; --position:100.01665403113587%; --time:2.263972705909074s; --delay:-2.0547987992653085s;"
                 ></div>
             </div>
-            <div class="content">
-                <div>
-                    <div>
-                        <b>Eldew</b>
-                        <a href="#">Secuce</a>
-                        <a href="#">Drupand</a>
-                        <a href="#">Oceash</a>
-                        <a href="#">Ugefe</a>
-                        <a href="#">Babed</a>
-                    </div>
-                    <div>
-                        <b>Spotha</b>
-                        <a href="#">Miskasa</a>
-                        <a href="#">Agithe</a>
-                        <a href="#">Scesha</a>
-                        <a href="#">Lulle</a>
-                    </div>
-                    <div>
-                        <b>Chashakib</b>
-                        <a href="#">Chogauw</a>
-                        <a href="#">Phachuled</a>
-                        <a href="#">Tiebeft</a>
-                        <a href="#">Ocid</a>
-                        <a href="#">Izom</a>
-                        <a href="#">Ort</a>
-                    </div>
-                    <div>
-                        <b>Athod</b>
-                        <a href="#">Pamuz</a>
-                        <a href="#">Vapert</a>
-                        <a href="#">Neesk</a>
-                        <a href="#">Omemanen</a>
-                    </div>
+            <div class="content z-2 flex justify-between items-end">
+                <div class="flex justify-center p-5 gap-3 text-base font-semibold text-white">
+                    <a href="https://github.com/thuongtruong1009/gitbox/fork">
+                        <button class="btn-hover color-5">
+                            <IFork />Fork
+                        </button>
+                    </a>
+                    <a href="https://github.com/thuongtruong1009/gitbox">
+                        <button class="btn-hover color-10">
+                            <IStars />Star
+                        </button>
+                    </a>
+                    <a href="https://github.com/thuongtruong1009/gitbox/generate">
+                        <button class="btn-hover color-3">
+                            <IGenerate />Generate
+                        </button>
+                    </a>
                 </div>
-                <div>
-                    <a
-                        class="image"
-                        href="https://codepen.io/z-"
-                        target="_blank"
-                        style="background-image: url(&quot;https://s3-us-west-2.amazonaws.com/s.cdpn.io/199011/happy.svg&quot;)"
-                    ></a>
+                <div class="flex justify-center text-light-600 text-sm p-5">
                     <p>
-                        ©2022
-                        <a href="https://github.com/thuongtruong1009">thuongtruong1009</a>
-                        <span>&bull;</span>
+                        Copyright 2022
+                        <a
+                            href="https://github.com/thuongtruong1009"
+                        >© thuongtruong1009</a>
+                        <span class="text-red-500 mx-2">&bull;</span>
                         <a href="https://docs.github.com/en/rest">Github API</a> | All rights reserved.
                     </p>
                 </div>
@@ -584,28 +571,17 @@
 
 <style scoped>
 .footer_container {
-    display: grid;
     grid-template-rows: 40% 60%;
     grid-template-areas: "main" "footer";
-    overflow: hidden;
     background: #f5f7fa;
-    min-height: 42vh;
+    /* min-height: 25vh; */
     font-family: "Open Sans", sans-serif;
 }
 .footer {
-    z-index: 1;
     --footer-background: #59779f;
-    display: grid;
-    position: relative;
     grid-area: footer;
-    min-height: 9rem;
 }
 .footer .bubbles {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1rem;
     background: var(--footer-background);
     filter: url("#blob");
 }
@@ -621,44 +597,62 @@
         bubble-move var(--time, 4s) ease-in infinite var(--delay, 0s);
     transform: translate(-50%, 100%);
 }
-.footer .content {
-    z-index: 2;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-gap: 4rem;
-    padding: 2rem;
-    background: var(--footer-background);
-}
-.footer .content a,
-.footer .content p {
-    color: #f5f7fa;
-    text-decoration: none;
-}
-.footer .content b {
-    color: white;
-}
-.footer .content p {
-    margin: 0;
-    font-size: 0.75rem;
-}
-.footer .content > div {
+.btn-hover {
+    width: fit-content;
+    height: fit-content;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.5rem 2rem;
+    cursor: pointer;
+    background-size: 300% 100%;
+    moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+    z-index: 2;
+    border-radius: 0.5rem;
 }
-.footer .content > div > div {
-    margin: 0.25rem 0;
+
+.btn-hover:hover {
+    background-position: 100% 0;
+    moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
 }
-.footer .content > div > div > * {
-    margin-right: 0.5rem;
+.btn-hover.color-3 {
+    background-image: linear-gradient(
+        to right,
+        #667eea,
+        #764ba2,
+        #6b8dd6,
+        #8e37d7
+    );
+    box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);
 }
-.footer .content > div .image {
-    align-self: center;
-    width: 4rem;
-    height: 4rem;
-    margin: 0.25rem 0;
-    background-size: cover;
-    background-position: center;
+.btn-hover.color-5 {
+    background-image: linear-gradient(
+        to right,
+        #0ba360,
+        #3cba92,
+        #30dd8a,
+        #2bb673
+    );
+    box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
+}
+.btn-hover.color-10 {
+    background-image: linear-gradient(
+        to right,
+        #ed6ea0,
+        #ec8c69,
+        #f7186a,
+        #fbb03b
+    );
+    box-shadow: 0 4px 15px 0 rgba(236, 116, 149, 0.75);
+}
+.footer .content {
+    background: var(--footer-background);
 }
 
 @-webkit-keyframes bubble-size {

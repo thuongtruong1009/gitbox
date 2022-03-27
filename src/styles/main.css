@@ -59,8 +59,8 @@ input, button, textarea, select, option{
     outline: none;
 }
 ::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar,
 ::-webkit-scrollbar-track {
@@ -68,5 +68,4 @@ input, button, textarea, select, option{
 }
 ::-webkit-scrollbar-thumb {
   background: #F48B8A;
-  border-radius: 300px;
 }
