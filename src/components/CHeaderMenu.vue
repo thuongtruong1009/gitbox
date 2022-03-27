@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watchEffect } from 'vue'
 import { userStore } from "../stores/user";
-import {activityStore} from "../stores/activity"
+import { activityStore } from "../stores/activity"
 import ILogo from "./icons/ILogo.vue"
 import ISearch from "./icons/ISearch.vue";
 
@@ -17,26 +17,29 @@ const saveNameInput = () => {
         store.isLoading = true
         store.userName = getNameInput.value
 
-        const fetchUser = fetch("https://api.github.com/users/" + getNameInput.value).then((res) => res.json())
-        const fetchOrgs = fetch("https://api.github.com/users/" + getNameInput.value + "/orgs").then((res) => res.json())
-        const fetchStarred = fetch("https://api.github.com/users/" + getNameInput.value + "/starred").then((res) => res.json())
-        const fetchRepos = fetch("https://api.github.com/users/" + getNameInput.value + "/repos").then((res) => res.json())
-        const fetchEvents = fetch("https://api.github.com/users/" + getNameInput.value + "/events/public").then((res) => res.json())
-        const fetchFollowers = fetch("https://api.github.com/users/" + getNameInput.value + "/followers").then((res) => res.json())
 
-        const apiData = Promise.all([fetchUser, fetchOrgs, fetchStarred, fetchRepos, fetchEvents, fetchFollowers])
-        apiData.then((res) => {
-            store.userData = res[0]
-            store.orgsData = res[1]
-            store.starredData = res[2]
-            store.reposData = res[3]
-            activities.activitiesData = res[4]
-            store.followersData = res[5]
-            store.isLoading = false
-            console.log(res)
-        })
     }
 }
+watchEffect(async () => {
+    const fetchUser = await fetch("https://api.github.com/users/" + store.userName).then((res) => res.json())
+    const fetchOrgs = await fetch("https://api.github.com/users/" + store.userName + "/orgs").then((res) => res.json())
+    const fetchStarred = await fetch("https://api.github.com/users/" + store.userName + "/starred").then((res) => res.json())
+    const fetchRepos = await fetch("https://api.github.com/users/" + store.userName + "/repos").then((res) => res.json())
+    const fetchEvents = await fetch("https://api.github.com/users/" + store.userName + "/events/public").then((res) => res.json())
+    const fetchFollowers = await fetch("https://api.github.com/users/" + store.userName + "/followers").then((res) => res.json())
+
+    const apiData = Promise.all([fetchUser, fetchOrgs, fetchStarred, fetchRepos, fetchEvents, fetchFollowers])
+    apiData.then( async (res) => {
+        store.userData = await res[0]
+        store.orgsData = await res[1]
+        store.starredData = await res[2]
+        store.reposData = await res[3]
+        activities.activitiesData = await res[4]
+        store.followersData = await res[5]
+        store.isLoading = false
+        console.log(res)
+    })
+})
 
 defineProps<{ msg: string }>()
 </script>

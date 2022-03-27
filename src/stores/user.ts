@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { reactive, ref } from 'vue'
 
 export const userStore = defineStore('user', () => {
-  const userName = ref('')
+  const userName = ref(`${import.meta.env.VITE_API_USERNAME}`)
   const contributions = ref(2129)
 
   const isLoading = ref(false)
