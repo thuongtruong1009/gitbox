@@ -11,7 +11,7 @@ const useUserStore = userStore()
     <CLoading v-if="useUserStore.isLoading === true" />
     <div
         class="users-container p-8 flex justify-center z-0 bg-gradient-to-r from-[#5B79A2] to-[#2F456A]"
-        v-if="useUserStore.isLoading === false"
+          v-if="useUserStore.isLoading === false"
     >
         <div class="container pt-5 rounded-lg max-w-1/2">
             <div

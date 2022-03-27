@@ -117,7 +117,7 @@ const getDateItem = (date: any) => (date.getHours() + ':' + date.getMinutes() + 
                 </div>
                 <!-- <div class="time-dot absolute top-0 rounded-full bg-[#4e5ed3] border-1 border-solid border-[#4e5ed3] w-4 h-4 -left-2 z-2"></div> -->
                 <div
-                    class="time-dot absolute top-0 -left-4 z-2 shadow-sm shadow-gray-300 bg-white rounded-full p-2.5 text-lg"
+                    class="time-dot absolute top-0 -left-4.5 z-2 shadow-md shadow-gray-200 bg-white rounded-full flex justify-center items-center w-10 h-10 text-lg"
                 >
                     <IPush v-if="active.type === 'PushEvent'" />
                     <IPROpen v-if="active.type === 'PullRequestEvent'" />
