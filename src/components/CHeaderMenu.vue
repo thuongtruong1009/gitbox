@@ -16,8 +16,7 @@ const saveNameInput = () => {
     if (getNameInput.value) {
         store.isLoading = true
         store.userName = getNameInput.value
-
-
+        getNameInput.value = ''
     }
 }
 watchEffect(async () => {
@@ -37,7 +36,7 @@ watchEffect(async () => {
         activities.activitiesData = await res[4]
         store.followersData = await res[5]
         store.isLoading = false
-        console.log(res)
+        // console.log(res)
     })
 })
 

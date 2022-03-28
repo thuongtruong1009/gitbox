@@ -38,6 +38,15 @@ const reposComputed = computed(() => {
 const reposVisible = ref(3)
 const step = ref(3)
 const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVisible.value))
+
+const getTimeUpdated = (time: any) => {
+    const date = new Date(time)
+    const year = date.getFullYear().toString()
+    const month = date.getMonth().toString()
+    const day = date.getDay().toString()
+    const result = year.concat('-').concat(month).concat('-').concat(day)
+    return result
+}
 </script>
 
 <template>
@@ -78,32 +87,43 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
         </div>
         <div class="repositories_list w-full">
             <div
-                class="repo flex justify-between items-start bg-[#F6F6F6] border-1 border-solid border-light-700/50 mt-2 rounded-xl py-2 px-5"
+                class="repo relative flex justify-between items-start bg-[#FAFAFA] hover:bg-[#F6F6F6] duration-200 border-1 border-solid border-light-700/50 mt-2 rounded-xl py-2 px-5"
                 v-for="repo in reposVisibleComputed"
                 :key="repo.id"
             >
                 <div class="flex">
                     <div class="repo_action mr-3">
                         <img
-                            src="https://avatars.githubusercontent.com/u/9950313?v=4&s=52"
-                            alt="repo_img"
+                            :src="repo.owner.avatar_url"
+                            alt="repo_img" class="min-w-13 h-13 rounded-full"
                         />
                     </div>
                     <div class="repo_detail">
-                        <h2 class="text-lg text-[#328AF1] font-medium">{{ repo.name }}</h2>
+                        <a :href="repo.html_url">
+                            <h2 class="text-lg text-[#0969DA] font-medium">{{ repo.name }}</h2>
+                        </a>
                         <p class="text-sm font-medium opacity-80 my-3">{{ repo.description }}</p>
+                        <div class="flex flex-wrap gap-1 my-2">
+                            <p
+                                v-for="(topic, i) in repo.topics"
+                                :key="i"
+                                class="bg-[#DDF4FF] py-1 px-2 text-xs font-medium rounded-xl text-[#0969DA] hover:text-white hover:bg-[#0969DA] cursor-pointer"
+                            >{{ topic }}</p>
+                        </div>
                         <p class="flex text-xs font-medium text-gray-400">
-                            <span class="repo_license">{{ repo.license }}</span>
+                            <!-- <span class="repo_license">{{ repo.license.spdx_id }}</span> -->
                             <span class="mx-1.5">•</span>
-                            <span class="repo_update_time">Updated 45 minutes ago</span>
+                            <span
+                                class="repo_update_time"
+                            >Updated {{ getTimeUpdated(repo.updated_at) }}</span>
                         </p>
                     </div>
                 </div>
-                <div class="repo_option grid gap-10">
+                <div class="repo_option">
                     <div class="flex text-sm text-[#9595A1] font-medium gap-3">
                         <p class="repo_lang flex items-center gap-1">
                             <span
-                                class="lang-icon w-2 h-2 rounded-full"
+                                class="lang-icon w-2.5 h-2.5 rounded-full block"
                                 :style="{ background: langColor[repo.language] }"
                             ></span>
                             {{ repo.language }}
@@ -118,7 +138,7 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
                         </p>
                     </div>
                     <div
-                        class="flex justify-end items-end text-sm text-[#9595A1] font-medium gap-3"
+                        class="flex justify-end items-end text-sm text-[#9595A1] font-medium gap-3 absolute bottom-3 right-5"
                     >
                         <a :href="`${repo.html_url}/archive/HEAD.zip`">
                             <IDownload />
