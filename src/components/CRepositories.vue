@@ -4,13 +4,13 @@ import { computed, ref } from 'vue';
 import langColor from '../shared/lang';
 import {alphaSort} from '../shared/sort'
 import CLoading from '../components/CLoading.vue';
-import IMultiLine from '../components/icons/repos/IMultiLine.vue';
-import ISingleLine from '../components/icons/repos/ISingleLine.vue'
-import IStar from '../components/icons/repos/IStar.vue'
-import IFork from '../components/icons/repos/IFork.vue'
-import IDownload from '../components/icons/repos/IDownload.vue';
-import IClone from '../components/icons/repos/IClone.vue';
-import IGenerate from '../components/icons/repos/IGenerate.vue'
+import IMultiLine from './icons/repos/IMultiLine.vue';
+import ISingleLine from './icons/repos/ISingleLine.vue'
+import IStar from './icons/repos/IStar.vue'
+import IFork from './icons/repos/IFork.vue'
+import IDownload from './icons/repos/IDownload.vue';
+import IClone from './icons/repos/IClone.vue';
+import IGenerate from './icons/repos/IGenerate.vue'
 
 const store = userStore()
 

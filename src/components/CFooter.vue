@@ -573,7 +573,7 @@ import IGenerate from './icons/footer/IGenerate.vue';
 .footer_container {
     grid-template-rows: 40% 60%;
     grid-template-areas: "main" "footer";
-    background: #f5f7fa;
+    background: transparent;
     /* min-height: 25vh; */
     font-family: "Open Sans", sans-serif;
 }
