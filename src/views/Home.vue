@@ -4,6 +4,8 @@ import CMetricsBox from '../components/CMetricsBox.vue';
 import CInforBox from '../components/CInforBox.vue'
 import CContributionsChart from '../components/CContributionsChart.vue'
 import CPluginStatic from '../components/CPluginStatic.vue';
+import CRepositories from '../components/CRepositories.vue';
+import CActivities from '../components/CActivities.vue';
 import CTimeLine from '../components/CTimeLine.vue';
 import CLoading from '../components/CLoading.vue';
 
@@ -14,7 +16,7 @@ const useUserStore = userStore()
 <template>
     <CLoading v-if="useUserStore.isLoading === true" />
     <div class="home-view" v-if="useUserStore.isLoading === false">
-        <div class="statics dark:bg-[#181818] bg-gradient-to-r from-[#5B79A2] to-[#2F456A] p-5">
+        <div class="statics dark:bg-[#181818] bg-gradient-to-r from-[#5B79A2] to-[#2F456A] py-5">
             <div class="flex justify-center items-start gap-3">
                 <CInforBox />
                 <CMetricsBox />
@@ -26,6 +28,8 @@ const useUserStore = userStore()
                 <CPluginStatic />
             </div>
         </div>
+        <CRepositories />
+        <CActivities />
     </div>
 </template>
 

@@ -56,7 +56,7 @@ defineProps<{ msg: string }>()
             <RouterLink to="/">Home</RouterLink>
             <RouterLink to="/repositories">Repositories</RouterLink>
             <RouterLink to="/users">Users</RouterLink>
-            <RouterLink to="/activities">Activities</RouterLink>
+            <RouterLink to="/explore">Activities</RouterLink>
             <RouterLink to="/about">About</RouterLink>
         </div>
         <div class="flex items-center gap-3">

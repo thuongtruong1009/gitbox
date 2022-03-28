@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import {ref} from 'vue'
+import { computed, ref } from 'vue'
 import { userStore } from '../stores/user';
 const store = userStore()
 
-const timeJoined = ref()
+const getTimeJoined = computed(() => {
+    const dateJoin = new Date(store.userData.created_at)
+    const dateNow = new Date()
+    const diff = dateNow.getFullYear() - dateJoin.getFullYear()
+    return diff
+})
 </script>
 
 <template>
@@ -20,11 +25,11 @@ const timeJoined = ref()
                 </a>
             </div>
             <div class="text-xs text-[#98A4B5] pb-3">
-                <p>{{store.userData.bio }}</p>
+                <p>{{ store.userData.bio }}</p>
             </div>
             <div class="text-xs font-medium">
-                <p>Member since 1 year ago</p>
-                <p>{{store.userData.company}}, {{store.userData.location }}</p>
+                <p>Member since {{ getTimeJoined }} year ago</p>
+                <p>{{ store.userData.company }}, {{ store.userData.location }}</p>
             </div>
         </div>
     </div>
