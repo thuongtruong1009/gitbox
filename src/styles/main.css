@@ -58,6 +58,9 @@ input, button, textarea, select, option{
     border: none;
     outline: none;
 }
+option{
+  cursor: pointer;
+}
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
