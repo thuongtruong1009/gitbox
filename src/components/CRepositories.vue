@@ -46,6 +46,9 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
         class="repositories_view p-5 max-w-238 mx-auto dark:bg-black"
         v-if="store.isLoading === false"
     >
+        <div class="flex justify-start text-xl font-medium">
+            <h1>Repositories</h1>
+        </div>
         <div class="filter_tab flex justify-between items-center py-5 w-full">
             <select
                 name="filter"
@@ -131,8 +134,11 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
             </div>
         </div>
         <div class="loadmore-tab">
-            <button class="fill_btn" @click="reposVisible += step"
-        v-if="reposVisible < reposComputed.length">Load more...</button>
+            <button
+                class="fill_btn"
+                @click="reposVisible += step"
+                v-if="reposVisible < reposComputed.length"
+            >Load more...</button>
         </div>
     </div>
 </template>

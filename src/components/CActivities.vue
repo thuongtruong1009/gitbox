@@ -14,6 +14,8 @@ const userUserStore = userStore()
 
 const getDateItem = (date: any) => (date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds())
 
+const eventName = (type:any) => (type.replace('Event', '').toLowerCase())
+
 // const typeEventColor = ref('#28A745')
 // function temp(type:any) {
 //     if (type === 'PushEvent') {
@@ -52,17 +54,27 @@ const getDateItem = (date: any) => (date.getHours() + ':' + date.getMinutes() + 
                     <div class="bg-white p-5 mb-3 rounded-2xl">
                         <div>
                             <h3
-                                class="px-2.75 py-0.75 rounded-2xl w-max text-white text-xs font-medium flex items-center bg-[#28A745]" v-if="active.type === 'PullRequestEvent'"
-                            >{{ active.type }}</h3>
-                            <h3 class="px-2.75 py-0.75 rounded-2xl w-max text-white text-xs font-medium flex items-center bg-[#1AAB8B]" v-if="active.type === 'PushEvent'">{{ active.type }}</h3>
-                            <h3 class="px-2.75 py-0.75 rounded-2xl w-max text-white text-xs font-medium flex items-center bg-[#F19A1A]" v-if="active.type === 'CreateEvent' || active.type === 'DeleteEvent' || active.type === 'IssuesEvent'">{{ active.type }}</h3>
-                            <h3 class="px-2.75 py-0.75 rounded-2xl w-max text-white text-xs font-medium flex items-center bg-[#8B60ED]" v-if="active.type === 'WatchEvent' || active.type === 'StarEvent'">{{ active.type }}</h3>
+                                class="px-2.75 py-0.75 rounded-2xl w-max text-white text-xs font-medium flex items-center bg-[#28A745]"
+                                v-if="active.type === 'PullRequestEvent'"
+                            >{{ eventName(active.type) }}</h3>
+                            <h3
+                                class="px-2.75 py-0.75 rounded-2xl w-max text-white text-xs font-medium flex items-center bg-[#1AAB8B]"
+                                v-if="active.type === 'PushEvent'"
+                            >{{ eventName(active.type) }}</h3>
+                            <h3
+                                class="px-2.75 py-0.75 rounded-2xl w-max text-white text-xs font-medium flex items-center bg-[#F19A1A]"
+                                v-if="active.type === 'CreateEvent' || active.type === 'DeleteEvent' || active.type === 'IssuesEvent'"
+                            >{{ eventName(active.type) }}</h3>
+                            <h3
+                                class="px-2.75 py-0.75 rounded-2xl w-max text-white text-xs font-medium flex items-center bg-[#8B60ED]"
+                                v-if="active.type === 'WatchEvent' || active.type === 'StarEvent'"
+                            >{{ eventName(active.type) }}</h3>
                             <h2 class="my-3 text-lg font-medium">
                                 <a
                                     :href="`https://github.com/${active.actor.login}`"
                                     class="text-[#3490DC]"
                                 >{{ active.actor.login }}</a>
-                                {{ active.type }}
+                                {{ eventName(active.type) }}
                                 <a
                                     :href="`https://github.com/${active.actor.login}${active.repo.name}`"
                                     class="font-normal text-[#3490DC]"
