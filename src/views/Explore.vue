@@ -47,8 +47,8 @@ const reposComputed = computed(() => {
     }
 })
 
-const reposVisibleInit = ref(3)
-const step = ref(3)
+const reposVisibleInit = ref(5)
+const step = ref(5)
 const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVisibleInit.value))
 
 const getTimeUpdated = (time: any) => {
