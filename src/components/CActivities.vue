@@ -3,38 +3,49 @@ import { computed, ref } from 'vue'
 import { activityStore } from '../stores/activity'
 import { userStore } from '../stores/user';
 import CLoading from '../components/CLoading.vue';
+import ISpan from './icons/time_line/ISpan.vue'
 import IPush from './icons/time_line/IPush.vue'
 import IPROpen from './icons/time_line/IPROpen.vue';
 import IStar from './icons/time_line/IStar.vue';
 import IMessage from './icons/time_line/IMessage.vue'
 import IWatch from './icons/time_line/IWatch.vue'
 import IJoinOrg from './icons/time_line/IJoinOrg.vue';
+import IReply from './icons/time_line/IReply.vue';
 
 const useActivityStore = activityStore()
 const userUserStore = userStore()
 
 const getDateItem = (date: any) => (date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds())
 
-const eventName = (type:any) => (type.replace('Event', '').toLowerCase())
+const eventName = (type: any) => (type.replace('Event', '').toLowerCase())
 
-// const typeEventColor = ref('#28A745')
-// function temp(type:any) {
-//     if (type === 'PushEvent') {
-//         typeEventColor.value = '#1AAB8B'
-//     }
-//     else if (type === 'PullRequestEvent') {
-//         typeEventColor.value = '#28A745'
-//     }
-//     else if (type === 'StarEvent') {
-//         typeEventColor.value = '#8B60ED'
-//     }
-//     else if (type === 'CreateEvent' || type === 'DeleteEvent' || type === 'IssuesEvent') {
-//         typeEventColor.value = '#F19A1A'
-//     }
-//     return typeEventColor.value
-// }
+const refactorUrlSpan = (url:any) =>{
+    const link = url.replace('api.github.com/repos', 'github.com')
+    return link
+}
 
-// <h3 class="px-2.75 py-0.75 rounded-2xl w-max text-white text-xs font-medium flex items-center bg-[#8B60ED]" v-if="active.type === 'WatchEvent' || active.type === 'StarEvent'">{{ active.type }}</h3>
+const splitMessages = (message: any) => {
+    const split = message.split('*')
+    return split
+}
+
+const temp = (type: any) => {
+    if (type === 'PushEvent') {
+        return '#1AAB8B'
+    }
+    else if (type === 'PullRequestEvent') {
+        return '#28A745'
+    }
+    else if (type === 'StarEvent') {
+        return '#8B60ED'
+    }
+    else if (type === 'CreateEvent' || type === 'DeleteEvent' || type === 'IssuesEvent') {
+        return '#F19A1A'
+    }
+    else {
+        return '#28A745'
+    }
+}
 
 </script>
 
@@ -44,7 +55,7 @@ const eventName = (type:any) => (type.replace('Event', '').toLowerCase())
         v-if="userUserStore.isLoading === false"
         class="activities-container flex flex-col justify-center items-center bg-[#F7F8FC] dark:bg-[#181818]"
     >
-        <h1 class="my-3 bg-[#56bbe7] text-white py-2 px-7 rounded-md">Recently activities</h1>
+        <h1 class="my-3 bg-[#56bbe7] text-white py-2 px-7 rounded-md">Top 30 recently activities</h1>
         <ul class="sessions">
             <li
                 v-for="(active, index) in useActivityStore.activitiesData"
@@ -54,26 +65,15 @@ const eventName = (type:any) => (type.replace('Event', '').toLowerCase())
                 <div class="px-5 pb-5">
                     <div class="bg-white p-5 mb-3 rounded-2xl">
                         <div>
-                            <h3
-                                class="px-2.75 py-0.75 rounded-2xl w-max text-white text-xs font-medium flex items-center bg-[#28A745]"
-                                v-if="active.type === 'PullRequestEvent'"
-                            >{{ eventName(active.type) }}</h3>
-                            <h3
-                                class="px-2.75 py-0.75 rounded-2xl w-max text-white text-xs font-medium flex items-center bg-[#1AAB8B]"
-                                v-if="active.type === 'PushEvent'"
-                            >{{ eventName(active.type) }}</h3>
-                            <h3
-                                class="px-2.75 py-0.75 rounded-2xl w-max text-white text-xs font-medium flex items-center bg-[#F19A1A]"
-                                v-if="active.type === 'CreateEvent' || active.type === 'DeleteEvent' || active.type === 'IssuesEvent'"
-                            >{{ eventName(active.type) }}</h3>
-                            <h3
-                                class="px-2.75 py-0.75 rounded-2xl w-max text-white text-xs font-medium flex items-center bg-[#8B60ED]"
-                                v-if="active.type === 'WatchEvent' || active.type === 'StarEvent'"
-                            >{{ eventName(active.type) }}</h3>
-                            <h3
-                                class="px-2.75 py-0.75 rounded-2xl w-max text-white text-xs font-medium flex items-center bg-[#8B60ED]"
-                                v-if="active.type === 'MemberEvent'"
-                            >{{ eventName(active.type) }}</h3>
+                            <div class="flex justify-between">
+                                <h3
+                                    class="px-2.75 py-0.75 rounded-2xl w-max text-white text-xs font-medium flex items-center"
+                                    :class="`bg-[${temp(active.type)}]`"
+                                >{{ eventName(active.type) }}</h3>
+                                <a :href="refactorUrlSpan(active.payload.commits[0].url)" v-if="active.payload.commits">
+                                    <ISpan class="cursor-pointer text-gray-500 hover:text-gray-700" />
+                                </a>
+                            </div>
                             <h2 class="my-3 text-lg font-medium">
                                 <a
                                     :href="`https://github.com/${active.actor.login}`"
@@ -108,18 +108,27 @@ const eventName = (type:any) => (type.replace('Event', '').toLowerCase())
                                             style="font-size: 0.65em"
                                         >created at {{ getDateItem(new Date(active.created_at)) }}</p>
                                     </div>
-                                    <div class="flex gap-2" v-if="active.payload.pull_request && active.payload.pull_request.labels">
+                                    <div
+                                        class="flex gap-2"
+                                        v-if="active.payload.pull_request && active.payload.pull_request.labels"
+                                    >
                                         <p
                                             v-for="(label, i) in active.payload.pull_request.labels"
                                             :key="i"
-                                            class="rounded-md text-white font-medium py-0.5 px-2" :class="`bg-[#${label.color}]`"
+                                            class="rounded-md text-white font-medium py-0.5 px-2"
+                                            :class="`bg-[#${label.color}]`"
                                             style="font-size: 0.65em"
-                                        >{{label.name}}</p>
+                                        >{{ label.name }}</p>
                                     </div>
                                 </div>
-                                <div class="bg-[#F7F8FC] py-3 px-5 rounded-lg mt-4" v-if="active.payload.commits">
-                                    <!-- <h4>{{ active.payload.commits.message }}</h4> more PR -->
-                                    <h4>{{active.payload.commits[0].message}}</h4>
+                                <div class="mt-4" v-if="active.payload.commits">
+                                    <ul
+                                        v-for="(message, i) in splitMessages(active.payload.commits[0].message)"
+                                        :key="i"
+                                        class="first:bg-[#F7F8FC] first:py-3 py-1 px-5 rounded-lg mt-2 not-first:list-circle list-inside text-sm text-black font-medium"
+                                    >
+                                        <li>{{ message }}</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -128,7 +137,7 @@ const eventName = (type:any) => (type.replace('Event', '').toLowerCase())
                             <a
                                 href="#"
                                 class="text-[#3490DC] underline decoration-gray-400"
-                            >{{active.payload.commits[0].sha}}</a>
+                            >{{ active.payload.commits[0].sha }}</a>
                         </p>
                     </div>
                 </div>
@@ -138,9 +147,12 @@ const eventName = (type:any) => (type.replace('Event', '').toLowerCase())
                     <IPush v-if="active.type === 'PushEvent'" />
                     <IPROpen v-if="active.type === 'PullRequestEvent'" />
                     <IStar v-if="active.type === 'WatchEvent'" />
-                    <IWatch v-if="active.type === 'PullRequestReviewEvent' || active.type === 'PullRequestReviewCommentEvent'" />
+                    <IWatch v-if="active.type === 'PullRequestReviewEvent'" />
                     <IMessage
-                        v-if="active.type === 'CreateEvent' || active.type === 'DeleteEvent' || active.type === 'IssuesEvent' || active.type === 'IssueCommentEvent'"
+                        v-if="active.type === 'CreateEvent' || active.type === 'DeleteEvent' || active.type === 'IssuesEvent'"
+                    />
+                    <IReply
+                        v-if="active.type === 'IssueCommentEvent' || active.type === 'PullRequestReviewCommentEvent'"
                     />
                     <IJoinOrg v-if="active.type === 'MemberEvent'" />
                 </div>
