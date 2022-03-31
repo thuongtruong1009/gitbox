@@ -30,6 +30,11 @@ Setup dependencies
 ```script
 npm install
 ```
+Preview at local
+```bash
+ # create .env.local
+VITE_API_USERNAME=<somethings>
+```
 Compiles and hot-reloads for development
 ```script
 npm run dev
