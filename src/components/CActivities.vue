@@ -8,6 +8,7 @@ import IPROpen from './icons/time_line/IPROpen.vue';
 import IStar from './icons/time_line/IStar.vue';
 import IMessage from './icons/time_line/IMessage.vue'
 import IWatch from './icons/time_line/IWatch.vue'
+import IJoinOrg from './icons/time_line/IJoinOrg.vue';
 
 const useActivityStore = activityStore()
 const userUserStore = userStore()
@@ -46,8 +47,8 @@ const eventName = (type:any) => (type.replace('Event', '').toLowerCase())
         <h1 class="my-3 bg-[#56bbe7] text-white py-2 px-7 rounded-md">Recently activities</h1>
         <ul class="sessions">
             <li
-                v-for="(active, i) in useActivityStore.activitiesData"
-                :key="i"
+                v-for="(active, index) in useActivityStore.activitiesData"
+                :key="index"
                 class="activity-item relative pl-5 w-276"
             >
                 <div class="px-5 pb-5">
@@ -68,6 +69,10 @@ const eventName = (type:any) => (type.replace('Event', '').toLowerCase())
                             <h3
                                 class="px-2.75 py-0.75 rounded-2xl w-max text-white text-xs font-medium flex items-center bg-[#8B60ED]"
                                 v-if="active.type === 'WatchEvent' || active.type === 'StarEvent'"
+                            >{{ eventName(active.type) }}</h3>
+                            <h3
+                                class="px-2.75 py-0.75 rounded-2xl w-max text-white text-xs font-medium flex items-center bg-[#8B60ED]"
+                                v-if="active.type === 'MemberEvent'"
                             >{{ eventName(active.type) }}</h3>
                             <h2 class="my-3 text-lg font-medium">
                                 <a
@@ -103,41 +108,41 @@ const eventName = (type:any) => (type.replace('Event', '').toLowerCase())
                                             style="font-size: 0.65em"
                                         >created at {{ getDateItem(new Date(active.created_at)) }}</p>
                                     </div>
-                                    <div class="flex gap-2">
+                                    <div class="flex gap-2" v-if="active.payload.pull_request && active.payload.pull_request.labels">
                                         <p
-                                            v-for="i in 4"
+                                            v-for="(label, i) in active.payload.pull_request.labels"
                                             :key="i"
-                                            class="rounded-md text-white font-medium py-0.5 px-2 bg-[#78F49A]"
+                                            class="rounded-md text-white font-medium py-0.5 px-2" :class="`bg-[#${label.color}]`"
                                             style="font-size: 0.65em"
-                                        >JavaScript</p>
+                                        >{{label.name}}</p>
                                     </div>
                                 </div>
-                                <div class="bg-[#F7F8FC] py-3 px-5 rounded-lg mt-4">
-                                    <!-- <h4>{{ active.payload.commits.message }}</h4> more PR-->
-                                    <h4>Oke</h4>
+                                <div class="bg-[#F7F8FC] py-3 px-5 rounded-lg mt-4" v-if="active.payload.commits">
+                                    <!-- <h4>{{ active.payload.commits.message }}</h4> more PR -->
+                                    <h4>{{active.payload.commits[0].message}}</h4>
                                 </div>
                             </div>
                         </div>
-                        <p class="text-xs mt-3">
+                        <p class="text-xs mt-3" v-if="active.payload.commits">
                             commit sha:
                             <a
                                 href="#"
                                 class="text-[#3490DC] underline decoration-gray-400"
-                            >123455</a>
+                            >{{active.payload.commits[0].sha}}</a>
                         </p>
                     </div>
                 </div>
-                <!-- <div class="time-dot absolute top-0 rounded-full bg-[#4e5ed3] border-1 border-solid border-[#4e5ed3] w-4 h-4 -left-2 z-2"></div> -->
                 <div
                     class="time-dot absolute top-0 -left-4.5 z-2 shadow-md shadow-gray-200 bg-white rounded-full flex justify-center items-center w-10 h-10 text-lg"
                 >
                     <IPush v-if="active.type === 'PushEvent'" />
                     <IPROpen v-if="active.type === 'PullRequestEvent'" />
-                    <IStar v-if="active.type === 'StarEvent'" />
-                    <IWatch v-if="active.type === 'WatchEvent'" />
+                    <IStar v-if="active.type === 'WatchEvent'" />
+                    <IWatch v-if="active.type === 'PullRequestReviewEvent' || active.type === 'PullRequestReviewCommentEvent'" />
                     <IMessage
-                        v-if="active.type === 'CreateEvent' || active.type === 'DeleteEvent' || active.type === 'IssuesEvent'"
+                        v-if="active.type === 'CreateEvent' || active.type === 'DeleteEvent' || active.type === 'IssuesEvent' || active.type === 'IssueCommentEvent'"
                     />
+                    <IJoinOrg v-if="active.type === 'MemberEvent'" />
                 </div>
                 <div
                     class="time-line absolute top-0 left-0 w-2 h-full z-1 border-l-1 border-dashed border-l-[#6CB2EB]"
@@ -146,9 +151,3 @@ const eventName = (type:any) => (type.replace('Event', '').toLowerCase())
         </ul>
     </div>
 </template>
-
-<style scoped>
-/* .time-table {
-    font-family: "Poppins", sans-serif;
-} */
-</style>
