@@ -21,35 +21,33 @@ const getDateItem = (date: any) => (date.getHours() + ':' + date.getMinutes() + 
 
 const eventName = (type: any) => (type.replace('Event', '').toLowerCase())
 
-const refactorUrlSpan = (url:any) =>{
+const refactorUrlSpan = (url: any) => {
     const link = url.replace('api.github.com/repos', 'github.com')
     return link
 }
 
 const splitMessages = (message: any) => message.split("*")
 
-const temp = (type: any) => {
-    if (type === "PushEvent") {
-        return "#1AAB8B"
+const temp = (type: string) => {
+    if (type === 'PushEvent') {
+        return '#1AAB8B'
     }
-    else if (type === "PullRequestEvent") {
-        return "#28A745"
+    if (type === 'PullRequestEvent') {
+        return '#28A745'
     }
-    else if (type === "WatchEvent") {
-        return "#8B60ED"
+    if (type === 'WatchEvent' || type === 'StarEvent') {
+        return '#8B60ED'
     }
-    else if (type === "CreateEvent" || type === "IssuesEvent") {
-        return "#F19A1A"
+    if (type === 'CreateEvent' || type === 'IssuesEvent') {
+        return '#F19A1A'
     }
-    else if(type === "DeleteEvent"){
+    if (type === "DeleteEvent") {
         return "#EC454F"
     }
-    else if(type === "ReleaseEvent"){
-        return "#8795A1"
+    if (type === 'ReleaseEvent') {
+        return '#8795A1'
     }
-    else {
-        return "#28A745"
-    }
+    return '#28A745'
 }
 
 </script>
@@ -73,10 +71,15 @@ const temp = (type: any) => {
                             <div class="flex justify-between">
                                 <h3
                                     class="px-2.75 py-0.75 rounded-2xl w-max text-white text-xs font-medium flex items-center"
-                                    :class="`bg-[${temp(active.type.toString())}]`"
+                                    :class="`bg-[${temp(active.type)}]`"
                                 >{{ eventName(active.type) }}</h3>
-                                <a :href="refactorUrlSpan(active.payload.commits[0].url)" v-if="active.payload.commits">
-                                    <ISpan class="cursor-pointer text-gray-500 hover:text-gray-700" />
+                                <a
+                                    :href="refactorUrlSpan(active.payload.commits[0].url)"
+                                    v-if="active.payload.commits"
+                                >
+                                    <ISpan
+                                        class="cursor-pointer text-gray-500 hover:text-gray-700"
+                                    />
                                 </a>
                             </div>
                             <h2 class="my-3 text-lg font-medium">
@@ -140,7 +143,7 @@ const temp = (type: any) => {
                                         class="first:bg-[#F7F8FC] first:text-red-500 py-1 px-5 rounded-lg mt-2 not-first:list-circle list-inside text-sm text-black font-medium"
                                     >
                                         <li>{{ commit.message }}</li>
-                                    </ul> -->
+                                    </ul>-->
                                 </div>
                             </div>
                         </div>

@@ -66,7 +66,7 @@ defineProps<{ msg: string }>()
                 type="text"
                 v-model="getNameInput"
                 placeholder="Generate your metrics..."
-                class="px-5 text-white rounded-3xl bg-white/10 my-0.5 w-70 max-w-70"
+                class="px-5 py-2 text-white rounded-3xl bg-white/10 my-0.5 w-70 max-w-70"
                 @click="saveNameInput"
                 @keyup.enter="saveNameInput"
             />
