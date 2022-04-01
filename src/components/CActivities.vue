@@ -11,6 +11,8 @@ import IMessage from './icons/time_line/IMessage.vue'
 import IWatch from './icons/time_line/IWatch.vue'
 import IJoinOrg from './icons/time_line/IJoinOrg.vue';
 import IReply from './icons/time_line/IReply.vue';
+import IRelease from './icons/time_line/IRelease.vue';
+import ILPush from './icons/time_line/label_type/ILPush.vue';
 
 const useActivityStore = activityStore()
 const userUserStore = userStore()
@@ -24,26 +26,29 @@ const refactorUrlSpan = (url:any) =>{
     return link
 }
 
-const splitMessages = (message: any) => {
-    const split = message.split('*')
-    return split
-}
+const splitMessages = (message: any) => message.split("*")
 
 const temp = (type: any) => {
-    if (type === 'PushEvent') {
-        return '#1AAB8B'
+    if (type === "PushEvent") {
+        return "#1AAB8B"
     }
-    else if (type === 'PullRequestEvent') {
-        return '#28A745'
+    else if (type === "PullRequestEvent") {
+        return "#28A745"
     }
-    else if (type === 'StarEvent') {
-        return '#8B60ED'
+    else if (type === "WatchEvent") {
+        return "#8B60ED"
     }
-    else if (type === 'CreateEvent' || type === 'DeleteEvent' || type === 'IssuesEvent') {
-        return '#F19A1A'
+    else if (type === "CreateEvent" || type === "IssuesEvent") {
+        return "#F19A1A"
+    }
+    else if(type === "DeleteEvent"){
+        return "#EC454F"
+    }
+    else if(type === "ReleaseEvent"){
+        return "#8795A1"
     }
     else {
-        return '#28A745'
+        return "#28A745"
     }
 }
 
@@ -68,7 +73,7 @@ const temp = (type: any) => {
                             <div class="flex justify-between">
                                 <h3
                                     class="px-2.75 py-0.75 rounded-2xl w-max text-white text-xs font-medium flex items-center"
-                                    :class="`bg-[${temp(active.type)}]`"
+                                    :class="`bg-[${temp(active.type.toString())}]`"
                                 >{{ eventName(active.type) }}</h3>
                                 <a :href="refactorUrlSpan(active.payload.commits[0].url)" v-if="active.payload.commits">
                                     <ISpan class="cursor-pointer text-gray-500 hover:text-gray-700" />
@@ -110,7 +115,7 @@ const temp = (type: any) => {
                                     </div>
                                     <div
                                         class="flex gap-2"
-                                        v-if="active.payload.pull_request && active.payload.pull_request.labels"
+                                        v-if="active.payload.pull_request && active.payload.pull_request.labels[0]"
                                     >
                                         <p
                                             v-for="(label, i) in active.payload.pull_request.labels"
@@ -125,10 +130,17 @@ const temp = (type: any) => {
                                     <ul
                                         v-for="(message, i) in splitMessages(active.payload.commits[0].message)"
                                         :key="i"
-                                        class="first:bg-[#F7F8FC] first:py-3 py-1 px-5 rounded-lg mt-2 not-first:list-circle list-inside text-sm text-black font-medium"
+                                        class="first:bg-[#F7F8FC] first:py-3 first:text-red-500 py-1 px-5 rounded-lg mt-2 not-first:list-circle list-inside text-sm text-black font-medium"
                                     >
                                         <li>{{ message }}</li>
                                     </ul>
+                                    <!-- <ul
+                                        v-for="(commit, i) in splitMessages(active.payload.commits[0])"
+                                        :key="i"
+                                        class="first:bg-[#F7F8FC] first:text-red-500 py-1 px-5 rounded-lg mt-2 not-first:list-circle list-inside text-sm text-black font-medium"
+                                    >
+                                        <li>{{ commit.message }}</li>
+                                    </ul> -->
                                 </div>
                             </div>
                         </div>
@@ -155,6 +167,7 @@ const temp = (type: any) => {
                         v-if="active.type === 'IssueCommentEvent' || active.type === 'PullRequestReviewCommentEvent'"
                     />
                     <IJoinOrg v-if="active.type === 'MemberEvent'" />
+                    <IRelease v-if="active.type === 'ReleaseEvent'" />
                 </div>
                 <div
                     class="time-line absolute top-0 left-0 w-2 h-full z-1 border-l-1 border-dashed border-l-[#6CB2EB]"

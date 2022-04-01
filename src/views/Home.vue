@@ -3,7 +3,7 @@ import { userStore } from '../stores/user';
 import CMetricsBox from '../components/CMetricsBox.vue';
 import CInforBox from '../components/CInforBox.vue'
 import CContributionsChart from '../components/CContributionsChart.vue'
-import CPluginStatic from '../components/CPluginStatic.vue';
+import CGraphActivities from '../components/CGraphActivities.vue';
 import CRepositories from '../components/CRepositories.vue';
 import CActivities from '../components/CActivities.vue';
 import CTimeLine from '../components/CTimeLine.vue';
@@ -25,7 +25,7 @@ const useUserStore = userStore()
                 <CContributionsChart />
             </div>
             <div class="flex justify-center px-5">
-                <CPluginStatic />
+                <CGraphActivities />
             </div>
         </div>
         <CRepositories />

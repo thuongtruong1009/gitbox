@@ -36,6 +36,9 @@ watchEffect(async () => {
         activities.activitiesData = await res[4]
         store.followersData = await res[5]
         store.isLoading = false
+        // setTimeout(()=>{
+        //     store.isLoading = false
+        // }, 2000);
         // console.log(res)
     })
 })
