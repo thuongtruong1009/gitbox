@@ -15,22 +15,22 @@ const getStarredLength = computed(() =>{
 
 <template>
     <div class="metrics-box-container flex gap-2 w-auto p-1 dark:bg-black">
-        <div class="follower cell">
+        <div class="follower cell bg-[#3B5275] dark:bg-white/30">
             <IFollower class="w-20" />
             <h2>{{store.userData.followers }}</h2>
             <p>follower</p>
         </div>
-         <div class="follower cell">
+         <div class="follower cell bg-[#34496A] dark:bg-white/30">
             <IRepos class="w-20" />
             <h2>{{store.userData.following }}</h2>
             <p>following</p>
         </div>
-         <div class="follower cell">
+         <div class="follower cell bg-[#304464] dark:bg-white/30">
             <IStars class="w-20 my-3" />
             <h2>{{getStarredLength}}</h2>
             <p>stars</p>
         </div>
-         <div class="follower cell">
+         <div class="follower cell bg-[#2B3F5F] dark:bg-white/30">
             <IRepos class="w-20" />
             <h2>{{store.userData.public_repos }}</h2>
             <p>repos</p>
@@ -52,18 +52,18 @@ const getStarredLength = computed(() =>{
     box-shadow: 2px 2px 4px rgb(75, 75, 75);
     cursor: pointer;
 }
-.cell:nth-child(1){
+/* .cell:nth-child(1){
     background: #3B5275;
-}
-.cell:nth-child(2){
+} */
+/* .cell:nth-child(2){
     background: #34496A;
-}
-.cell:nth-child(3){
+} */
+/* .cell:nth-child(3){
     background: #304464;
-}
-.cell:nth-child(4){
+} */
+/* .cell:nth-child(4){
     background: #2B3F5F;
-}
+} */
 .cell:hover{
     background: #3B5172;
 }

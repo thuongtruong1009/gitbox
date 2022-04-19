@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { userStore } from '../stores/user';
 import { exploreStore } from '../stores/explore'
-import { computed, reactive, ref, watchEffect } from 'vue';
+import { computed, onMounted, reactive, ref, watchEffect } from 'vue';
 import langColor from '../shared/lang';
 import { alphaSort } from '../shared/sort'
 import CLoading from '../components/CLoading.vue';
@@ -12,38 +12,51 @@ import IFork from '../components/icons/repos/IFork.vue'
 import IDownload from '../components/icons/repos/IDownload.vue';
 import IClone from '../components/icons/repos/IClone.vue';
 import IGenerate from '../components/icons/repos/IGenerate.vue'
+import ISearch from '../components/icons/ISearch.vue';
 
-const useExploreStore = exploreStore()
-const queryInput = reactive({
-    q:  "tetris"
-})
+const useExploreStore = exploreStore();
+const queryInput = ref<any>("tetris");
+const q = ref<any>("tetris");
+
+const search = () => {
+    if (queryInput.value !== "") {
+        q.value = queryInput.value;
+    }
+    queryInput.value = ""
+}
+const vFocus = {
+  mounted: (el) => el.focus()
+}
+
 watchEffect(() => {
-    const fetchExplore = fetch(`https://api.github.com/search/repositories?q=${queryInput.q}+language:assembly&sort=stars&order=desc`).then(res => res.json()).then(data => {
+    const fetchExplore = fetch(`https://api.github.com/search/repositories?q=${q.value}+language:assembly&sort=stars&order=desc`).then(res => res.json()).then(data => {
         useExploreStore.reposTrending = data
-        //console.log(data)
     })
 })
+
 const store = userStore()
 
 const filterMode = ref('default')
 const reposComputed = computed(() => {
-    if (filterMode.value === 'default') {
-        return alphaSort(useExploreStore.reposTrending.items, "name");
-    }
-    else if (filterMode.value === 'most_stars') {
-        return (useExploreStore.reposTrending.items.sort((a: any, b: any) => a.stargazers_count - b.stargazers_count)).reverse();
-    }
-    else if (filterMode.value === 'fewest_star') {
-        return (useExploreStore.reposTrending.items.sort((a: any, b: any) => a.stargazers_count - b.stargazers_count));
-    }
-    else if (filterMode.value === 'most_fork') {
-        return (useExploreStore.reposTrending.items.sort((a: any, b: any) => a.forks_count - b.forks_count)).reverse();
-    }
-    else if (filterMode.value === 'fewest_fork') {
-        return (useExploreStore.reposTrending.items.sort((a: any, b: any) => a.forks_count - b.forks_count));
-    }
-    else if (filterMode.value === 'z_a') {
-        return alphaSort(useExploreStore.reposTrending.items, "name").reverse();
+    switch (filterMode.value) {
+        case 'most_stars':
+            return (useExploreStore.reposTrending.items.sort((a: any, b: any) => a.stargazers_count - b.stargazers_count)).reverse();
+            break;
+        case 'fewest_star':
+            return (useExploreStore.reposTrending.items.sort((a: any, b: any) => a.stargazers_count - b.stargazers_count));
+            break;
+        case 'most_fork':
+            return (useExploreStore.reposTrending.items.sort((a: any, b: any) => a.forks_count - b.forks_count)).reverse();
+            break;
+        case 'fewest_fork':
+            return (useExploreStore.reposTrending.items.sort((a: any, b: any) => a.forks_count - b.forks_count));
+            break;
+        case 'z_a':
+            return alphaSort(useExploreStore.reposTrending.items, "name").reverse();
+            break;
+        default:
+            return alphaSort(useExploreStore.reposTrending.items, "name");
+            break;
     }
 })
 
@@ -64,20 +77,14 @@ const getTimeUpdated = (time: any) => {
 
 <template>
     <CLoading v-if="store.isLoading === true" />
-    <div
-        class="repositories_view p-5 max-w-238 mx-auto dark:bg-black"
-        v-if="store.isLoading === false"
-    >
+    <div class="repositories_view p-5 max-w-238 mx-auto dark:bg-black" v-if="store.isLoading === false">
         <div class="flex justify-start text-xl font-medium">
             <h1>Repositories</h1>
         </div>
         <div class="filter_tab flex justify-between items-center py-5 w-full">
-            <select
-                name="filter"
-                id="filter"
+            <select name="filter" id="filter"
                 class="pl-3 py-2 rounded-3xl bg-[#F6F6F6] w-50 max-w-50 text-sm text-[#9595A1] cursor-pointer mr-3"
-                v-model="filterMode"
-            >
+                v-model="filterMode">
                 <option value="default">Default matches</option>
                 <option value="most_stars">Most stars</option>
                 <option value="fewest_star">Fewest stars</option>
@@ -85,39 +92,23 @@ const getTimeUpdated = (time: any) => {
                 <option value="fewest_fork">Fewest forks</option>
                 <option value="z_a">Alphabet Z to A</option>
             </select>
-           <div class="flex items-center gap-5">
-                <div class="flex gap-2 text-[#9595A1]">
-                    <div
-                        class="rounded-lg active:bg-[#F6F6F6] cursor-pointer flex justify-center items-center w-9 h-9"
-                    >
-                        <ISingleLine />
-                    </div>
-                    <div
-                        class="rounded-lg bg-[#F6F6F6] cursor-pointer flex justify-center items-center w-9 h-9"
-                    >
-                        <IMultiLine />
-                    </div>
+            <div class="flex items-center gap-5">
+
+                <input type="text" name="search_repos" id="search_repos"
+                    class="px-5 rounded-3xl bg-[#F6F6F6] my-0.5 w-70 max-w-70" v-model="queryInput" v-focus 
+                    @keyup.enter="search" />
+                <div class="rounded-lg bg-[#F6F6F6] cursor-pointer flex justify-center items-center w-10 h-10 text-[#9595A1] hover:text-black"
+                    @click="search">
+                    <ISearch />
                 </div>
-                <input
-                    type="text"
-                    name="search_repos"
-                    id="search_repos"
-                    class="px-5 rounded-3xl bg-[#F6F6F6] my-0.5 w-70 max-w-70" v-model="queryInput.q"
-                />
             </div>
         </div>
         <div class="repositories_list w-full">
-            <div
-                class="repo relative flex justify-between items-start bg-[#FAFAFA] hover:bg-[#F6F6F6] duration-200 border-1 border-solid border-light-700/50 mt-2 rounded-xl py-2 px-5"
-                v-for="trending in reposVisibleComputed"
-                :key="trending.id"
-            >
+            <div class="repo relative flex justify-between items-start bg-[#FAFAFA] hover:bg-[#F6F6F6] duration-200 border-1 border-solid border-light-700/50 mt-2 rounded-xl py-2 px-5"
+                v-for="trending in reposVisibleComputed" :key="trending.id">
                 <div class="flex">
                     <div class="repo_action mr-3">
-                        <img
-                            :src="trending.owner.avatar_url"
-                            alt="repo_img" class="min-w-13 h-13 rounded-full"
-                        />
+                        <img :src="trending.owner.avatar_url" alt="repo_img" class="min-w-13 h-13 rounded-full" />
                     </div>
                     <div class="repo_detail">
                         <a :href="trending.html_url">
@@ -125,28 +116,22 @@ const getTimeUpdated = (time: any) => {
                         </a>
                         <p class="text-sm font-medium opacity-80 my-3">{{ trending.description }}</p>
                         <div class="flex flex-wrap gap-1 my-2">
-                            <p
-                                v-for="(topic, i) in trending.topics"
-                                :key="i"
-                                class="bg-[#DDF4FF] py-1 px-2 text-xs font-medium rounded-xl text-[#0969DA] hover:text-white hover:bg-[#0969DA] cursor-pointer"
-                            >{{ topic }}</p>
+                            <p v-for="(topic, i) in trending.topics" :key="i"
+                                class="bg-[#DDF4FF] py-1 px-2 text-xs font-medium rounded-xl text-[#0969DA] hover:text-white hover:bg-[#0969DA] cursor-pointer">
+                                {{ topic }}</p>
                         </div>
                         <p class="flex text-xs font-medium text-gray-400">
                             <!-- <span class="repo_license">{{ repo.license.spdx_id }}</span> -->
                             <span class="mx-1.5">•</span>
-                            <span
-                                class="repo_update_time"
-                            >Updated {{ getTimeUpdated(trending.updated_at) }}</span>
+                            <span class="repo_update_time">Updated {{ getTimeUpdated(trending.updated_at) }}</span>
                         </p>
                     </div>
                 </div>
                 <div class="repo_option">
                     <div class="flex text-sm text-[#9595A1] font-medium gap-3">
                         <p class="repo_lang flex items-center gap-1">
-                            <span
-                                class="lang-icon w-2.5 h-2.5 rounded-full block"
-                                :style="{ background: langColor[trending.language] }"
-                            ></span>
+                            <span class="lang-icon w-2.5 h-2.5 rounded-full block"
+                                :style="{ background: langColor[trending.language] }"></span>
                             {{ trending.language }}
                         </p>
                         <p class="repo_star flex items-start gap-0.5">
@@ -159,8 +144,7 @@ const getTimeUpdated = (time: any) => {
                         </p>
                     </div>
                     <div
-                        class="flex justify-end items-end text-sm text-[#9595A1] font-medium gap-3 absolute bottom-3 right-5"
-                    >
+                        class="flex justify-end items-end text-sm text-[#9595A1] font-medium gap-3 absolute bottom-3 right-5">
                         <a :href="`${trending.html_url}/archive/HEAD.zip`">
                             <IDownload />
                         </a>
@@ -175,11 +159,8 @@ const getTimeUpdated = (time: any) => {
             </div>
         </div>
         <div class="loadmore-tab">
-            <button
-                class="fill_btn"
-                @click="reposVisibleInit += step"
-                v-if="reposVisibleInit < useExploreStore.reposTrending.items.length"
-            >Load more...</button>
+            <button class="fill_btn" @click="reposVisibleInit += step"
+                v-if="reposVisibleInit < useExploreStore.reposTrending.items.length">Load more...</button>
         </div>
     </div>
 </template>
@@ -196,6 +177,7 @@ const getTimeUpdated = (time: any) => {
     transition: 0.25s;
     border-radius: 0.5em;
 }
+
 .fill_btn:hover {
     border-color: #cb72aa;
     color: #fff;

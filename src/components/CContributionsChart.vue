@@ -4,7 +4,7 @@ const store = userStore()
 </script>
 
 <template>
-    <div class="contributions-chart bg-white text-black p-5 rounded-lg max-w-225 w-225">
+    <div class="contributions-chart bg-white dark:bg-[#181818] dark:text-light-200 text-black p-5 rounded-lg max-w-225 w-225">
         <div class="text-center text-md font-medium">
             <h2>{{store.contributions}} contributions in the last year</h2>
         </div>

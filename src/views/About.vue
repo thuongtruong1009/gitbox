@@ -1,18 +1,12 @@
 <template>
-    <div class="about-view-container relative min-h-screen dark:bg-black">
+    <div class="about-view-container min-h-screen dark:bg-black">
         About
     </div>
 </template>
 
 <style scoped>
-.about-view-container:before{
-    content: '';
-    position: absolute;
+.about-view-container{
     background: linear-gradient(to bottom, rgba(50, 150, 100, 0.4), rgba(0, 0, 100, 0));
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
 }
 /* .about-view-container:before {
   content: '';

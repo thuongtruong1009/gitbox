@@ -22,14 +22,18 @@ window.addEventListener('scroll', scrollFunction)
 </script>
 
 <template>
-  <Transition name="bounce">
-    <div v-if="isScroll" id="fcircle" class="fixed z-30 w-10 h-10 bottom-10 right-5 bg-[#F48B8A] hover:bg-[#FF5252] text-white rounded-full border shadow-md shadow-gray-400 flex justify-center items-center cursor-pointer" @click="scrollToTop">
-      <ITop />
-    </div>
-  </Transition>
-  <CHeaderMenu msg="Gitbox"/>
-  <RouterView />
-  <CFooter />
+  <div class="relative dark:bg-[#181818]">
+    <Transition name="bounce">
+      <div v-if="isScroll" id="fcircle"
+        class="fixed z-30 w-10 h-10 bottom-10 right-5 bg-[#F48B8A] hover:bg-[#FF5252] text-white rounded-full border shadow-md shadow-gray-400 flex justify-center items-center cursor-pointer"
+        @click="scrollToTop">
+        <ITop />
+      </div>
+    </Transition>
+    <CHeaderMenu msg="Gitbox" />
+    <RouterView />
+    <CFooter />
+  </div>
 </template>
 
 <style>
@@ -37,23 +41,35 @@ window.addEventListener('scroll', scrollFunction)
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* background: #F7F8FC; */
+  position: relative;
+}
+#app::before{
+  content: '';
+  position: absolute;
   background-image: linear-gradient(to left, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 .bounce-enter-active {
   animation: bounce-in 0.5s;
 }
+
 .bounce-leave-active {
   animation: bounce-in 0.5s reverse;
 }
+
 @keyframes bounce-in {
   0% {
     transform: scale(0);
     transform: translateY(2rem);
   }
+
   50% {
     transform: scale(1.25);
   }
+
   100% {
     transform: scale(1);
     transform: translateY(0);

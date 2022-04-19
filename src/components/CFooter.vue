@@ -6,7 +6,7 @@ import IGenerate from './icons/footer/IGenerate.vue';
 </script>
 
 <template>
-    <footer class="footer_container grid overflow-hidden min-h-60 dark:bg-black">
+    <footer class="footer_container grid overflow-hidden min-h-60">
         <div class="footer z-1 relative grid min-h-36">
             <div class="bubbles absolute top-0 left-0 right-0 h-4">
                 <div

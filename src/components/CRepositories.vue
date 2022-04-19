@@ -54,7 +54,7 @@ const getTimeUpdated = (time: any) => {
 <template>
     <CLoading v-if="store.isLoading === true" />
     <div
-        class="repositories_view p-5 max-w-238 mx-auto dark:bg-black"
+        class="repositories_view p-5 max-w-238 mx-auto"
         v-if="store.isLoading === false"
     >
         <div class="flex justify-start text-xl font-medium">
@@ -67,7 +67,7 @@ const getTimeUpdated = (time: any) => {
                 class="pl-3 py-2 rounded-3xl bg-[#F6F6F6] w-50 max-w-50 text-sm text-[#9595A1] cursor-pointer mr-3"
                 v-model="filterMode"
             >
-                <option value="default">Default matches</option>
+                <option value="default" class="accent-green-500/50">Default matches</option>
                 <option value="most_stars">Most stars</option>
                 <option value="fewest_star">Fewest stars</option>
                 <option value="most_fork">Most forks</option>

@@ -16,15 +16,15 @@ const useUserStore = userStore()
 <template>
     <CLoading v-if="useUserStore.isLoading === true" />
     <div class="home-view" v-if="useUserStore.isLoading === false">
-        <div class="statics relative dark:bg-[#181818] bg-gradient-to-r from-[#5B79A2] to-[#2F456A] py-5">
-            <div class="flex justify-center items-start gap-3">
+        <div class="statics relative dark:bg-[#181818] bg-gradient-to-r from-[#5B79A2] to-[#2F456A]">
+            <div class="flex justify-center items-start gap-3 dark:bg-[#181818] pt-5">
                 <CInforBox />
                 <CMetricsBox />
             </div>
-            <div class="flex justify-center py-10 px-5">
+            <div class="flex justify-center py-10 px-5 dark:bg-[#181818]">
                 <CContributionsChart />
             </div>
-            <div class="flex justify-center px-5">
+            <div class="flex justify-center px-5 dark:bg-[#181818] pb-5">
                 <CGraphActivities />
             </div>
         </div>

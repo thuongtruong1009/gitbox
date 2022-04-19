@@ -5,6 +5,10 @@ import { userStore } from "../stores/user";
 import { activityStore } from "../stores/activity"
 import ILogo from "./icons/ILogo.vue"
 import ISearch from "./icons/ISearch.vue";
+import IHome from "./icons/header/IHome.vue";
+import IExplore from "./icons/header/IExplore.vue"
+import IUsers from "./icons/header/IUsers.vue";
+import IAbout from "./icons/header/IContact.vue"
 
 import CDarkMode from "@/components/CDarkMode.vue"
 
@@ -65,11 +69,11 @@ window.addEventListener('scroll', scrollFunction)
             <h1>{{ msg }}</h1>
         </div>
         <div class="menu-tab flex gap-10 font-medium text-md text-[#98A4B5]">
-            <RouterLink to="/">Home</RouterLink>
-            <RouterLink to="/repositories">Repositories</RouterLink>
-            <RouterLink to="/users">Users</RouterLink>
-            <RouterLink to="/explore">Explore</RouterLink>
-            <RouterLink to="/about">About</RouterLink>
+            <RouterLink to="/" class="flex items-center gap-1"><IHome />Home</RouterLink>
+            <RouterLink to="/repositories" class="flex items-center gap-1">Repositories</RouterLink>
+            <RouterLink to="/users" class="flex items-center gap-1"><IUsers />Users</RouterLink>
+            <RouterLink to="/explore" class="flex items-center gap-1"><IExplore />Explore</RouterLink>
+            <RouterLink to="/about" class="flex items-center gap-1"><IAbout />About</RouterLink>
         </div>
         <div class="flex items-center gap-3">
             <input type="text" v-model="getNameInput" placeholder="Generate your metrics..."

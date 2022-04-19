@@ -55,7 +55,7 @@ const temp = (type: string) => {
 <template>
     <CLoading v-if="userUserStore.isLoading === true" />
     <div v-if="userUserStore.isLoading === false"
-        class="activities-container flex flex-col justify-center items-center dark:bg-[#181818]">
+        class="activities-container flex flex-col justify-center items-center">
         <h1 class="my-3 bg-[#56bbe7] text-white py-2 px-7 rounded-md">Top 30 recently activities</h1>
         <ul class="sessions">
             <li v-for="(active, index) in useActivityStore.activitiesData" :key="index"
