@@ -76,7 +76,7 @@ const reposComputed = computed(() =>{
         </div>
         <div class="repositories_list w-full">
             <div
-                class="repo flex justify-between items-start bg-[#F6F6F6] border-1 border-solid border-light-700/50 mt-2 rounded-xl py-2 px-5"
+                class="repo flex justify-between items-start bg-[#F6F6F6] shadow-md shadow-gray-300/50 border-1 border-solid border-light-700/50 mt-2 rounded-xl py-2 px-5"
                 v-for="repo in reposComputed"
                 :key="repo.id"
             >

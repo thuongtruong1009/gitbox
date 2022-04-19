@@ -16,23 +16,25 @@ const store = userStore()
 
 const filterMode = ref('default')
 const reposComputed = computed(() => {
-    if (filterMode.value === 'default') {
-        return alphaSort(store.reposData, "name");
-    }
-    else if (filterMode.value === 'most_stars') {
-        return (store.reposData.sort((a: any, b: any) => a.stargazers_count - b.stargazers_count)).reverse();
-    }
-    else if (filterMode.value === 'fewest_star') {
-        return (store.reposData.sort((a: any, b: any) => a.stargazers_count - b.stargazers_count));
-    }
-    else if (filterMode.value === 'most_fork') {
-        return (store.reposData.sort((a: any, b: any) => a.forks_count - b.forks_count)).reverse();
-    }
-    else if (filterMode.value === 'fewest_fork') {
-        return (store.reposData.sort((a: any, b: any) => a.forks_count - b.forks_count));
-    }
-    else if (filterMode.value === 'z_a') {
-        return alphaSort(store.reposData, "name").reverse();
+    switch(filterMode.value){
+        case 'most_stars':
+            return (store.reposData.sort((a: any, b: any) => a.stargazers_count - b.stargazers_count)).reverse();
+            break;
+        case 'fewest_star':
+            return (store.reposData.sort((a: any, b: any) => a.stargazers_count - b.stargazers_count));
+            break;
+        case 'most_fork':
+            return (store.reposData.sort((a: any, b: any) => a.forks_count - b.forks_count)).reverse();
+            break;
+        case 'fewest_fork':
+            return (store.reposData.sort((a: any, b: any) => a.forks_count - b.forks_count));
+            break;
+        case 'z_a':
+            return alphaSort(store.reposData, "name").reverse();
+            break;
+        default:
+            return alphaSort(store.reposData, "name");
+            break;
     }
 })
 const reposVisible = ref(3)
@@ -87,7 +89,7 @@ const getTimeUpdated = (time: any) => {
         </div>
         <div class="repositories_list w-full">
             <div
-                class="repo relative flex justify-between items-start bg-[#FAFAFA] hover:bg-[#F6F6F6] duration-200 border-1 border-solid border-light-700/50 mt-2 rounded-xl py-2 px-5"
+                class="repo relative flex justify-between items-start bg-white hover:bg-[#F6F6F6] shadow-md shadow-gray-300/50 duration-200 border-1 border-solid border-[#e9e9e9] mt-2 rounded-xl py-2 px-5"
                 v-for="repo in reposVisibleComputed"
                 :key="repo.id"
             >

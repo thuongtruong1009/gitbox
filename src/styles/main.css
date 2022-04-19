@@ -53,6 +53,7 @@
     box-sizing: border-box;
     user-select: none;
     overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 input, button, textarea, select, option{
     border: none;

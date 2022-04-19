@@ -16,7 +16,7 @@ const useUserStore = userStore()
 <template>
     <CLoading v-if="useUserStore.isLoading === true" />
     <div class="home-view" v-if="useUserStore.isLoading === false">
-        <div class="statics dark:bg-[#181818] bg-gradient-to-r from-[#5B79A2] to-[#2F456A] py-5">
+        <div class="statics relative dark:bg-[#181818] bg-gradient-to-r from-[#5B79A2] to-[#2F456A] py-5">
             <div class="flex justify-center items-start gap-3">
                 <CInforBox />
                 <CMetricsBox />
@@ -38,6 +38,28 @@ const useUserStore = userStore()
     background-image: url("../assets/globe.png");
     background-repeat: no-repeat;
 } */
+.statics::before{
+    content: '';
+    position: absolute;
+    background-image: url("/img/parallax-0.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    top: 5;
+    left: -45rem;
+    width: 100%;
+    height: 100%;
+}
+.statics::after{
+    content: '';
+    position: absolute;
+    background-image: url("/img/parallax-01.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    top: 20rem;
+    right: -38rem;
+    width: 80%;
+    height: 80%;
+}
 
 /* ********************* RESPONSIVE *********************/
 @media (max-width: 1024px) {
