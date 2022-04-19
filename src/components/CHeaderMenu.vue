@@ -49,10 +49,10 @@ const isScroll = ref(false)
 const scrollFunction = () => {
     const header = document.getElementById('header')
     if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100)
-        header.classList.add("sticky")
+        header!.classList.add("sticky")
 
     else
-        header.classList.remove("sticky")
+        header!.classList.remove("sticky")
 }
 window.addEventListener('scroll', scrollFunction)
 </script>
