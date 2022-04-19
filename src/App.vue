@@ -23,7 +23,7 @@ window.addEventListener('scroll', scrollFunction)
 
 <template>
   <Transition name="bounce">
-    <div v-if="isScroll" id="fcircle" class="fixed z-30 w-13 h-13 bottom-10 right-5 bg-[#F48B8A] hover:bg-[#FF5252] text-white rounded-full border shadow-md shadow-gray-400 flex justify-center items-center cursor-pointer" @click="scrollToTop">
+    <div v-if="isScroll" id="fcircle" class="fixed z-30 w-10 h-10 bottom-10 right-5 bg-[#F48B8A] hover:bg-[#FF5252] text-white rounded-full border shadow-md shadow-gray-400 flex justify-center items-center cursor-pointer" @click="scrollToTop">
       <ITop />
     </div>
   </Transition>
@@ -37,7 +37,8 @@ window.addEventListener('scroll', scrollFunction)
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #F7F8FC;
+  /* background: #F7F8FC; */
+  background-image: linear-gradient(to left, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
 }
 .bounce-enter-active {
   animation: bounce-in 0.5s;

@@ -58,7 +58,7 @@ window.addEventListener('scroll', scrollFunction)
 </script>
 
 <template>
-    <div class="header-container flex justify-between items-center bg-gradient-to-r from-[#5B79A2] to-[#2F456A] px-10 py-4 shadow-md shadow-gray-400 dark:bg-[#181818]"
+    <div class="header-container flex justify-between items-center bg-gradient-to-r from-[#5B79A2] to-[#2F456A] px-10 py-4 dark:bg-[#181818]"
         id="header">
         <div class="logo text-white cursor-pointer flex items-end gap-2 text-2xl font-semibold">
             <ILogo />

@@ -34,10 +34,6 @@ const useUserStore = userStore()
 </template>
 
 <style scoped>
-/* .home-container .statics > div:nth-child(1) {
-    background-image: url("../assets/globe.png");
-    background-repeat: no-repeat;
-} */
 .statics::before{
     content: '';
     position: absolute;

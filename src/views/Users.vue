@@ -9,29 +9,19 @@ const useUserStore = userStore()
 
 <template>
     <CLoading v-if="useUserStore.isLoading === true" />
-    <div
-        class="users-container p-8 flex justify-center z-0 bg-gradient-to-r from-[#5B79A2] to-[#2F456A]"
-          v-if="useUserStore.isLoading === false"
-    >
-        <div class="container pt-5 rounded-lg max-w-1/2">
+    <div class="users-container p-8 flex justify-center items-center z-0 dark:bg-black"
+        v-if="useUserStore.isLoading === false">
+        <div class="container pt-5 rounded-lg max-w-1/2 h-min">
             <div
-                class="nav text-3xl font-bold flex justify-center items-center py-4 relative bg-[#fafafa] rounded-b-md -mx-4 mt-3"
-            >
+                class="nav text-3xl font-bold flex justify-center items-center py-4 relative bg-green-100 rounded-b-md -mx-4 mt-3">
                 <h2>Followers data list</h2>
             </div>
             <div class="list rounded-lg max-h-screen overflow-y-scroll flex justify-start flex-wrap gap-1 p-3">
-                <div
-                    class="num relative bg-[#fafafa] dark:bg-purple-600 dark:text-white cursor-pointer text-right px-5 py-1 rounded-t-l-none rounded-t-r-md rounded-b-l-md rounded-b-r-md"
-                    v-for="(follower, i) in useUserStore.followersData"
-                    :key="i"
-                >
+                <div class="num relative bg-[#fafafa] dark:bg-purple-600 dark:text-white cursor-pointer text-right px-5 py-1 rounded-t-l-none rounded-t-r-md rounded-b-l-md rounded-b-r-md"
+                    v-for="(follower, i) in useUserStore.followersData" :key="i">
                     <div class="mr-3 flex justify-center">
                         <a :href="follower.html_url">
-                            <img
-                                :src="follower.avatar_url"
-                                alt="followers_avatar"
-                                class="w-18 rounded-full"
-                            />
+                            <img :src="follower.avatar_url" alt="followers_avatar" class="w-18 rounded-full" />
                         </a>
                     </div>
                     <div class>
@@ -51,15 +41,32 @@ const useUserStore = userStore()
 <style scoped>
 .users-container {
     font-family: "Montserrat", sans-serif;
+    min-height: 80vh;
+    position: relative;
 }
+
+.users-container::before {
+    content: '';
+    position: absolute;
+    background: linear-gradient(to bottom, rgba(50, 150, 100, 0.4), rgba(0, 0, 100, 0));
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
 .container {
     background-color: #fff;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
 }
+
 .container .nav {
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
     font-family: "Tangerine", serif;
 }
+
 .container .nav:before,
 .container .nav:after {
     content: "";
@@ -73,18 +80,22 @@ const useUserStore = userStore()
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 1;
 }
+
 .container .nav:before {
     left: 0;
     transform: translateY(-0.45rem) rotate(135deg) translateX(-0.4rem);
 }
+
 .container .nav:after {
     right: 0;
     transform: translateY(-0.45rem) rotate(-135deg) translateX(0.4rem);
 }
+
 .num {
     counter-increment: list;
     background: #E7DFFC;
 }
+
 .num:before {
     content: counter(list);
     position: absolute;

@@ -6,7 +6,7 @@ import IGenerate from './icons/footer/IGenerate.vue';
 </script>
 
 <template>
-    <footer class="footer_container grid overflow-hidden min-h-60">
+    <footer class="footer_container grid overflow-hidden min-h-60 dark:bg-black">
         <div class="footer z-1 relative grid min-h-36">
             <div class="bubbles absolute top-0 left-0 right-0 h-4">
                 <div
@@ -522,7 +522,7 @@ import IGenerate from './icons/footer/IGenerate.vue';
                     style="--size:3.18711339556802rem; --distance:6.298098135490076rem; --position:100.01665403113587%; --time:2.263972705909074s; --delay:-2.0547987992653085s;"
                 ></div>
             </div>
-            <div class="content z-2 flex justify-between items-end">
+            <div class="content z-2 flex justify-around items-end">
                 <div class="flex justify-center p-5 gap-3 text-base font-semibold text-white">
                     <a href="https://github.com/thuongtruong1009/gitbox/fork">
                         <button class="btn-hover color-5">
@@ -540,7 +540,7 @@ import IGenerate from './icons/footer/IGenerate.vue';
                         </button>
                     </a>
                 </div>
-                <div class="flex justify-center text-light-600 text-sm p-5">
+                <div class="flex justify-center text-light-600 text-xs p-5">
                     <p>
                         Copyright 2022
                         <a
@@ -550,6 +550,7 @@ import IGenerate from './icons/footer/IGenerate.vue';
                         <a href="https://docs.github.com/en/rest">Github API</a> | All rights reserved.
                     </p>
                 </div>
+                <div class="w-1/5"></div>
             </div>
         </div>
         <svg style="position:fixed; top:100vh">
@@ -603,7 +604,7 @@ import IGenerate from './icons/footer/IGenerate.vue';
     display: flex;
     align-items: center;
     gap: 0.25rem;
-    padding: 0.5rem 2rem;
+    padding: 0.25rem 1.25rem;
     cursor: pointer;
     background-size: 300% 100%;
     moz-transition: all 0.4s ease-in-out;

@@ -55,6 +55,10 @@ const langColor:any = {
     "Fantom": "#14253C",
     "Solidity": "#AA6746",
     "COBOL": "#9CB17C",
-    "Factor": "#636746"
+    "Factor": "#636746",
+    "PLpgSQL": "#DAD8D8",
+    "PLSQL": "#DAD8D8",
+    "TSQL": "#DAD8D8",
+    "SQLPL": "#DAD8D8"
  };
  export default langColor
