@@ -24,9 +24,10 @@ const search = () => {
     }
     queryInput.value = ""
 }
-const vFocus = {
-  mounted: (el:any) => el.focus()
-}
+const vFocus = ref<any>()
+onMounted(()=>{
+    vFocus.value.focus()
+})
 
 watchEffect(() => {
     const fetchExplore = fetch(`https://api.github.com/search/repositories?q=${q.value}+language:assembly&sort=stars&order=desc`).then(res => res.json()).then(data => {
@@ -95,7 +96,7 @@ const getTimeUpdated = (time: any) => {
             <div class="flex items-center gap-5">
 
                 <input type="text" name="search_repos" id="search_repos"
-                    class="px-5 rounded-3xl bg-[#F6F6F6] my-0.5 w-70 max-w-70" v-model="queryInput" v-focus 
+                    class="px-5 rounded-3xl bg-[#F6F6F6] my-0.5 w-70 max-w-70" v-model="queryInput" ref="vFocus"
                     @keyup.enter="search" />
                 <div class="rounded-lg bg-[#F6F6F6] cursor-pointer flex justify-center items-center w-10 h-10 text-[#9595A1] hover:text-black"
                     @click="search">
