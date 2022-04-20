@@ -3,28 +3,16 @@
     GITBOX
 </h1>
 
-## Ref
+## References
 + [chart](https://vuejsprojects.com/vue-morris)
 
-## Vue 3 + Typescript + Vite
-
-This template should help get you started developing with Vue 3 and Typescript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
-
-## 💻 We used
-+ Using **VueJs 3** framwork in **ViteJs** module.
+## Exploring
++ Developing **VueJs 3** framwork in **ViteJs** module with **TypeScript** option.
++ [Composition API](https://vuejs.org/guide/essentials/lifecycle.html) for hook in Vue3
 + Get acquainted with **[REST API GITHUB](https://docs.github.com/en/rest)**
-+ Using [axios](https://www.npmjs.com) HTTP Client library to fetch data links with support of [Postman](https://www.postman.com).
-+ Combining composition-api, state-binding, class-binding, style-binding, props, emit... technologies in [Vue 3](https://v3.vuejs.org)
++ Using [axios](https://www.npmjs.com)HTTP Client library and **fetch()** method to fetch data links with support of [Postman](https://www.postman.com).
 + Transporting data between components by [event bus](https://v3.vuejs.org/guide/migration/events-api.html#overview)  library in Javascript.
-+ Get idea [Github](https://github.com/) and [Youtube](https://youtube.com/).
-
-## 🚀 This project has the following changes
 + The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
-+ Explore and learn how the Java language works through libraries and methods.
-+ Familiarize yourself with object oriented programming and its working principle.
-+ Introduce the Java Swing and java.awt libraries through implementation and method inheritance its.
-+ Improve your skills to resolve the problems in programming.
-+ Practice and complete assignment Java OOP projects in a university lab.
 
 
 ## Setup project
@@ -33,10 +21,10 @@ Setup dependencies
 ```script
 npm install
 ```
-Preview at local
+Enviroment key
 ```bash
- # create .env.local
-VITE_API_USERNAME=<somethings>
+ # create .env.<mode>
+VITE_API_USERNAME=<your_username>
 ```
 Compiles and hot-reloads for development
 ```script
@@ -65,7 +53,7 @@ npm run lint
 + Recommended IDE setup: [Visual Studio Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar).
 + Extension: Vetur, Prettier, ESLint...
 + Get started at [ViteJs](https://vitejs.dev/).
-+ Learning front-end full course at [front-end course](https://github.com/thuongtruong1009/challenge-resposive-web-design-in-300hrs).
++ Learning front-end full course at [front-end course](https://github.com/thuongtruong1009/fontend-master).
 
 ### ❤️ Support me
 [![MOMO](https://img.shields.io/badge/-MOMO-red?style=for-the-badge&labelColor=pink&logo=MOMO&logoColor=black)](https://nhantien.momo.vn/0917085937)

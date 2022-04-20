@@ -25,7 +25,7 @@ const search = () => {
     queryInput.value = ""
 }
 const vFocus = {
-  mounted: (el) => el.focus()
+  mounted: (el:any) => el.focus()
 }
 
 watchEffect(() => {
