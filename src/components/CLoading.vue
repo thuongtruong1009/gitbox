@@ -1,8 +1,8 @@
 <template>
     <div class="loading-container flex justify-center pt-20">
         <div class="wrapper w-64 h-64 relative overflow-hidden">
-            <div class="loading-large absolute w-32 h-32 top-15 left-15 rounded-full bg-[#ff6bcb9a]"></div>
-            <div class="loading-small absolute w-32 h-32 top-15 left-15 rounded-full bg-[#ff6bcb]"></div>
+            <div class="loading-large absolute w-30 h-30 top-15 left-15 rounded-full bg-[#ff6bcb9a]"></div>
+            <div class="loading-small absolute w-30 h-30 top-15 left-15 rounded-full bg-[#ff6bcb]"></div>
         </div>
     </div>
 </template>

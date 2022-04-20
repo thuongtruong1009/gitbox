@@ -69,7 +69,7 @@ window.addEventListener('scroll', scrollFunction)
             <h1>{{ msg }}</h1>
         </div>
         <div class="menu-tab flex gap-10 font-medium text-md text-[#98A4B5]">
-            <RouterLink to="/" class="flex items-center gap-1"><IHome />Home</RouterLink>
+            <RouterLink to="/" class="flex items-center gap-1" router-link-exact-active exact><IHome />Home</RouterLink>
             <RouterLink to="/repositories" class="flex items-center gap-1">Repositories</RouterLink>
             <RouterLink to="/users" class="flex items-center gap-1"><IUsers />Users</RouterLink>
             <RouterLink to="/explore" class="flex items-center gap-1"><IExplore />Explore</RouterLink>
@@ -105,12 +105,16 @@ window.addEventListener('scroll', scrollFunction)
 .menu-tab>a {
     border-bottom: 3px solid transparent;
     cursor: pointer;
-    transition: 0.3s linear;
+    transition: 0.3s ease-out;
     padding: 0.5rem 0;
 }
 
-.menu-tab>a:hover {
+.menu-tab>a:hover,
+.menu-tab>a.router-link-active,
+.menu-tab>a.router-link-exact-active  {
     color: white;
+}
+.menu-tab>a:hover{
     border-color: white;
 }
 

@@ -21,17 +21,19 @@ const q = ref<any>("tetris");
 const search = () => {
     if (queryInput.value !== "") {
         q.value = queryInput.value;
+        store.isLoading = true
     }
     queryInput.value = ""
 }
 const vFocus = ref<any>()
-onMounted(()=>{
+onMounted(() => {
     vFocus.value.focus()
 })
 
 watchEffect(() => {
     const fetchExplore = fetch(`https://api.github.com/search/repositories?q=${q.value}+language:assembly&sort=stars&order=desc`).then(res => res.json()).then(data => {
         useExploreStore.reposTrending = data
+        store.isLoading = false
     })
 })
 
@@ -77,8 +79,7 @@ const getTimeUpdated = (time: any) => {
 </script>
 
 <template>
-    <CLoading v-if="store.isLoading === true" />
-    <div class="repositories_view p-5 max-w-238 mx-auto dark:bg-black" v-if="store.isLoading === false">
+    <div class="repositories_view p-5 max-w-238 mx-auto dark:bg-black">
         <div class="flex justify-start text-xl font-medium">
             <h1>Repositories</h1>
         </div>
@@ -104,7 +105,8 @@ const getTimeUpdated = (time: any) => {
                 </div>
             </div>
         </div>
-        <div class="repositories_list w-full">
+        <CLoading v-if="store.isLoading === true" />
+        <div class="repositories_list w-full" v-if="store.isLoading === false">
             <div class="repo relative flex justify-between items-start bg-[#FAFAFA] hover:bg-[#F6F6F6] duration-200 border-1 border-solid border-light-700/50 mt-2 rounded-xl py-2 px-5"
                 v-for="trending in reposVisibleComputed" :key="trending.id">
                 <div class="flex">
@@ -158,10 +160,10 @@ const getTimeUpdated = (time: any) => {
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="loadmore-tab">
-            <button class="fill_btn" @click="reposVisibleInit += step"
-                v-if="reposVisibleInit < useExploreStore.reposTrending.items.length">Load more...</button>
+            <div class="loadmore-tab">
+                <button class="fill_btn" @click="reposVisibleInit += step"
+                    v-if="reposVisibleInit < useExploreStore.reposTrending.items.length">Load more...</button>
+            </div>
         </div>
     </div>
 </template>
