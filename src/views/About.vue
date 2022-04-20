@@ -16,9 +16,9 @@ const changeTab = (tab: any) => {
 <template>
   <div class="about-view-container min-h-screen-sm dark:bg-black flex justify-center gap-10 break-words pt-20">
     <div>
-      <div class="text-5xl font-semibold flex items-center gap-5">
-        <span class="w-4 h-20 bg-[#21EA6E] block rounded-md"></span>
-        <h1>About pace</h1>
+      <div class="text-5xl font-semibold flex items-center gap-5 dark:text-light-200">
+        <span class="w-3 h-20 bg-[#21EA6E] block rounded-r-lg shadow-md shadow-gray-500/50"></span>
+        <h1>About space</h1>
       </div>
       <div class="flex justify-evenly items-center my-5">
         <a href="https://github.com/thuongtruong1009">
@@ -38,24 +38,36 @@ const changeTab = (tab: any) => {
       <div class="nav flex">
         <p class="border-b-1 border-b-solid border-b-pink-500 w-1/20"></p>
         <a class="text-pink-500 font-medium px-2 py-0.5 rounded-t-md" @click="changeTab('author')"
-          :class="{ active: activeTab === 'author' }">&bull; Author</a>
+          :class="{ active: activeTab === 'author' }">Author</a>
         <a class="text-pink-500 font-medium px-2 py-0.5 rounded-t-md" @click="changeTab('features')"
-          :class="{ active: activeTab === 'features' }">&bull; Features</a>
+          :class="{ active: activeTab === 'features' }">Features</a>
+          <a class="text-pink-500 font-medium px-2 py-0.5 rounded-t-md" @click="changeTab('technologies')"
+          :class="{ active: activeTab === 'technologies' }">Technologies</a>
         <p class="border-b-1 border-b-solid border-b-pink-500 w-2/5"></p>
       </div>
-      <div class="max-w-md">
+      <div class="max-w-md text-gray-500 dark:text-light-500">
         <Transition>
           <div v-if="activeTab === 'author'">
-            <h5>Hi, my name's Tran Nguyen Thuong Truong - frontend developer!</h5>
-            <h5>I am currently working in Ho Chi Minh city - Vietnam.</h5>
+            <h5>&bull; Hi, my name's Tran Nguyen Thuong Truong - frontend developer!</h5>
+            <h5>&bull; I am currently working in Ho Chi Minh city - Vietnam.</h5>
           </div>
         </Transition>
         <Transition>
           <div v-if="activeTab === 'features'">
-            <h5>Gitbox is a webapp product created while practicing Vuejs.</h5>
-            <h5>Using the original data from GitHub's restful API through fetching data.</h5>
-            <h5>In this project, i use Vue3 framework using Vite module combined with WindiCSS to speed up the build and
+            <h5>&bull; Gitbox is a webapp product created while practicing Vuejs.</h5>
+            <h5>&bull; Using the original data from GitHub's restful API through fetching data.</h5>
+            <h5>&bull; In this project, i use Vue3 framework using Vite module combined with WindiCSS to speed up the build and
               improve the interface.</h5>
+          </div>
+        </Transition>
+        <Transition>
+          <div v-if="activeTab === 'technologies'">
+            <h5>&bull; VueJs 3 (composition API) + Vue-Router (v4) + Pinia (TypeScript)</h5>
+            <h5>&bull; ViteJs (latest) + TypeScript (option)</h5>
+            <h5>&bull; WindiCSS (migrade from TailwindCSS)</h5>
+            <h5>&bull; RESTful API from GitHub</h5>
+            <h5>&bull; Enviroment variables mode</h5>
+            <h5>&bull; Dark/Light mode</h5>
           </div>
         </Transition>
       </div>
@@ -81,6 +93,10 @@ const changeTab = (tab: any) => {
 .nav>a.active {
   border: 1px solid rgb(236, 72, 153);
   border-bottom-color: transparent;
+}
+h5{
+  font-size: 0.9em;
+  padding-top: 0.5rem;
 }
 
 /* *************** TRANSITION ***************** */

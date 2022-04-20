@@ -20,7 +20,7 @@ Setup dependencies
 ```script
 npm install
 ```
-Enviroment key
+Enviroment variables
 ```bash
  # create .env.<mode>
 VITE_API_USERNAME=<your_username>
