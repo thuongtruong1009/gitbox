@@ -41,7 +41,7 @@ const changeTab = (tab: any) => {
           :class="{ active: activeTab === 'author' }">Author</a>
         <a class="text-pink-500 font-medium px-2 py-0.5 rounded-t-md" @click="changeTab('features')"
           :class="{ active: activeTab === 'features' }">Features</a>
-          <a class="text-pink-500 font-medium px-2 py-0.5 rounded-t-md" @click="changeTab('technologies')"
+        <a class="text-pink-500 font-medium px-2 py-0.5 rounded-t-md" @click="changeTab('technologies')"
           :class="{ active: activeTab === 'technologies' }">Technologies</a>
         <p class="border-b-1 border-b-solid border-b-pink-500 w-2/5"></p>
       </div>
@@ -56,18 +56,19 @@ const changeTab = (tab: any) => {
           <div v-if="activeTab === 'features'">
             <h5>&bull; Gitbox is a webapp product created while practicing Vuejs.</h5>
             <h5>&bull; Using the original data from GitHub's restful API through fetching data.</h5>
-            <h5>&bull; In this project, i use Vue3 framework using Vite module combined with WindiCSS to speed up the build and
+            <h5>&bull; In this project, i use Vue3 framework using Vite module combined with WindiCSS to speed up the
+              build and
               improve the interface.</h5>
+            <h5>&bull; Dark/Light mode</h5>
           </div>
         </Transition>
         <Transition>
           <div v-if="activeTab === 'technologies'">
-            <h5>&bull; VueJs 3 (composition API) + Vue-Router (v4) + Pinia (TypeScript)</h5>
-            <h5>&bull; ViteJs (latest) + TypeScript (option)</h5>
+            <h5>&bull; Vuejs 3 (composition API) + ViteJs (latest) + TypeScript (option)</h5>
+            <h5>&bull; Vue-Router (v4) + Pinia (TypeScript)</h5>
             <h5>&bull; WindiCSS (migrade from TailwindCSS)</h5>
             <h5>&bull; RESTful API from GitHub</h5>
             <h5>&bull; Enviroment variables mode</h5>
-            <h5>&bull; Dark/Light mode</h5>
           </div>
         </Transition>
       </div>
@@ -75,7 +76,7 @@ const changeTab = (tab: any) => {
 
     <div>
       <img src="https://avatars.githubusercontent.com/u/71834167?v=4" alt="author_avatar_img"
-        class="max-w-80 max-h-80 rounded-full shadow-lg shadow-gray-400/50">
+        class="author-avatar max-w-80 max-h-80 shadow-lg shadow-gray-500">
     </div>
   </div>
 </template>
@@ -94,9 +95,14 @@ const changeTab = (tab: any) => {
   border: 1px solid rgb(236, 72, 153);
   border-bottom-color: transparent;
 }
-h5{
+
+h5 {
   font-size: 0.9em;
   padding-top: 0.5rem;
+}
+
+.author-avatar {
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
 }
 
 /* *************** TRANSITION ***************** */
