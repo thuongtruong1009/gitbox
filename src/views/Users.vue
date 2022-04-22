@@ -7,25 +7,28 @@ import IGithub from '../components/icons/user/IGithub.vue'
 
 const useUserStore = userStore()
 
-const getEvenFollow = computed(() =>{
+const getEvenFollow = computed(() => {
     return useUserStore.followersData.filter((element: any, index: any) => {
         if (index % 2 === 0) {
             return element
         }
     })
 })
-const getOddFollow = computed(() =>{
+const getOddFollow = computed(() => {
     return useUserStore.followersData.filter((element: any, index: any) => {
         if (index % 2 !== 0) {
             return element
         }
     })
 })
-
-// var a = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
-// while(a.length) {
-//     console.log(a.splice(0,3));
-// }
+const printList = computed(() => {
+    const result = []
+    while (getOddFollow.value.length && getEvenFollow.value.length) {
+        result.push(getOddFollow.value.splice(0, 3), getEvenFollow.value.splice(0, 5))
+    }
+    console.log(result)
+    return result
+})
 </script>
 
 <template>
@@ -39,7 +42,7 @@ const getOddFollow = computed(() =>{
             </div>
             <div class="list rounded-lg max-h-screen overflow-y-scroll flex justify-start flex-wrap gap-1 p-3">
                 <div class="num relative dark:text-white cursor-pointer text-right px-5 py-1 rounded-t-l-none rounded-t-r-md rounded-b-l-md rounded-b-r-md"
-                    v-for="(follower, i) in getOddFollow" :key="i">
+                    v-for="(follower, i) in printList[1]" :key="i">
 
                     <a :href="follower.html_url">
                         <img :src="follower.avatar_url" alt="followers_avatar" class="user-avatar w-18" />
@@ -57,35 +60,38 @@ const getOddFollow = computed(() =>{
             </div>
         </div>
 
-        <section>
-            <div class="hex_row_odd">
-                <div class="center" v-for="(follower, i) in getOddFollow" :key="i">
+        <section v-for="(items, i) in printList" :key="i">
+            <div v-if="i%2 === 0">
+                <div class="hex_row_odd" v-for="(item, index) in items" :key="index">
+                <div class="center">
                     <div class="hexagon">
                         <div class="hex1">
-                            <div class="hex2"  :style="`background: url(${follower.avatar_url}) center no-repeat`">
+                            <div class="hex2" :style="`background: url(${item.avatar_url}) center no-repeat`">
                                 <div class="desc">
                                     <h2>Welcome this is an epic title</h2>
-                                    <p>{{ follower.login }}</p>
+                                    <p>{{ i }}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            </div>
 
             <div class="hex_row_even">
-                <div class="center" v-for="(follower, i) in getEvenFollow" :key="i">
+                <div v-if="i%2 !== 0">
+                    <div class="center"  v-for="(item, index) in items" :key="index">
                     <div class="hexagon">
                         <div class="hex1">
-                            <div class="hex2"
-                                :style="`background: url(${follower.avatar_url}) center no-repeat`">
+                            <div class="hex2" :style="`background: url(${item.avatar_url}) center no-repeat`">
                                 <div class="desc">
                                     <h2>Welcome this is an epic title</h2>
-                                    <p>{{ follower.login }}</p>
+                                    <p>{{ item.login }}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </section>
