@@ -24,7 +24,7 @@ const getOddFollow = computed(() => {
 const printList = computed(() => {
     const result = []
     while (getOddFollow.value.length && getEvenFollow.value.length) {
-        result.push(getOddFollow.value.splice(0, 3), getEvenFollow.value.splice(0, 5))
+        result.push(getOddFollow.value.splice(0, 3), getEvenFollow.value.splice(0, 4))
     }
     console.log(result)
     return result
@@ -35,16 +35,16 @@ const printList = computed(() => {
     <CLoading v-if="useUserStore.isLoading === true" />
     <div class="users-container p-8 grid justify-center items-center z-0 dark:bg-black"
         v-if="useUserStore.isLoading === false">
-        <div class="container pt-5 rounded-lg max-w-1/2 h-min">
+        <div class="container pt-5 rounded-lg max-w-1/2 h-min mx-auto">
             <div
                 class="nav text-3xl font-bold flex justify-center items-center py-4 relative bg-green-100 rounded-b-md -mx-4 mt-3">
                 <h2>Followers data list</h2>
             </div>
-            <div class="list rounded-lg max-h-screen overflow-y-scroll flex justify-start flex-wrap gap-1 p-3">
-                <div class="num relative dark:text-white cursor-pointer text-right px-5 py-1 rounded-t-l-none rounded-t-r-md rounded-b-l-md rounded-b-r-md"
-                    v-for="(follower, i) in printList[1]" :key="i">
+            <div class="list rounded-lg max-h-screen overflow-y-scroll flex justify-center flex-wrap gap-5 p-3">
+                <div class="num relative dark:text-white cursor-pointer text-right rounded-t-l-none rounded-t-r-md rounded-b-l-md rounded-b-r-md"
+                    v-for="(follower, i) in useUserStore.followersData" :key="i">
 
-                    <a :href="follower.html_url">
+                    <a :href="follower.html_url" class="">
                         <img :src="follower.avatar_url" alt="followers_avatar" class="user-avatar w-18" />
                     </a>
 
@@ -60,41 +60,49 @@ const printList = computed(() => {
             </div>
         </div>
 
-        <section v-for="(items, i) in printList" :key="i">
-            <div v-if="i%2 === 0">
-                <div class="hex_row_odd" v-for="(item, index) in items" :key="index">
-                <div class="center">
-                    <div class="hexagon">
-                        <div class="hex1">
-                            <div class="hex2" :style="`background: url(${item.avatar_url}) center no-repeat`">
-                                <div class="desc">
-                                    <h2>Welcome this is an epic title</h2>
-                                    <p>{{ i }}</p>
+        <div class="mb-30">
+            <section v-for="(items, i) in printList" :key="i">
+                <div v-if="i % 2 === 0">
+                    <div class="hex_row_odd" v-for="(item, index) in items" :key="index">
+                        <div class="center">
+                            <div class="hexagon">
+                                <div class="hex1">
+                                    <div class="hex2" :style="`background: url(${item.avatar_url}) center no-repeat`">
+                                        <div class="desc opacity-0 duration-200 grid gap-5 justify-center content-center text-white text-2xl left-1/3 top-[45%] absolute text-center font-medium w-auto h-auto">
+                                            <h2>{{ item.login }}</h2>
+                                            <a :href="item.html_url" class="flex items-start gap-1 text-xs">
+                                                <IUserName />
+                                                <p>{{ item.login }}</p>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            </div>
 
-            <div class="hex_row_even">
-                <div v-if="i%2 !== 0">
-                    <div class="center"  v-for="(item, index) in items" :key="index">
-                    <div class="hexagon">
-                        <div class="hex1">
-                            <div class="hex2" :style="`background: url(${item.avatar_url}) center no-repeat`">
-                                <div class="desc">
-                                    <h2>Welcome this is an epic title</h2>
-                                    <p>{{ item.login }}</p>
+                <div class="hex_row_even"  v-for="(item, index) in items" :key="index">
+                    <div v-if="i % 2 !== 0">
+                        <div class="center">
+                            <div class="hexagon">
+                                <div class="hex1">
+                                    <div class="hex2" :style="`background: url(${item.avatar_url}) center no-repeat`">
+                                        <div class="desc opacity-0 duration-200 grid gap-5 justify-center content-center text-white text-2xl left-1/3 top-[45%] absolute text-center font-medium w-auto h-auto">
+                                            <h2>{{ item.login }}</h2>
+                                            <a :href="item.html_url" class="flex items-start gap-1 text-xs">
+                                                <IUserName />
+                                                <p>{{ item.login }}</p>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                </div>
-            </div>
-        </section>
+            </section>
+        </div>
     </div>
 </template>
 
@@ -160,7 +168,8 @@ const printList = computed(() => {
     content: counter(list);
     position: absolute;
     top: 0;
-    left: 0;
+    z-index: 2;
+    left: 5;
     font-size: 0.6rem;
     display: flex;
     justify-content: center;
@@ -171,37 +180,29 @@ const printList = computed(() => {
     border-radius: 0 50% 50% 50%;
     /* shape-outside: ellipse(); */
 }
-
 .user-avatar {
-    clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
+    clip-path: polygon(0 0, 67% 0, 100% 20%, 100% 80%, 68% 100%, 29% 100%, 0% 80%, 0% 20%);
 }
-
-@import url(https://fonts.googleapis.com/css?family=Lato:300);
-
 section {
     margin: 0 auto;
     text-align: center;
     width: 960px;
 }
-
 .hex_row_even {
     display: inline-block;
     margin: 0 auto -275px auto;
     overflow: hidden;
 }
-
 .hex_row_odd {
     display: inline-block;
-    margin: 0 auto -275px auto;
+    margin: 0 auto -300px auto;
     overflow: hidden;
 }
-
 .center {
     float: left;
     margin: 20px 10px;
     width: 220px;
 }
-
 .hexagon {
     -moz-transform: rotate(120deg);
     -ms-transform: rotate(120deg);
@@ -213,7 +214,6 @@ section {
     visibility: hidden;
     width: 220px;
 }
-
 .hex1 {
     -moz-transform: rotate(-60deg);
     -ms-transform: rotate(-60deg);
@@ -223,7 +223,6 @@ section {
     overflow: hidden;
     width: 100%;
 }
-
 .hex2 {
     -moz-transform: rotate(-60deg);
     -ms-transform: rotate(-60deg);
@@ -234,47 +233,40 @@ section {
     visibility: visible;
     width: 100%;
 }
-
+.hex2:hover .desc{
+    opacity: 1;
+}
 .hex2[style] {
     background-size: cover !important;
 }
-
-.desc {
-    color: white;
-    font-family: 'Lato', sans-serif;
-    font-size: 1.5em;
-    font-weight: 300;
-    height: 440px;
-    line-height: 1.5em;
+.hex_row_odd:hover .hex2:before,
+.hex_row_even:hover .hex2:before {
+    content: 'edede';
     position: absolute;
-    text-align: center;
-    text-transform: uppercase;
-    visibility: visible;
-    width: 220px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: 3s linear;
 }
-
-.desc.base {
-    background: rgba(230, 0, 98, 0.75);
+.hex_row_odd:nth-child(1):hover .hex2:before,
+.hex_row_even:nth-child(1):hover .hex2:before {
+    background: #e60062bf;
 }
-
-.desc.one {
-    background: rgba(252, 171, 55, 0.75);
+.hex_row_odd:nth-child(2):hover .hex2:before,
+.hex_row_even:nth-child(2):hover .hex2:before {
+background: rgba(252, 171, 55, 0.75);
+    background-size: 100% 100%;
 }
-
-.desc.two {
+.hex_row_odd:nth-child(3):hover .hex2:before,
+.hex_row_even:nth-child(3):hover .hex2:before  {
     background: rgba(169, 160, 50, 0.75);
 }
-
-.desc.three {
+.hex_row_odd:nth-child(4):hover .hex2:before,
+.hex_row_even:nth-child(4):hover .hex2:before{
     background: rgba(83, 70, 54, 0.75);
 }
-
-.desc h2 {
+/* .desc h2 {
     margin: 165px 20px 0 20px;
-}
-
-.desc p {
-    font-size: .5em;
-    text-transform: lowercase;
-}
+} */
 </style>
