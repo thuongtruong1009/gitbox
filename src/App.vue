@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import CHeaderMenu from "./components/CHeaderMenu.vue";
 import CFooter from "./components/CFooter.vue";
 import ITop from "./components/icons/ITop.vue"
@@ -18,7 +18,7 @@ const scrollFunction = () => {
     isScroll.value = false
 }
 window.addEventListener('scroll', scrollFunction)
-document.addEventListener('contextmenu', event => event.preventDefault());
+// document.addEventListener('contextmenu', event => event.preventDefault());
 
 </script>
 

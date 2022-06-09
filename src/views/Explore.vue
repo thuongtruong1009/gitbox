@@ -3,7 +3,9 @@ import { userStore } from '../stores/user';
 import { exploreStore } from '../stores/explore'
 import { computed, onMounted, reactive, ref, watchEffect } from 'vue';
 import langColor from '../shared/lang';
-import { alphaSort } from '../shared/sort'
+import { alphaSort } from '../utils/sort'
+import RepoRequest from '../services/repo_request';
+
 import CLoading from '../components/CLoading.vue';
 import IMultiLine from '../components/icons/repos/IMultiLine.vue';
 import ISingleLine from '../components/icons/repos/ISingleLine.vue'
@@ -16,11 +18,19 @@ import ISearch from '../components/icons/ISearch.vue';
 
 const useExploreStore = exploreStore();
 const queryInput = ref<any>("tetris");
-const q = ref<any>("tetris");
+
+const payload = reactive({
+    input: 'tetris',
+    language: 'assembly',
+    sort: 'stars',
+    order: 'desc',
+    page: 1,
+    per_page: 30
+})
 
 const search = () => {
     if (queryInput.value !== "") {
-        q.value = queryInput.value;
+        payload.input = queryInput.value;
         store.isLoading = true
     }
     queryInput.value = ""
@@ -30,11 +40,13 @@ onMounted(() => {
     vFocus.value.focus()
 })
 
-watchEffect(() => {
-    const fetchExplore = fetch(`https://api.github.com/search/repositories?q=${q.value}+language:assembly&sort=stars&order=desc`).then(res => res.json()).then(data => {
-        useExploreStore.reposTrending = data
-        store.isLoading = false
-    })
+watchEffect(async() => {
+    store.isLoading = true
+    const fetchExplore = await RepoRequest.searchRepos(payload.input, payload.language, payload.sort, payload.order, payload.page, payload.per_page)
+    // useExploreStore.reposTrending = fetchExplore
+    payload.input = ''
+    store.isLoading = false
+    console.log(fetchExplore)
 })
 
 const store = userStore()
