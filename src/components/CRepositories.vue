@@ -2,7 +2,7 @@
 import { userStore } from '../stores/user';
 import { computed, ref } from 'vue';
 import langColor from '../shared/lang';
-import { alphaSort } from '../shared/sort'
+import { alphaSort, sizeSort } from '../utils/sort'
 import CLoading from '../components/CLoading.vue';
 import IMultiLine from './icons/repos/IMultiLine.vue';
 import ISingleLine from './icons/repos/ISingleLine.vue'
@@ -67,12 +67,12 @@ const getTimeUpdated = (time: any) => {
                 class="pl-3 py-2 rounded-3xl bg-[#F6F6F6] w-50 max-w-50 text-sm text-[#9595A1] cursor-pointer mr-3"
                 v-model="filterMode"
             >
-                <option value="default" class="accent-green-500/50">Default matches</option>
+                <option value="default" class="accent-green-500/50">Alphabet A to Z</option>
+                <option value="z_a">Alphabet Z to A</option>
                 <option value="most_stars">Most stars</option>
                 <option value="fewest_star">Fewest stars</option>
                 <option value="most_fork">Most forks</option>
                 <option value="fewest_fork">Fewest forks</option>
-                <option value="z_a">Alphabet Z to A</option>
             </select>
             <div class="flex items-center gap-2 text-[#9595A1]">
                 <div
