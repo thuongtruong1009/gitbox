@@ -4,6 +4,7 @@ import { exploreStore } from '../stores/explore'
 import { computed, onMounted, reactive, ref, watchEffect } from 'vue';
 import langColor from '../shared/lang';
 import { alphaSort } from '../utils/sort'
+import { handleDate } from '../utils/date'
 
 import CLoading from '../components/CLoading.vue';
 import IMultiLine from '../components/icons/repos/IMultiLine.vue';
@@ -75,14 +76,14 @@ const reposVisibleInit = ref(5)
 const step = ref(5)
 const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVisibleInit.value))
 
-const getTimeUpdated = (time: any) => {
-    const date = new Date(time)
-    const year = date.getFullYear().toString()
-    const month = date.getMonth().toString()
-    const day = date.getDay().toString()
-    const result = year.concat('-').concat(month).concat('-').concat(day)
-    return result
-}
+// const getTimeUpdated = (time: any) => {
+//     const date = new Date(time)
+//     const year = date.getFullYear().toString()
+//     const month = date.getMonth().toString()
+//     const day = date.getDay().toString()
+//     const result = year.concat('-').concat(month).concat('-').concat(day)
+//     return result
+// }
 
 </script>
 
@@ -129,16 +130,31 @@ const getTimeUpdated = (time: any) => {
                         <div class="flex flex-wrap gap-1 my-2">
                             <p v-for="(topic, i) in trending.topics" :key="i"
                                 class="bg-[#DDF4FF] py-1 px-2 text-xs font-medium rounded-xl text-[#0969DA] hover:text-white hover:bg-[#0969DA] cursor-pointer">
-                                {{ topic }}</p>
+                                {{ topic }}
+                            </p>
                         </div>
                         <p class="flex text-xs font-medium text-gray-400">
-                            <!-- <span class="repo_license">{{ repo.license.spdx_id }}</span> -->
-                            <span class="mx-1.5">•</span>
-                            <span class="repo_update_time">Updated {{ getTimeUpdated(trending.updated_at) }}</span>
+                            <span class="repo_license" v-if="trending.license">
+                                <a :href="trending.license.url">{{ trending.license.spdx_id }} license</a>
+                                <span class="mx-1.5">•</span>
+                            </span>
+                            <span class="repo_update_time">Last updated {{ handleDate(trending.updated_at) }}</span>
                         </p>
                     </div>
                 </div>
                 <div class="repo_option">
+                    <div
+                        class="flex justify-end items-end text-sm text-[#9595A1] font-medium gap-3 absolute bottom-3 right-5">
+                        <a :href="`${trending.html_url}/archive/HEAD.zip`">
+                            <IDownload />
+                        </a>
+                        <a :href="trending.forks_url">
+                            <IClone />
+                        </a>
+                        <a :href="`${trending.html_url}/generate`">
+                            <IGenerate />
+                        </a>
+                    </div>
                     <div class="flex text-sm text-[#9595A1] font-medium gap-3">
                         <p class="repo_lang flex items-center gap-1">
                             <span class="lang-icon w-2.5 h-2.5 rounded-full block"
@@ -153,18 +169,6 @@ const getTimeUpdated = (time: any) => {
                             <IFork />
                             {{ trending.forks_count }}
                         </p>
-                    </div>
-                    <div
-                        class="flex justify-end items-end text-sm text-[#9595A1] font-medium gap-3 absolute bottom-3 right-5">
-                        <a :href="`${trending.html_url}/archive/HEAD.zip`">
-                            <IDownload />
-                        </a>
-                        <a :href="trending.forks_url">
-                            <IClone />
-                        </a>
-                        <a :href="`${trending.html_url}/generate`">
-                            <IGenerate />
-                        </a>
                     </div>
                 </div>
             </div>

@@ -2,6 +2,32 @@
   "name": "gitbox",
   "private": true,
   "version": "5.0.0",
+  "description": "Generate details your statistics of Github data information when searching",
+    "keywords": [
+        "git",
+        "github",
+        "gitbox",
+        "api",
+        "RESTful API",
+        "metrics",
+        "repository",
+        "vue",
+        "axios",
+        "pinia",
+        "typescript",
+        "javascript"
+    ],
+    "homepage": "https://github.com/thuongtruong1009/gitbox#readme",
+    "bugs": {
+        "url": "https://github.com/thuongtruong1009/gitbox/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/thuongtruong1009/gitbox"
+    },
+    "funding": "https://paypal.me/thuongtruong1009",
+    "license": "MIT",
+    "author": "Thuong Truong <thuongtruong1009@proton.me>",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
