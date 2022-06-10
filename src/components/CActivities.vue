@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { useActivity } from '../stores/activity'
-import { userStore } from '../stores/user';
+import { useUser } from '../stores/user';
 import EventRequest from '../services/event_request';
 import CLoading from '../components/CLoading.vue';
 
@@ -17,7 +17,7 @@ import IRelease from './icons/time_line/IRelease.vue';
 import ILPush from './icons/time_line/label_type/ILPush.vue';
 
 const activity = useActivity()
-const user = userStore()
+const user = useUser()
 
 onMounted(async()=>{
     const fetchEvent = await EventRequest.getPublicEvents(user.userName)

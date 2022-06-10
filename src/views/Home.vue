@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { userStore } from '../stores/user';
+import { useUser } from '../stores/user';
 import CMetricsBox from '../components/CMetricsBox.vue';
 import CInforBox from '../components/CInforBox.vue'
 import CContributionsChart from '../components/CContributionsChart.vue'
@@ -9,7 +9,7 @@ import CActivities from '../components/CActivities.vue';
 import CTimeLine from '../components/CTimeLine.vue';
 import CLoading from '../components/CLoading.vue';
 
-const user = userStore()
+const user = useUser()
 
 </script>
 

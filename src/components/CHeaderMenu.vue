@@ -2,7 +2,8 @@
 import { RouterLink, RouterView } from "vue-router";
 import { onMounted, ref, watchEffect } from 'vue'
 
-import { userStore } from "../stores/user";
+import { useUser } from "../stores/user";
+import { useRepo } from '../stores/repo';
 import UserRequest from '../services/user_request'
 import OrgRequest from '../services/org_request'
 import RepoRequest from '../services/repo_request'
@@ -17,7 +18,8 @@ import IAbout from "./icons/header/IContact.vue"
 
 import CDarkMode from "@/components/CDarkMode.vue"
 
-const store = userStore()
+const store = useUser()
+const repo = useRepo()
 
 const getNameInput = ref('')
 const saveNameInput = () => {
@@ -40,7 +42,7 @@ watchEffect(() => {
         store.userData = res[0]
         store.orgsData = res[1]
         store.starredData = res[2]
-        store.reposData = res[3]
+        repo.reposData = res[3]
         store.followersData = res[4]
         store.isLoading = false
 

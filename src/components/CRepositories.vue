@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { userStore } from '../stores/user';
+import { useUser } from '../stores/user';
+import { useRepo } from '../stores/repo'
 import { computed, ref } from 'vue';
 import langColor from '../shared/lang';
 import { alphaSort, sizeSort } from '../utils/sort'
@@ -12,28 +13,29 @@ import IDownload from './icons/repos/IDownload.vue';
 import IClone from './icons/repos/IClone.vue';
 import IGenerate from './icons/repos/IGenerate.vue'
 
-const store = userStore()
+const store = useUser()
+const repo = useRepo()
 
 const filterMode = ref('default')
 const reposComputed = computed(() => {
     switch(filterMode.value){
         case 'most_stars':
-            return (store.reposData.sort((a: any, b: any) => a.stargazers_count - b.stargazers_count)).reverse();
+            return (repo.reposData.sort((a: any, b: any) => a.stargazers_count - b.stargazers_count)).reverse();
             break;
         case 'fewest_star':
-            return (store.reposData.sort((a: any, b: any) => a.stargazers_count - b.stargazers_count));
+            return (repo.reposData.sort((a: any, b: any) => a.stargazers_count - b.stargazers_count));
             break;
         case 'most_fork':
-            return (store.reposData.sort((a: any, b: any) => a.forks_count - b.forks_count)).reverse();
+            return (repo.reposData.sort((a: any, b: any) => a.forks_count - b.forks_count)).reverse();
             break;
         case 'fewest_fork':
-            return (store.reposData.sort((a: any, b: any) => a.forks_count - b.forks_count));
+            return (repo.reposData.sort((a: any, b: any) => a.forks_count - b.forks_count));
             break;
         case 'z_a':
-            return alphaSort(store.reposData, "name").reverse();
+            return alphaSort(repo.reposData, "name").reverse();
             break;
         default:
-            return alphaSort(store.reposData, "name");
+            return alphaSort(repo.reposData, "name");
             break;
     }
 })

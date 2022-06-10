@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { userStore } from '../stores/user';
+import { useUser } from '../stores/user';
 import { exploreStore } from '../stores/explore'
 import { computed, onMounted, reactive, ref, watchEffect } from 'vue';
 import langColor from '../shared/lang';
 import { alphaSort } from '../utils/sort'
-import RepoRequest from '../services/repo_request';
 
 import CLoading from '../components/CLoading.vue';
 import IMultiLine from '../components/icons/repos/IMultiLine.vue';
@@ -16,6 +15,7 @@ import IClone from '../components/icons/repos/IClone.vue';
 import IGenerate from '../components/icons/repos/IGenerate.vue'
 import ISearch from '../components/icons/ISearch.vue';
 
+const user = useUser()
 const useExploreStore = exploreStore();
 const queryInput = ref<any>("tetris");
 
@@ -29,9 +29,9 @@ const payload = reactive({
 })
 
 const search = () => {
-    if (queryInput.value !== "") {
+    if (queryInput.value) {
         payload.input = queryInput.value;
-        store.isLoading = true
+        user.isLoading = true
     }
     queryInput.value = ""
 }
@@ -40,16 +40,12 @@ onMounted(() => {
     vFocus.value.focus()
 })
 
-watchEffect(async() => {
-    store.isLoading = true
-    const fetchExplore = await RepoRequest.searchRepos(payload.input, payload.language, payload.sort, payload.order, payload.page, payload.per_page)
-    // useExploreStore.reposTrending = fetchExplore
-    payload.input = ''
-    store.isLoading = false
-    console.log(fetchExplore)
+watchEffect(() => {
+    const fetchExplore = fetch(`https://api.github.com/search/repositories?q=${payload.input}+language:${payload.language}&sort=${payload.sort}&order=${payload.order}&page=${payload.page}&per_page=${payload.per_page}`).then(res => res.json()).then(data => {
+        useExploreStore.reposTrending = data
+        user.isLoading = false
+    })
 })
-
-const store = userStore()
 
 const filterMode = ref('default')
 const reposComputed = computed(() => {
@@ -117,8 +113,8 @@ const getTimeUpdated = (time: any) => {
                 </div>
             </div>
         </div>
-        <CLoading v-if="store.isLoading === true" />
-        <div class="repositories_list w-full" v-if="store.isLoading === false">
+        <CLoading v-if="user.isLoading === true" />
+        <div class="repositories_list w-full" v-if="user.isLoading === false">
             <div class="repo relative flex justify-between items-start bg-[#FAFAFA] hover:bg-[#F6F6F6] duration-200 border-1 border-solid border-light-700/50 mt-2 rounded-xl py-2 px-5"
                 v-for="trending in reposVisibleComputed" :key="trending.id">
                 <div class="flex">

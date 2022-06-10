@@ -1,21 +1,21 @@
 <script setup lang="ts">
 import { computed, ref, reactive } from 'vue';
-import { userStore } from '../stores/user'
+import { useUser } from '../stores/user'
 import CLoading from '../components/CLoading.vue';
 import IUserName from '../components/icons/user/IUsername.vue'
 import IGithub from '../components/icons/user/IGithub.vue'
 
-const useUserStore = userStore()
+const user = useUser()
 
 const getEvenFollow = computed(() => {
-    return useUserStore.followersData.filter((element: any, index: any) => {
+    return user.followersData.filter((element: any, index: any) => {
         if (index % 2 === 0) {
             return element
         }
     })
 })
 const getOddFollow = computed(() => {
-    return useUserStore.followersData.filter((element: any, index: any) => {
+    return user.followersData.filter((element: any, index: any) => {
         if (index % 2 !== 0) {
             return element
         }
@@ -32,9 +32,9 @@ const printList = computed(() => {
 </script>
 
 <template>
-    <CLoading v-if="useUserStore.isLoading === true" />
+    <CLoading v-if="user.isLoading === true" />
     <div class="users-container p-8 grid justify-center items-center z-0 dark:bg-black"
-        v-if="useUserStore.isLoading === false">
+        v-if="user.isLoading === false">
         <div class="container pt-5 rounded-lg max-w-1/2 h-min mx-auto">
             <div
                 class="nav text-3xl font-bold flex justify-center items-center py-4 relative bg-green-100 rounded-b-md -mx-4 mt-3">
@@ -42,7 +42,7 @@ const printList = computed(() => {
             </div>
             <div class="list rounded-lg max-h-screen overflow-y-scroll flex justify-center flex-wrap gap-5 p-3">
                 <div class="num relative dark:text-white cursor-pointer text-right rounded-t-l-none rounded-t-r-md rounded-b-l-md rounded-b-r-md"
-                    v-for="(follower, i) in useUserStore.followersData" :key="i">
+                    v-for="(follower, i) in user.followersData" :key="i">
 
                     <a :href="follower.html_url" class="">
                         <img :src="follower.avatar_url" alt="followers_avatar" class="user-avatar w-18" />

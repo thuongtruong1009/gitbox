@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { userStore } from '../stores/user';
+import { useUser } from '../stores/user';
+import { useRepo } from '../stores/repo';
 import { computed, ref } from 'vue';
 import langColor from '../shared/lang';
-import {alphaSort} from '../utils/sort'
+import { alphaSort } from '../utils/sort'
 import CLoading from '../components/CLoading.vue';
 import IMultiLine from '../components/icons/repos/IMultiLine.vue';
 import ISingleLine from '../components/icons/repos/ISingleLine.vue'
@@ -12,27 +13,28 @@ import IDownload from '../components/icons/repos/IDownload.vue';
 import IClone from '../components/icons/repos/IClone.vue';
 import IGenerate from '../components/icons/repos/IGenerate.vue'
 
-const store = userStore()
+const store = useUser()
+const repo = useRepo()
 
 const filterMode = ref('default')
 const reposComputed = computed(() =>{
     if(filterMode.value === 'default'){
-        return alphaSort(store.reposData, "name");
+        return alphaSort(repo.reposData, "name");
     }
     else if(filterMode.value === 'most_stars'){
-        return (store.reposData.sort((a:any, b:any) => a.stargazers_count - b.stargazers_count)).reverse();
+        return (repo.reposData.sort((a:any, b:any) => a.stargazers_count - b.stargazers_count)).reverse();
     }
     else if(filterMode.value === 'fewest_star'){
-        return (store.reposData.sort((a:any, b:any) => a.stargazers_count - b.stargazers_count));
+        return (repo.reposData.sort((a:any, b:any) => a.stargazers_count - b.stargazers_count));
     }
     else if(filterMode.value === 'most_fork'){
-        return (store.reposData.sort((a:any, b:any) => a.forks_count - b.forks_count)).reverse();
+        return (repo.reposData.sort((a:any, b:any) => a.forks_count - b.forks_count)).reverse();
     }
     else if(filterMode.value === 'fewest_fork'){
-        return (store.reposData.sort((a:any, b:any) => a.forks_count - b.forks_count));
+        return (repo.reposData.sort((a:any, b:any) => a.forks_count - b.forks_count));
     }
     else if(filterMode.value === 'z_a'){
-        return alphaSort(store.reposData, "name").reverse();
+        return alphaSort(repo.reposData, "name").reverse();
     }
 })
 </script>

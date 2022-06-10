@@ -1,11 +1,11 @@
 <script setup>
 import {reactive, computed} from 'vue'
-import { userStore } from '../stores/user';
+import { useUser } from '../stores/user';
 import IFollower from './icons/IFollower.vue';
 import IStars from './icons/IStars.vue';
 import IRepos from './icons/IRepos.vue';
 
-const store = userStore()
+const store = useUser()
 const starredNumber = reactive([])
 const getStarredLength = computed(() =>{
     store.starredData.map((item) => starredNumber.push(item))
