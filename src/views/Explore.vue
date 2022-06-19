@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { useUser } from '../stores/user';
 import { exploreStore } from '../stores/explore'
 import { computed, onMounted, reactive, ref, watchEffect } from 'vue';
@@ -18,7 +18,7 @@ import ISearch from '../components/icons/ISearch.vue';
 
 const user = useUser()
 const useExploreStore = exploreStore();
-const queryInput = ref<any>("tetris");
+const queryInput = ref("tetris");
 
 const payload = reactive({
     input: 'tetris',
@@ -36,7 +36,7 @@ const search = () => {
     }
     queryInput.value = ""
 }
-const vFocus = ref<any>()
+const vFocus = ref()
 onMounted(() => {
     vFocus.value.focus()
 })
@@ -52,16 +52,16 @@ const filterMode = ref('default')
 const reposComputed = computed(() => {
     switch (filterMode.value) {
         case 'most_stars':
-            return (useExploreStore.reposTrending.items.sort((a: any, b: any) => a.stargazers_count - b.stargazers_count)).reverse();
+            return (useExploreStore.reposTrending.items.sort((a, b) => a.stargazers_count - b.stargazers_count)).reverse();
             break;
         case 'fewest_star':
-            return (useExploreStore.reposTrending.items.sort((a: any, b: any) => a.stargazers_count - b.stargazers_count));
+            return (useExploreStore.reposTrending.items.sort((a, b) => a.stargazers_count - b.stargazers_count));
             break;
         case 'most_fork':
-            return (useExploreStore.reposTrending.items.sort((a: any, b: any) => a.forks_count - b.forks_count)).reverse();
+            return (useExploreStore.reposTrending.items.sort((a, b) => a.forks_count - b.forks_count)).reverse();
             break;
         case 'fewest_fork':
-            return (useExploreStore.reposTrending.items.sort((a: any, b: any) => a.forks_count - b.forks_count));
+            return (useExploreStore.reposTrending.items.sort((a, b) => a.forks_count - b.forks_count));
             break;
         case 'z_a':
             return alphaSort(useExploreStore.reposTrending.items, "name").reverse();
