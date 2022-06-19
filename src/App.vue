@@ -18,7 +18,7 @@ const scrollFunction = () => {
     isScroll.value = false
 }
 window.addEventListener('scroll', scrollFunction)
-// document.addEventListener('contextmenu', event => event.preventDefault());
+document.addEventListener('contextmenu', event => event.preventDefault());
 
 </script>
 
