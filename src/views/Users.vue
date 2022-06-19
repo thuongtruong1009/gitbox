@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { computed, ref, reactive } from 'vue';
 import { useUser } from '../stores/user'
 import CLoading from '../components/CLoading.vue';
@@ -14,14 +14,14 @@ const getEvenFollow = computed(() => {
         }
     })
 })
-const getOddFollow = computed<any>(() => {
+const getOddFollow = computed(() => {
     return user.followersData.filter((element: any, index: any) => {
         if (index % 2 !== 0) {
             return element
         }
     })
 })
-const printList = computed<any>(() => {
+const printList = computed(() => {
     const result = []
     while (getOddFollow.value.length && getEvenFollow.value.length) {
         result.push(getOddFollow.value.splice(0, 3), getEvenFollow.value.splice(0, 4))
