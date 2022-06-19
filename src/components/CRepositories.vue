@@ -2,6 +2,7 @@
 import { useUser } from '../stores/user';
 import { useRepo } from '../stores/repo'
 import { computed, ref } from 'vue';
+import { handleDate } from '../utils/date';
 import langColor from '../shared/lang';
 import { alphaSort, sizeSort } from '../utils/sort'
 import CLoading from '../components/CLoading.vue';
@@ -43,14 +44,14 @@ const reposVisible = ref(3)
 const step = ref(3)
 const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVisible.value))
 
-const getTimeUpdated = (time: any) => {
-    const date = new Date(time)
-    const year = date.getFullYear().toString()
-    const month = date.getMonth().toString()
-    const day = date.getDay().toString()
-    const result = year.concat('-').concat(month).concat('-').concat(day)
-    return result
-}
+// const getTimeUpdated = (time: any) => {
+//     const date = new Date(time)
+//     const year = date.getFullYear().toString()
+//     const month = date.getMonth().toString()
+//     const day = date.getDay().toString()
+//     const result = year.concat('-').concat(month).concat('-').concat(day)
+//     return result
+// }
 </script>
 
 <template>
@@ -119,7 +120,7 @@ const getTimeUpdated = (time: any) => {
                             <span class="mx-1.5">•</span>
                             <span
                                 class="repo_update_time"
-                            >Updated {{ getTimeUpdated(repo.updated_at) }}</span>
+                            >Updated {{ handleDate(repo.updated_at) }}</span>
                         </p>
                     </div>
                 </div>

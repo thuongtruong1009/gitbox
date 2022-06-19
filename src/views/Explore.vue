@@ -76,15 +76,6 @@ const reposVisibleInit = ref(5)
 const step = ref(5)
 const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVisibleInit.value))
 
-// const getTimeUpdated = (time: any) => {
-//     const date = new Date(time)
-//     const year = date.getFullYear().toString()
-//     const month = date.getMonth().toString()
-//     const day = date.getDay().toString()
-//     const result = year.concat('-').concat(month).concat('-').concat(day)
-//     return result
-// }
-
 </script>
 
 <template>

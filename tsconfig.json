@@ -12,6 +12,10 @@
     "lib": ["esnext", "dom"]
   },
   "noImplicitAny": false,
+  "typeRoots": [
+    "./typings",
+    "./node_modules/@types/"
+  ],
   "include": ["src/**/*.js", "src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
