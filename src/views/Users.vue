@@ -14,14 +14,14 @@ const getEvenFollow = computed(() => {
         }
     })
 })
-const getOddFollow = computed(() => {
+const getOddFollow = computed<any>(() => {
     return user.followersData.filter((element: any, index: any) => {
         if (index % 2 !== 0) {
             return element
         }
     })
 })
-const printList = computed(() => {
+const printList = computed<any>(() => {
     const result = []
     while (getOddFollow.value.length && getEvenFollow.value.length) {
         result.push(getOddFollow.value.splice(0, 3), getEvenFollow.value.splice(0, 4))
