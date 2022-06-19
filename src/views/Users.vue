@@ -8,14 +8,14 @@ import IGithub from '../components/icons/user/IGithub.vue'
 const user = useUser()
 
 const getEvenFollow = computed(() => {
-    return user.followersData.filter((element: any, index: any) => {
+    return user.followersData.filter((element, index) => {
         if (index % 2 === 0) {
             return element
         }
     })
 })
 const getOddFollow = computed(() => {
-    return user.followersData.filter((element: any, index: any) => {
+    return user.followersData.filter((element, index) => {
         if (index % 2 !== 0) {
             return element
         }
