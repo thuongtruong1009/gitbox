@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
+
 import { useActivity } from '../stores/activity'
 import { useUser } from '../stores/user';
+import { getDate, getTime } from '../utils/date';
+
 import EventRequest from '../services/event_request';
+
 import CLoading from '../components/CLoading.vue';
 
 import ISpan from './icons/time_line/ISpan.vue'
@@ -103,9 +107,7 @@ const temp = (type: string) => {
                                                 class="rounded-2xl text-xs text-gray-500 px-2 py-0.5 border-1 border-solid border-gray-300 dark:border-none dark:text-[#0F9669] bg-[#F7F7F7] dark:bg-[#1C4C6E]">
                                                 OWNER</h4>
                                         </div>
-                                        <p class="text-gray-400 font-medium" style="font-size: 0.65em">created at {{
-                                            getDateItem(new Date(active.created_at))
-                                        }}</p>
+                                        <p class="text-gray-400 font-medium" style="font-size: 0.65em">created at {{ getDate(active.created_at) }} - {{ getTime(active.created_at)}}</p>
                                     </div>
                                     <div class="flex gap-2"
                                         v-if="active.payload.pull_request && active.payload.pull_request.labels[0]">

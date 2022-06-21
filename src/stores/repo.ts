@@ -1,5 +1,5 @@
 import {defineStore } from 'pinia'
-import {reactive} from 'vue'
+import { reactive } from 'vue'
 
 export const useRepo = defineStore('repo', () =>{
     const reposData = reactive<any>([])

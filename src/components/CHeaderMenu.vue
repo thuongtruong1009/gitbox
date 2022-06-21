@@ -4,9 +4,9 @@ import { onMounted, ref, watchEffect } from 'vue'
 
 import { useUser } from "../stores/user";
 import { useRepo } from '../stores/repo';
+
 import UserRequest from '../services/user_request'
 import OrgRequest from '../services/org_request'
-import RepoRequest from '../services/repo_request'
 import StarredRequest from '../services/starred_request'
 
 import ILogo from "./icons/ILogo.vue"
@@ -34,16 +34,14 @@ watchEffect(() => {
     const fetchUser = UserRequest.getUser(store.userName)
     const fetchOrg = OrgRequest.getOrgs(store.userName)
     const fetchStarred = StarredRequest.getAllStarred(store.userName)
-    const fetchRepo = RepoRequest.getAllRepos(store.userName)
     const fetchFollowers = UserRequest.getFollowers(store.userName)
 
-    const apiData = Promise.all([fetchUser, fetchOrg, fetchStarred, fetchRepo, fetchFollowers])
+    const apiData = Promise.all([fetchUser, fetchOrg, fetchStarred, fetchFollowers])
     apiData.then((res) => {
         store.userData = res[0]
         store.orgsData = res[1]
         store.starredData = res[2]
-        repo.reposData = res[3]
-        store.followersData = res[4]
+        store.followersData = res[3]
         store.isLoading = false
 
         // console.log(res)

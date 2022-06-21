@@ -4,7 +4,7 @@ import { exploreStore } from '../stores/explore'
 import { computed, onMounted, reactive, ref, watchEffect } from 'vue';
 import langColor from '../shared/lang';
 import { alphaSort } from '../utils/sort'
-import { handleDate } from '../utils/date'
+import { getDate, getTime } from '../utils/date';
 
 import CLoading from '../components/CLoading.vue';
 import IMultiLine from '../components/icons/repos/IMultiLine.vue';
@@ -129,7 +129,7 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
                                 <a :href="trending.license.url">{{ trending.license.spdx_id }} license</a>
                                 <span class="mx-1.5">•</span>
                             </span>
-                            <span class="repo_update_time">Last updated {{ handleDate(trending.updated_at) }}</span>
+                            <span class="repo_update_time">Last updated {{ getDate(trending.updated_at) }} - {{ getTime(trending.updated_at)}}</span>
                         </p>
                     </div>
                 </div>
