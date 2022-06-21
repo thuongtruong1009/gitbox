@@ -1,7 +1,8 @@
 import {defineStore } from 'pinia'
-import {reactive, ref} from 'vue'
+import { reactive } from 'vue'
 
-export const repoStore = defineStore('repo', () =>{
-    const topics = reactive([])
-    return {topics}
+export const useRepo = defineStore('repo', () =>{
+    const reposData = reactive<any>([])
+    const topics = reactive<any>([])
+    return { reposData, topics }
 })

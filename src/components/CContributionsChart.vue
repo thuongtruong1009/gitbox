@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { userStore } from "../stores/user"
-const store = userStore()
+import { useUser } from "../stores/user"
+const store = useUser()
 </script>
 
 <template>

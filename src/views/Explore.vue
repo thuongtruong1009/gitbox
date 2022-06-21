@@ -1,9 +1,11 @@
-<script setup lang="ts">
-import { userStore } from '../stores/user';
+<script setup>
+import { useUser } from '../stores/user';
 import { exploreStore } from '../stores/explore'
 import { computed, onMounted, reactive, ref, watchEffect } from 'vue';
 import langColor from '../shared/lang';
-import { alphaSort } from '../shared/sort'
+import { alphaSort } from '../utils/sort'
+import { getDate, getTime } from '../utils/date';
+
 import CLoading from '../components/CLoading.vue';
 import IMultiLine from '../components/icons/repos/IMultiLine.vue';
 import ISingleLine from '../components/icons/repos/ISingleLine.vue'
@@ -14,45 +16,52 @@ import IClone from '../components/icons/repos/IClone.vue';
 import IGenerate from '../components/icons/repos/IGenerate.vue'
 import ISearch from '../components/icons/ISearch.vue';
 
+const user = useUser()
 const useExploreStore = exploreStore();
-const queryInput = ref<any>("tetris");
-const q = ref<any>("tetris");
+const queryInput = ref("tetris");
+
+const payload = reactive({
+    input: 'tetris',
+    language: 'assembly',
+    sort: 'stars',
+    order: 'desc',
+    page: 1,
+    per_page: 30
+})
 
 const search = () => {
-    if (queryInput.value !== "") {
-        q.value = queryInput.value;
-        store.isLoading = true
+    if (queryInput.value) {
+        payload.input = queryInput.value;
+        user.isLoading = true
     }
     queryInput.value = ""
 }
-const vFocus = ref<any>()
+const vFocus = ref()
 onMounted(() => {
     vFocus.value.focus()
 })
 
 watchEffect(() => {
-    const fetchExplore = fetch(`https://api.github.com/search/repositories?q=${q.value}+language:assembly&sort=stars&order=desc`).then(res => res.json()).then(data => {
+    const fetchExplore = fetch(`https://api.github.com/search/repositories?q=${payload.input}+language:${payload.language}&sort=${payload.sort}&order=${payload.order}&page=${payload.page}&per_page=${payload.per_page}`).then(res => res.json()).then(data => {
         useExploreStore.reposTrending = data
-        store.isLoading = false
+        user.isLoading = false
     })
 })
-
-const store = userStore()
 
 const filterMode = ref('default')
 const reposComputed = computed(() => {
     switch (filterMode.value) {
         case 'most_stars':
-            return (useExploreStore.reposTrending.items.sort((a: any, b: any) => a.stargazers_count - b.stargazers_count)).reverse();
+            return (useExploreStore.reposTrending.items.sort((a, b) => a.stargazers_count - b.stargazers_count)).reverse();
             break;
         case 'fewest_star':
-            return (useExploreStore.reposTrending.items.sort((a: any, b: any) => a.stargazers_count - b.stargazers_count));
+            return (useExploreStore.reposTrending.items.sort((a, b) => a.stargazers_count - b.stargazers_count));
             break;
         case 'most_fork':
-            return (useExploreStore.reposTrending.items.sort((a: any, b: any) => a.forks_count - b.forks_count)).reverse();
+            return (useExploreStore.reposTrending.items.sort((a, b) => a.forks_count - b.forks_count)).reverse();
             break;
         case 'fewest_fork':
-            return (useExploreStore.reposTrending.items.sort((a: any, b: any) => a.forks_count - b.forks_count));
+            return (useExploreStore.reposTrending.items.sort((a, b) => a.forks_count - b.forks_count));
             break;
         case 'z_a':
             return alphaSort(useExploreStore.reposTrending.items, "name").reverse();
@@ -66,15 +75,6 @@ const reposComputed = computed(() => {
 const reposVisibleInit = ref(5)
 const step = ref(5)
 const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVisibleInit.value))
-
-const getTimeUpdated = (time: any) => {
-    const date = new Date(time)
-    const year = date.getFullYear().toString()
-    const month = date.getMonth().toString()
-    const day = date.getDay().toString()
-    const result = year.concat('-').concat(month).concat('-').concat(day)
-    return result
-}
 
 </script>
 
@@ -105,8 +105,8 @@ const getTimeUpdated = (time: any) => {
                 </div>
             </div>
         </div>
-        <CLoading v-if="store.isLoading === true" />
-        <div class="repositories_list w-full" v-if="store.isLoading === false">
+        <CLoading v-if="user.isLoading === true" />
+        <div class="repositories_list w-full" v-if="user.isLoading === false">
             <div class="repo relative flex justify-between items-start bg-[#FAFAFA] hover:bg-[#F6F6F6] duration-200 border-1 border-solid border-light-700/50 mt-2 rounded-xl py-2 px-5"
                 v-for="trending in reposVisibleComputed" :key="trending.id">
                 <div class="flex">
@@ -121,16 +121,31 @@ const getTimeUpdated = (time: any) => {
                         <div class="flex flex-wrap gap-1 my-2">
                             <p v-for="(topic, i) in trending.topics" :key="i"
                                 class="bg-[#DDF4FF] py-1 px-2 text-xs font-medium rounded-xl text-[#0969DA] hover:text-white hover:bg-[#0969DA] cursor-pointer">
-                                {{ topic }}</p>
+                                {{ topic }}
+                            </p>
                         </div>
                         <p class="flex text-xs font-medium text-gray-400">
-                            <!-- <span class="repo_license">{{ repo.license.spdx_id }}</span> -->
-                            <span class="mx-1.5">•</span>
-                            <span class="repo_update_time">Updated {{ getTimeUpdated(trending.updated_at) }}</span>
+                            <span class="repo_license" v-if="trending.license">
+                                <a :href="trending.license.url">{{ trending.license.spdx_id }} license</a>
+                                <span class="mx-1.5">•</span>
+                            </span>
+                            <span class="repo_update_time">Last updated {{ getDate(trending.updated_at) }} - {{ getTime(trending.updated_at)}}</span>
                         </p>
                     </div>
                 </div>
                 <div class="repo_option">
+                    <div
+                        class="flex justify-end items-end text-sm text-[#9595A1] font-medium gap-3 absolute bottom-3 right-5">
+                        <a :href="`${trending.html_url}/archive/HEAD.zip`">
+                            <IDownload />
+                        </a>
+                        <a :href="trending.forks_url">
+                            <IClone />
+                        </a>
+                        <a :href="`${trending.html_url}/generate`">
+                            <IGenerate />
+                        </a>
+                    </div>
                     <div class="flex text-sm text-[#9595A1] font-medium gap-3">
                         <p class="repo_lang flex items-center gap-1">
                             <span class="lang-icon w-2.5 h-2.5 rounded-full block"
@@ -145,18 +160,6 @@ const getTimeUpdated = (time: any) => {
                             <IFork />
                             {{ trending.forks_count }}
                         </p>
-                    </div>
-                    <div
-                        class="flex justify-end items-end text-sm text-[#9595A1] font-medium gap-3 absolute bottom-3 right-5">
-                        <a :href="`${trending.html_url}/archive/HEAD.zip`">
-                            <IDownload />
-                        </a>
-                        <a :href="trending.forks_url">
-                            <IClone />
-                        </a>
-                        <a :href="`${trending.html_url}/generate`">
-                            <IGenerate />
-                        </a>
                     </div>
                 </div>
             </div>

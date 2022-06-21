@@ -1,21 +1,20 @@
 <script setup lang="ts">
-import { userStore } from '../stores/user';
+import { useUser } from '../stores/user';
 import CMetricsBox from '../components/CMetricsBox.vue';
 import CInforBox from '../components/CInforBox.vue'
 import CContributionsChart from '../components/CContributionsChart.vue'
 import CGraphActivities from '../components/CGraphActivities.vue';
-import CRepositories from '../components/CRepositories.vue';
 import CActivities from '../components/CActivities.vue';
 import CTimeLine from '../components/CTimeLine.vue';
 import CLoading from '../components/CLoading.vue';
 
-const useUserStore = userStore()
+const user = useUser()
 
 </script>
 
-<template>
-    <CLoading v-if="useUserStore.isLoading === true" />
-    <div class="home-view" v-if="useUserStore.isLoading === false">
+<template v-cloak>
+    <CLoading v-if="user.isLoading === true" />
+    <div class="home-view" v-if="user.isLoading === false">
         <div class="statics relative dark:bg-[#181818] bg-gradient-to-r from-[#5B79A2] to-[#2F456A]">
             <div class="flex justify-center items-start gap-3 dark:bg-[#181818] pt-5">
                 <CInforBox />
@@ -28,7 +27,6 @@ const useUserStore = userStore()
                 <CGraphActivities />
             </div>
         </div>
-        <CRepositories />
         <CActivities />
     </div>
 </template>

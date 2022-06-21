@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { userStore } from '../stores/user';
-const store = userStore()
+import { useUser } from '../stores/user';
+const store = useUser()
 
 const getTimeJoined = computed(() => {
     const dateJoin = new Date(store.userData.created_at)

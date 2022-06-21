@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { reactive } from 'vue'
 
-export const activityStore = defineStore('activity', () => {
+export const useActivity = defineStore('activity', () => {
   const activitiesData = reactive<any>([])
 
   return{

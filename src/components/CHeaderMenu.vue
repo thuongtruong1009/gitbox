@@ -1,8 +1,14 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
 import { onMounted, ref, watchEffect } from 'vue'
-import { userStore } from "../stores/user";
-import { activityStore } from "../stores/activity"
+
+import { useUser } from "../stores/user";
+import { useRepo } from '../stores/repo';
+
+import UserRequest from '../services/user_request'
+import OrgRequest from '../services/org_request'
+import StarredRequest from '../services/starred_request'
+
 import ILogo from "./icons/ILogo.vue"
 import ISearch from "./icons/ISearch.vue";
 import IHome from "./icons/header/IHome.vue";
@@ -12,8 +18,8 @@ import IAbout from "./icons/header/IContact.vue"
 
 import CDarkMode from "@/components/CDarkMode.vue"
 
-const store = userStore()
-const activities = activityStore()
+const store = useUser()
+const repo = useRepo()
 
 const getNameInput = ref('')
 const saveNameInput = () => {
@@ -23,26 +29,21 @@ const saveNameInput = () => {
         getNameInput.value = ''
     }
 }
-watchEffect(async () => {
-    const fetchUser = await fetch(store.api + store.userName).then((res) => res.json())
-    const fetchOrgs = await fetch(store.api + store.userName + "/orgs").then((res) => res.json())
-    const fetchStarred = await fetch(store.api + store.userName + "/starred").then((res) => res.json())
-    const fetchRepos = await fetch(store.api + store.userName + "/repos").then((res) => res.json())
-    const fetchEvents = await fetch(store.api + store.userName + "/events/public").then((res) => res.json())
-    const fetchFollowers = await fetch(store.api + store.userName + "/followers").then((res) => res.json())
+watchEffect(() => {
+    store.isLoading = true
+    const fetchUser = UserRequest.getUser(store.userName)
+    const fetchOrg = OrgRequest.getOrgs(store.userName)
+    const fetchStarred = StarredRequest.getAllStarred(store.userName)
+    const fetchFollowers = UserRequest.getFollowers(store.userName)
 
-    const apiData = Promise.all([fetchUser, fetchOrgs, fetchStarred, fetchRepos, fetchEvents, fetchFollowers])
-    apiData.then(async (res) => {
-        store.userData = await res[0]
-        store.orgsData = await res[1]
-        store.starredData = await res[2]
-        store.reposData = await res[3]
-        activities.activitiesData = await res[4]
-        store.followersData = await res[5]
+    const apiData = Promise.all([fetchUser, fetchOrg, fetchStarred, fetchFollowers])
+    apiData.then((res) => {
+        store.userData = res[0]
+        store.orgsData = res[1]
+        store.starredData = res[2]
+        store.followersData = res[3]
         store.isLoading = false
-        // setTimeout(()=>{
-        //     store.isLoading = false
-        // }, 2000);
+
         // console.log(res)
     })
 })

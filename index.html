@@ -3,8 +3,23 @@
 
 <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/favicon.svg" type="image/x-icon">
+    <meta property="og:image" content="/favicon.svg">
+    <meta property="og:description" content="Generate details your statistics of Github data information when searching">
+    <meta name="keywords" content="github, gitbox, vue, api, javascript, typescript, pinia, axios, router">
+    <meta property=”og:url” content="https://www.gitbox.vercel.app" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Gitbox and GitHub">
+    <meta name="twitter:card" content="/favicon.svg" />
+    <meta name="twitter:title" content="Gitbox and GitHub" />
+    <meta name="twitter:url" content="https://www.gitbox.vercel.app/" />
+    <meta name="twitter:description" content="Generate details your statistics of Github data information when searching" />
+    <meta name="twitter:image" content="/favicon.svg" />
+    <!-- <html itemscope itemtype="https://schema.org/Article"> -->
+    <meta itemprop="name" content="Gitbox and GitHub">
+    <meta itemprop="description" content="Generate details your statistics of Github data information when searching">
+    <meta itemprop="image" content="/favicon.svg">
     <title>Gitbox</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
     <script>
@@ -20,6 +35,15 @@
 <body>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
+
+    <script type='text/javascript'>
+        document.onkeydown = function() {
+            if (window.event.keyCode == 123) {
+                window.event.keyCode = 0;
+                window.event.returnValue = false;
+            }
+        }
+    </script>
 </body>
 
 </html>

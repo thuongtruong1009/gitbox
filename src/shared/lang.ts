@@ -59,6 +59,8 @@ const langColor:any = {
     "PLpgSQL": "#DAD8D8",
     "PLSQL": "#DAD8D8",
     "TSQL": "#DAD8D8",
-    "SQLPL": "#DAD8D8"
+    "SQLPL": "#DAD8D8",
+    "OpenEdge ABL": "#5CE600",
+    "Roff": "#ECDEBE"
  };
  export default langColor

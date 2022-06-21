@@ -3,6 +3,12 @@
     GITBOX
 </h1>
 
+## Preview
+
+![Home](/public/preview/demo_version5.png)
+
+## Proccess
+![Project](/public//preview/demo_project.png)
 ## Features
 + [chart](https://vuejsprojects.com/vue-morris)
 
