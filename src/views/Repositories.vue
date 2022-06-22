@@ -99,10 +99,10 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
                 :key="repo.id"
             >
                 <div class="flex">
-                    <div class="repo_action mr-3">
+                    <div class="mr-3">
                         <img
                             :src="repo.owner.avatar_url"
-                            alt="repo_img" class="min-w-13 h-13 rounded-full"
+                            alt="repo_img" class="min-w-13 h-13 rounded-full shadow-md"
                         />
                     </div>
                     <div class="repo_detail">
@@ -118,7 +118,7 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
                             >{{ topic }}</p>
                         </div>
                         <p class="flex text-xs font-medium text-gray-400">
-                            <span class="repo_license">{{ repo.license?.spdx_id }}</span>
+                            <span class="repo_license">{{ repo.license }}</span>
                             <span class="mx-1.5">•</span>
                             <span
                                 class="repo_update_time"
@@ -145,15 +145,15 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
                         </p>
                     </div>
                     <div
-                        class="flex justify-end items-end text-sm text-[#9595A1] font-medium gap-3 absolute bottom-3 right-5"
+                        class="repo_action flex justify-end items-end text-sm text-[#9595A1] font-medium gap-3 absolute bottom-3 right-5"
                     >
-                        <a :href="`${repo.html_url}/archive/HEAD.zip`">
+                        <a :href="`${repo.html_url}/archive/HEAD.zip`" title="download">
                             <IDownload />
                         </a>
-                        <a :href="repo.forks_url">
+                        <a :href="repo.forks_url" title="fork">
                             <IClone />
                         </a>
-                        <a :href="`${repo.html_url}/generate`">
+                        <a :href="`${repo.html_url}/generate`" title="generate">
                             <IGenerate />
                         </a>
                     </div>
@@ -197,5 +197,11 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
     border-color: #cb72aa;
     color: #fff;
     box-shadow: inset 0 0 0 2em #cb72aa;
+}
+.repo_action{
+    display: none;
+}
+.repo:hover .repo_action{
+    display: flex;
 }
 </style>

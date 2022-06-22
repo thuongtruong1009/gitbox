@@ -15,6 +15,8 @@ import IDownload from '../components/icons/repos/IDownload.vue';
 import IClone from '../components/icons/repos/IClone.vue';
 import IGenerate from '../components/icons/repos/IGenerate.vue'
 import ISearch from '../components/icons/ISearch.vue';
+import IArrowLeft from '../components/icons/explore/IArrowLeft.vue'
+import IArrowRight from '../components/icons/explore/IArrowRight.vue'
 
 const user = useUser()
 const useExploreStore = exploreStore();
@@ -107,7 +109,7 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
         </div>
         <CLoading v-if="user.isLoading === true" />
         <div class="repositories_list w-full" v-if="user.isLoading === false">
-            <div class="repo relative flex justify-between items-start bg-[#FAFAFA] hover:bg-[#F6F6F6] duration-200 border-1 border-solid border-light-700/50 mt-2 rounded-xl py-2 px-5"
+            <div class="repo relative flex justify-between items-start bg-[#FAFAFA] dark:(bg-gray-900 hover:bg-gray-800 border-gray-700) hover:bg-[#F6F6F6] duration-200 border-1 border-solid border-light-700/50 mt-2 rounded-xl py-2 px-5"
                 v-for="trending in reposVisibleComputed" :key="trending.id">
                 <div class="flex">
                     <div class="repo_action mr-3">
@@ -117,10 +119,10 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
                         <a :href="trending.html_url">
                             <h2 class="text-lg text-[#0969DA] font-medium">{{ trending.full_name }}</h2>
                         </a>
-                        <p class="text-sm font-medium opacity-80 my-3">{{ trending.description }}</p>
+                        <p class="text-sm dark:text-orange-500 font-medium opacity-80 my-3">{{ trending.description }}</p>
                         <div class="flex flex-wrap gap-1 my-2">
                             <p v-for="(topic, i) in trending.topics" :key="i"
-                                class="bg-[#DDF4FF] py-1 px-2 text-xs font-medium rounded-xl text-[#0969DA] hover:text-white hover:bg-[#0969DA] cursor-pointer">
+                                class="bg-[#DDF4FF] dark:(bg-gray-700 text-purple-600) py-1 px-2 text-xs font-medium rounded-xl text-[#0969DA] hover:text-white hover:bg-[#0969DA] cursor-pointer">
                                 {{ topic }}
                             </p>
                         </div>
@@ -163,10 +165,30 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
                     </div>
                 </div>
             </div>
-            <div class="loadmore-tab">
-                <button class="fill_btn" @click="reposVisibleInit += step"
-                    v-if="reposVisibleInit < useExploreStore.reposTrending.items.length">Load more...</button>
+
+            <div class="flex justify-between items-end py-2">
+                <div class="loadmore-tab">
+                    <button class="fill_btn" @click="reposVisibleInit += step"
+                        v-if="reposVisibleInit < useExploreStore.reposTrending.items.length">Load more...</button>
+                </div>
+                
+                <div class="flex flex-col items-center">
+                    <span class="text-xs text-gray-700 dark:text-gray-400">
+                        Showing <span class="font-semibold text-gray-900 dark:text-white">1</span> to <span class="font-semibold text-gray-900 dark:text-white">10</span> of <span class="font-semibold text-gray-900 dark:text-white">100</span> Entries
+                    </span>
+                    <div class="inline-flex mt-2 xs:mt-0">
+                        <button class="inline-flex items-center p-2 text-sm font-medium text-white bg-gray-800 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                            <IArrowLeft />
+                            Prev
+                        </button>
+                        <button class="inline-flex items-center p-2 text-sm font-medium text-white bg-gray-800 rounded-r border-0 border-l border-gray-700 hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                            Next
+                            <IArrowRight />
+                        </button>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
 </template>
