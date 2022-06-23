@@ -87,7 +87,7 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
         </div>
         <div class="filter_tab flex justify-between items-center py-5 w-full">
             <select name="filter" id="filter"
-                class="pl-3 py-2 rounded-3xl bg-[#F6F6F6] w-50 max-w-50 text-sm text-[#9595A1] cursor-pointer mr-3"
+                class="pl-3 py-2 rounded-3xl bg-[#F6F6F6] dark:bg-gray-700 w-50 max-w-50 text-sm text-[#9595A1] cursor-pointer mr-3"
                 v-model="filterMode">
                 <option value="default">Default matches</option>
                 <option value="most_stars">Most stars</option>
@@ -97,11 +97,10 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
                 <option value="z_a">Alphabet Z to A</option>
             </select>
             <div class="flex items-center gap-5">
-
                 <input type="text" name="search_repos" id="search_repos"
-                    class="px-5 rounded-3xl bg-[#F6F6F6] my-0.5 w-70 max-w-70" v-model="queryInput" ref="vFocus"
+                    class="px-5 rounded-3xl bg-[#F6F6F6] dark:(bg-gray-700 text-white) my-0.5 w-70 max-w-70" v-model="queryInput" ref="vFocus"
                     @keyup.enter="search" />
-                <div class="rounded-lg bg-[#F6F6F6] cursor-pointer flex justify-center items-center w-10 h-10 text-[#9595A1] hover:text-black"
+                <div class="rounded-lg bg-[#F6F6F6] dark:bg-gray-700 cursor-pointer flex justify-center items-center w-10 h-10 text-[#9595A1] hover:text-black"
                     @click="search">
                     <ISearch />
                 </div>
@@ -109,10 +108,10 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
         </div>
         <CLoading v-if="user.isLoading === true" />
         <div class="repositories_list w-full" v-if="user.isLoading === false">
-            <div class="repo relative flex justify-between items-start bg-[#FAFAFA] dark:(bg-gray-900 hover:bg-gray-800 border-gray-700) hover:bg-[#F6F6F6] duration-200 border-1 border-solid border-light-700/50 mt-2 rounded-xl py-2 px-5"
+            <div class="repo relative flex justify-between items-start bg-[#FAFAFA] dark:(bg-gray-900 hover:bg-gray-800 border-gray-700 shadow-gray-700) hover:bg-[#F6F6F6] shadow-md shadow-gray-300/50 duration-200 border-1 border-solid border-light-700/50 mt-2 rounded-xl py-2 px-5"
                 v-for="trending in reposVisibleComputed" :key="trending.id">
                 <div class="flex">
-                    <div class="repo_action mr-3">
+                    <div class="repo_avatar mr-3">
                         <img :src="trending.owner.avatar_url" alt="repo_img" class="min-w-13 h-13 rounded-full" />
                     </div>
                     <div class="repo_detail">
@@ -135,9 +134,9 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
                         </p>
                     </div>
                 </div>
-                <div class="repo_option">
+                <div>
                     <div
-                        class="flex justify-end items-end text-sm text-[#9595A1] font-medium gap-3 absolute bottom-3 right-5">
+                        class="repo_action flex justify-end items-end text-sm font-medium gap-3 absolute bottom-3 right-5">
                         <a :href="`${trending.html_url}/archive/HEAD.zip`">
                             <IDownload />
                         </a>
@@ -210,5 +209,18 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
     border-color: #cb72aa;
     color: #fff;
     box-shadow: inset 0 0 0 2em #cb72aa;
+}
+.repo_action{
+    color: #9595A1;
+    display:none;
+}
+.repo:hover .repo_action{
+    display: flex;
+}
+.repo_action a {
+    color: #9595A1;
+}
+.repo_action a:hover{
+    color:#cb72aa;
 }
 </style>

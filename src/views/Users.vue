@@ -41,13 +41,13 @@ const printList = computed(() => {
     <CLoading v-if="user.isLoading === true" />
     <div class="users-container p-8 grid justify-center items-center z-0 dark:bg-black"
         v-if="user.isLoading === false">
-        <div class="container pt-5 rounded-lg max-w-2/3 h-min mx-auto dark:bg-gray-800">
+        <div class="container pt-5 rounded-lg max-w-2/3 h-min mx-auto bg-[#f7f7f7] dark:bg-gray-800">
             <div
-                class="nav text-3xl font-bold flex justify-center items-center py-4 relative bg-green-100 rounded-b-md -mx-4 mt-3">
+                class="nav text-3xl font-bold flex justify-center items-center py-4 relative bg-green-100 dark:(bg-gray-700 text-white) rounded-b-md -mx-4 mt-3">
                 <h1>Followers data list</h1>
             </div>
             <div class="list rounded-lg max-h-screen overflow-y-scroll flex justify-start flex-wrap gap-5 p-3">
-                <div class="num relative flex items-center bg-white shadow-md shadow-gray-300/50 hover:shadow-lg rounded-lg cursor-pointer" v-for="(follower, i) in user.followersData" :key="i" @click="visitProfile(follower.html_url)">
+                <div class="num relative flex items-center bg-white dark:(bg-gray-700 shadow-gray-600) shadow-md shadow-gray-300/50 hover:shadow-lg rounded-lg cursor-pointer" v-for="(follower, i) in user.followersData" :key="i" @click="visitProfile(follower.html_url)">
                     <img class="w-15 h-15 rounded-full m-2 shadow-md" :src="follower.avatar_url" alt="user_avatar_img">
                     <div class="p-1 font-medium dark:text-white">
                         <div>{{ follower.login }}</div>
@@ -90,7 +90,6 @@ const printList = computed(() => {
 }
 
 .container {
-    background-color: rgb(247, 247, 247);
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1;
 }
