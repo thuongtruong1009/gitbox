@@ -34,7 +34,6 @@ const payload = reactive({
 const search = () => {
     if (queryInput.value) {
         payload.input = queryInput.value;
-        user.isLoading = true
     }
     queryInput.value = ""
 }
@@ -44,6 +43,7 @@ onMounted(() => {
 })
 
 watchEffect(() => {
+    user.isLoading = true
     const fetchExplore = fetch(`https://api.github.com/search/repositories?q=${payload.input}+language:${payload.language}&sort=${payload.sort}&order=${payload.order}&page=${payload.page}&per_page=${payload.per_page}`).then(res => res.json()).then(data => {
         useExploreStore.reposTrending = data
         user.isLoading = false
@@ -174,14 +174,14 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
                 
                 <div class="flex flex-col items-center">
                     <span class="text-xs text-gray-700 dark:text-gray-400">
-                        Showing <span class="font-semibold text-gray-900 dark:text-white">1</span> to <span class="font-semibold text-gray-900 dark:text-white">10</span> of <span class="font-semibold text-gray-900 dark:text-white">100</span> Entries
+                        Showing <span class="font-semibold text-gray-900 dark:text-white">{{ reposVisibleInit }}</span> entries of page <span class="font-semibold text-gray-900 dark:text-white">{{ payload.page }}</span>
                     </span>
-                    <div class="inline-flex mt-2 xs:mt-0">
-                        <button class="inline-flex items-center p-2 text-sm font-medium text-white bg-gray-800 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                    <div class="inline-flex mt-2 xs:mt-0 gap-1">
+                        <button class="inline-flex items-center p-2 text-sm font-medium text-white bg-gray-800 rounded-md hover:bg-gray-900 dark:(bg-gray-800 border-gray-700 text-gray-400) dark:hover:bg-gray-700 dark:hover:text-white" @click="--payload.page">
                             <IArrowLeft />
                             Prev
                         </button>
-                        <button class="inline-flex items-center p-2 text-sm font-medium text-white bg-gray-800 rounded-r border-0 border-l border-gray-700 hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                        <button class="inline-flex items-center p-2 text-sm font-medium text-white bg-gray-800 rounded-md border-0 border-l border-gray-700 hover:bg-gray-900 dark:(bg-gray-800 border-gray-700 text-gray-400) dark:hover:bg-gray-700 dark:hover:text-white" @click="++payload.page">
                             Next
                             <IArrowRight />
                         </button>

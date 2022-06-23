@@ -12,6 +12,7 @@ import StarredRequest from '../services/starred_request'
 import ILogo from "./icons/ILogo.vue"
 import ISearch from "./icons/ISearch.vue";
 import IHome from "./icons/header/IHome.vue";
+import IRepository from "./icons/header/IRepository.vue";
 import IExplore from "./icons/header/IExplore.vue"
 import IUsers from "./icons/header/IUsers.vue";
 import IAbout from "./icons/header/IContact.vue"
@@ -71,7 +72,7 @@ window.addEventListener('scroll', scrollFunction)
         </div>
         <div class="menu-tab flex gap-10 font-medium text-md text-[#98A4B5]">
             <RouterLink to="/" class="flex items-center gap-1" router-link-exact-active exact><IHome />Home</RouterLink>
-            <RouterLink to="/repositories" class="flex items-center gap-1">Repositories</RouterLink>
+            <RouterLink to="/repositories" class="flex items-center gap-1"><IRepository />Repositories</RouterLink>
             <RouterLink to="/users" class="flex items-center gap-1"><IUsers />Users</RouterLink>
             <RouterLink to="/explore" class="flex items-center gap-1"><IExplore />Explore</RouterLink>
             <RouterLink to="/about" class="flex items-center gap-1"><IAbout />About</RouterLink>
