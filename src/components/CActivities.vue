@@ -128,7 +128,7 @@ const temp = (type: string) => {
                         </div>
                         <p class="text-xs mt-3" v-if="active.payload.commits">
                             commit sha:
-                            <a href="#" class="text-[#3490DC] underline decoration-gray-400">
+                            <a :href="active.payload.commits[0]?.url.replace('api.github.com/repos', 'github.com')" class="text-[#3490DC] underline decoration-gray-400">
                                 {{ active.payload.commits[0]?.sha }}
                             </a>
                         </p>

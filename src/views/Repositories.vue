@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 
 import { useUser } from '../stores/user';
 import { useRepo } from '../stores/repo'
@@ -21,9 +21,11 @@ import IGenerate from '../components/icons/repos/IGenerate.vue'
 const user = useUser()
 const repo = useRepo()
 
-onMounted(async()=>{
+watchEffect(async()=>{
+    user.isLoading = true
     const fetchRepo = await RepoRequest.getAllRepos(user.userName)
     repo.reposData = fetchRepo
+    user.isLoading = false
 })
 
 const viewMode = ref('flow')
@@ -71,7 +73,7 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
             <select
                 name="filter"
                 id="filter"
-                class="pl-3 py-2 rounded-3xl bg-[#F6F6F6] w-50 max-w-50 text-sm text-[#9595A1] cursor-pointer mr-3"
+                class="pl-3 py-2 rounded-3xl bg-[#F6F6F6] dark:bg-gray-700 w-50 max-w-50 text-sm text-[#9595A1] cursor-pointer mr-3"
                 v-model="filterMode"
             >
                 <option value="default" class="accent-green-500/50">Alphabet A to Z</option>
@@ -83,26 +85,26 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
             </select>
             <div class="flex items-center gap-2 text-[#9595A1]">
                 <div
-                    class="rounded-lg cursor-pointer flex justify-center items-center w-9 h-9" @click="viewMode = 'grid'" :class="[viewMode === 'grid' ? 'bg-[#F6F6F6]' : 'bg-transparent']">
+                    class="rounded-lg cursor-pointer flex justify-center items-center w-9 h-9" @click="viewMode = 'grid'" :class="[viewMode === 'grid' ? 'bg-[#F6F6F6] dark:bg-gray-700' : 'bg-transparent']">
                     <ISingleLine />
                 </div>
                 <div
-                    class="rounded-lg cursor-pointer flex justify-center items-center w-9 h-9" @click="viewMode = 'flow'" :class="[viewMode === 'flow' ? 'bg-[#F6F6F6]' : 'bg-transparent']">
+                    class="rounded-lg cursor-pointer flex justify-center items-center w-9 h-9" @click="viewMode = 'flow'" :class="[viewMode === 'flow' ? 'bg-[#F6F6F6] dark:bg-gray-700' : 'bg-transparent']">
                     <IMultiLine />
                 </div>
             </div>
         </div>
         <div class="repositories_list w-full" v-if="viewMode === 'flow'">
             <div
-                class="repo relative flex justify-between items-start bg-white hover:bg-[#F6F6F6] shadow-md shadow-gray-300/50 duration-200 border-1 border-solid border-[#e9e9e9] mt-2 rounded-xl py-2 px-5"
+                class="repo relative flex justify-between items-start bg-white hover:bg-[#F6F6F6] dark:(bg-gray-900 hover:bg-gray-800 border-gray-700 shadow-gray-700) shadow-md shadow-gray-300/50 duration-200 border-1 border-solid border-[#e9e9e9] mt-2 rounded-xl py-2 px-5"
                 v-for="repo in reposVisibleComputed"
                 :key="repo.id"
             >
                 <div class="flex">
-                    <div class="repo_action mr-3">
+                    <div class="mr-3">
                         <img
                             :src="repo.owner.avatar_url"
-                            alt="repo_img" class="min-w-13 h-13 rounded-full"
+                            alt="repo_img" class="min-w-13 h-13 rounded-full shadow-md"
                         />
                     </div>
                     <div class="repo_detail">
@@ -114,11 +116,11 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
                             <p
                                 v-for="(topic, i) in repo.topics"
                                 :key="i"
-                                class="bg-[#DDF4FF] py-1 px-2 text-xs font-medium rounded-xl text-[#0969DA] hover:text-white hover:bg-[#0969DA] cursor-pointer"
+                                class="bg-[#DDF4FF] py-1 px-2 text-xs font-medium rounded-xl text-[#0969DA] dark:(bg-gray-700 text-purple-600) hover:text-white hover:bg-[#0969DA] cursor-pointer"
                             >{{ topic }}</p>
                         </div>
                         <p class="flex text-xs font-medium text-gray-400">
-                            <span class="repo_license">{{ repo.license?.spdx_id }}</span>
+                            <span class="repo_license">{{ repo.license?.name }}</span>
                             <span class="mx-1.5">•</span>
                             <span
                                 class="repo_update_time"
@@ -145,15 +147,15 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
                         </p>
                     </div>
                     <div
-                        class="flex justify-end items-end text-sm text-[#9595A1] font-medium gap-3 absolute bottom-3 right-5"
+                        class="repo_action flex justify-end items-end text-sm font-medium gap-3 absolute bottom-3 right-5"
                     >
-                        <a :href="`${repo.html_url}/archive/HEAD.zip`">
+                        <a :href="`${repo.html_url}/archive/HEAD.zip`" title="download">
                             <IDownload />
                         </a>
-                        <a :href="repo.forks_url">
+                        <a :href="repo.forks_url" title="fork">
                             <IClone />
                         </a>
-                        <a :href="`${repo.html_url}/generate`">
+                        <a :href="`${repo.html_url}/generate`" title="generate">
                             <IGenerate />
                         </a>
                     </div>
@@ -167,7 +169,7 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
                 v-for="repo in reposComputed"
                 :key="repo.id" :href="`${repo.html_url}`" target="_blank" v-cloak
             >
-                <img :src="`https://github-readme-stats.vercel.app/api/pin/?username=${user.userName}&repo=${repo.name}`" alt="repo_card" class="shadow-lg shadow-gray-300 rounded-xl hover:shadow-md">
+                <img :src="`https://github-readme-stats.vercel.app/api/pin/?username=${user.userName}&repo=${repo.name}`" alt="repo_card" class="shadow-lg shadow-gray-300 rounded-xl hover:shadow-md dark:(shadow-gray-700)">
             </a>
         </div>
 
@@ -197,5 +199,17 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
     border-color: #cb72aa;
     color: #fff;
     box-shadow: inset 0 0 0 2em #cb72aa;
+}
+.repo_action{
+    display: none;
+}
+.repo_action a {
+    color: #9595A1;
+}
+.repo_action a:hover{
+    color:#cb72aa;
+}
+.repo:hover .repo_action{
+    display: flex;
 }
 </style>

@@ -15,6 +15,8 @@ import IDownload from '../components/icons/repos/IDownload.vue';
 import IClone from '../components/icons/repos/IClone.vue';
 import IGenerate from '../components/icons/repos/IGenerate.vue'
 import ISearch from '../components/icons/ISearch.vue';
+import IArrowLeft from '../components/icons/explore/IArrowLeft.vue'
+import IArrowRight from '../components/icons/explore/IArrowRight.vue'
 
 const user = useUser()
 const useExploreStore = exploreStore();
@@ -32,7 +34,6 @@ const payload = reactive({
 const search = () => {
     if (queryInput.value) {
         payload.input = queryInput.value;
-        user.isLoading = true
     }
     queryInput.value = ""
 }
@@ -42,6 +43,7 @@ onMounted(() => {
 })
 
 watchEffect(() => {
+    user.isLoading = true
     const fetchExplore = fetch(`https://api.github.com/search/repositories?q=${payload.input}+language:${payload.language}&sort=${payload.sort}&order=${payload.order}&page=${payload.page}&per_page=${payload.per_page}`).then(res => res.json()).then(data => {
         useExploreStore.reposTrending = data
         user.isLoading = false
@@ -85,7 +87,7 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
         </div>
         <div class="filter_tab flex justify-between items-center py-5 w-full">
             <select name="filter" id="filter"
-                class="pl-3 py-2 rounded-3xl bg-[#F6F6F6] w-50 max-w-50 text-sm text-[#9595A1] cursor-pointer mr-3"
+                class="pl-3 py-2 rounded-3xl bg-[#F6F6F6] dark:bg-gray-700 w-50 max-w-50 text-sm text-[#9595A1] cursor-pointer mr-3"
                 v-model="filterMode">
                 <option value="default">Default matches</option>
                 <option value="most_stars">Most stars</option>
@@ -95,11 +97,10 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
                 <option value="z_a">Alphabet Z to A</option>
             </select>
             <div class="flex items-center gap-5">
-
                 <input type="text" name="search_repos" id="search_repos"
-                    class="px-5 rounded-3xl bg-[#F6F6F6] my-0.5 w-70 max-w-70" v-model="queryInput" ref="vFocus"
+                    class="px-5 rounded-3xl bg-[#F6F6F6] dark:(bg-gray-700 text-white) my-0.5 w-70 max-w-70" v-model="queryInput" ref="vFocus"
                     @keyup.enter="search" />
-                <div class="rounded-lg bg-[#F6F6F6] cursor-pointer flex justify-center items-center w-10 h-10 text-[#9595A1] hover:text-black"
+                <div class="rounded-lg bg-[#F6F6F6] dark:bg-gray-700 cursor-pointer flex justify-center items-center w-10 h-10 text-[#9595A1] hover:text-black"
                     @click="search">
                     <ISearch />
                 </div>
@@ -107,20 +108,20 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
         </div>
         <CLoading v-if="user.isLoading === true" />
         <div class="repositories_list w-full" v-if="user.isLoading === false">
-            <div class="repo relative flex justify-between items-start bg-[#FAFAFA] hover:bg-[#F6F6F6] duration-200 border-1 border-solid border-light-700/50 mt-2 rounded-xl py-2 px-5"
+            <div class="repo relative flex justify-between items-start bg-[#FAFAFA] dark:(bg-gray-900 hover:bg-gray-800 border-gray-700 shadow-gray-700) hover:bg-[#F6F6F6] shadow-md shadow-gray-300/50 duration-200 border-1 border-solid border-light-700/50 mt-2 rounded-xl py-2 px-5"
                 v-for="trending in reposVisibleComputed" :key="trending.id">
                 <div class="flex">
-                    <div class="repo_action mr-3">
+                    <div class="repo_avatar mr-3">
                         <img :src="trending.owner.avatar_url" alt="repo_img" class="min-w-13 h-13 rounded-full" />
                     </div>
                     <div class="repo_detail">
                         <a :href="trending.html_url">
                             <h2 class="text-lg text-[#0969DA] font-medium">{{ trending.full_name }}</h2>
                         </a>
-                        <p class="text-sm font-medium opacity-80 my-3">{{ trending.description }}</p>
+                        <p class="text-sm dark:text-orange-500 font-medium opacity-80 my-3">{{ trending.description }}</p>
                         <div class="flex flex-wrap gap-1 my-2">
                             <p v-for="(topic, i) in trending.topics" :key="i"
-                                class="bg-[#DDF4FF] py-1 px-2 text-xs font-medium rounded-xl text-[#0969DA] hover:text-white hover:bg-[#0969DA] cursor-pointer">
+                                class="bg-[#DDF4FF] dark:(bg-gray-700 text-purple-600) py-1 px-2 text-xs font-medium rounded-xl text-[#0969DA] hover:text-white hover:bg-[#0969DA] cursor-pointer">
                                 {{ topic }}
                             </p>
                         </div>
@@ -133,9 +134,9 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
                         </p>
                     </div>
                 </div>
-                <div class="repo_option">
+                <div>
                     <div
-                        class="flex justify-end items-end text-sm text-[#9595A1] font-medium gap-3 absolute bottom-3 right-5">
+                        class="repo_action flex justify-end items-end text-sm font-medium gap-3 absolute bottom-3 right-5">
                         <a :href="`${trending.html_url}/archive/HEAD.zip`">
                             <IDownload />
                         </a>
@@ -163,10 +164,30 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
                     </div>
                 </div>
             </div>
-            <div class="loadmore-tab">
-                <button class="fill_btn" @click="reposVisibleInit += step"
-                    v-if="reposVisibleInit < useExploreStore.reposTrending.items.length">Load more...</button>
+
+            <div class="flex justify-between items-end py-2">
+                <div class="loadmore-tab">
+                    <button class="fill_btn" @click="reposVisibleInit += step"
+                        v-if="reposVisibleInit < useExploreStore.reposTrending.items.length">Load more...</button>
+                </div>
+                
+                <div class="flex flex-col items-center">
+                    <span class="text-xs text-gray-700 dark:text-gray-400">
+                        Showing <span class="font-semibold text-gray-900 dark:text-white">{{ reposVisibleInit }}</span> entries of page <span class="font-semibold text-gray-900 dark:text-white">{{ payload.page }}</span>
+                    </span>
+                    <div class="inline-flex mt-2 xs:mt-0 gap-1">
+                        <button class="inline-flex items-center p-2 text-sm font-medium text-white bg-gray-800 rounded-md hover:bg-gray-900 dark:(bg-gray-800 border-gray-700 text-gray-400) dark:hover:bg-gray-700 dark:hover:text-white" @click="--payload.page">
+                            <IArrowLeft />
+                            Prev
+                        </button>
+                        <button class="inline-flex items-center p-2 text-sm font-medium text-white bg-gray-800 rounded-md border-0 border-l border-gray-700 hover:bg-gray-900 dark:(bg-gray-800 border-gray-700 text-gray-400) dark:hover:bg-gray-700 dark:hover:text-white" @click="++payload.page">
+                            Next
+                            <IArrowRight />
+                        </button>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
 </template>
@@ -188,5 +209,18 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
     border-color: #cb72aa;
     color: #fff;
     box-shadow: inset 0 0 0 2em #cb72aa;
+}
+.repo_action{
+    color: #9595A1;
+    display:none;
+}
+.repo:hover .repo_action{
+    display: flex;
+}
+.repo_action a {
+    color: #9595A1;
+}
+.repo_action a:hover{
+    color:#cb72aa;
 }
 </style>
