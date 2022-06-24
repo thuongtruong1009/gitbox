@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 
 import { useUser } from '../stores/user';
 import { useRepo } from '../stores/repo'
@@ -21,9 +21,11 @@ import IGenerate from '../components/icons/repos/IGenerate.vue'
 const user = useUser()
 const repo = useRepo()
 
-onMounted(async()=>{
+watchEffect(async()=>{
+    user.isLoading = true
     const fetchRepo = await RepoRequest.getAllRepos(user.userName)
     repo.reposData = fetchRepo
+    user.isLoading = false
 })
 
 const viewMode = ref('flow')
@@ -118,7 +120,7 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
                             >{{ topic }}</p>
                         </div>
                         <p class="flex text-xs font-medium text-gray-400">
-                            <span class="repo_license">{{ repo.license }}</span>
+                            <span class="repo_license">{{ repo.license?.name }}</span>
                             <span class="mx-1.5">•</span>
                             <span
                                 class="repo_update_time"
