@@ -81,11 +81,8 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
 </script>
 
 <template>
-    <div class="repositories_view p-5 max-w-238 mx-auto dark:bg-black">
-        <div class="flex justify-start text-xl font-medium">
-            <h1>Repositories</h1>
-        </div>
-        <div class="filter_tab flex justify-between items-center py-5 w-full">
+    <div class="repositories_view max-w-238 mx-auto dark:bg-black">
+        <div class="filter_tab flex justify-between items-center pb-5 w-full">
             <select name="filter" id="filter"
                 class="pl-3 py-2 rounded-3xl bg-[#F6F6F6] dark:bg-gray-700 w-50 max-w-50 text-sm text-[#9595A1] cursor-pointer mr-3"
                 v-model="filterMode">

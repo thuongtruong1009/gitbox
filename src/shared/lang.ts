@@ -61,6 +61,8 @@ const langColor:any = {
     "TSQL": "#DAD8D8",
     "SQLPL": "#DAD8D8",
     "OpenEdge ABL": "#5CE600",
-    "Roff": "#ECDEBE"
+    "Roff": "#ECDEBE",
+    "Scilab": "#CA0F21",
+    "Rich Text Format": "#CCCCCC",
  };
  export default langColor
