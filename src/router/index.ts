@@ -33,7 +33,7 @@ const routes = [
     children: [
       {
         path: 'repositories',
-        component: () => import(/* webpackChunkName: "about" */ '../views/explore.vue'),
+        component: () => import(/* webpackChunkName: "about" */ '../views/explore/repositories.vue'),
       },
       {
         path: 'users',

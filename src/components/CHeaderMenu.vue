@@ -78,7 +78,7 @@ window.addEventListener('scroll', scrollFunction)
             <RouterLink to="/about" class="flex items-center gap-1"><IAbout />About</RouterLink>
         </div>
         <div class="flex items-center gap-3">
-            <input type="text" v-model="getNameInput" placeholder="Generate your metrics..."
+            <input type="text" v-model="getNameInput" placeholder="Enter your username..."
                 class="px-5 py-2 text-white rounded-3xl bg-white/10 my-0.5 w-70 max-w-70" @click="saveNameInput"
                 @keyup.enter="saveNameInput" />
             <div class="search text-white p-2 rounded-xl bg-white/10 hover:bg-white/30 cursor-pointer">
