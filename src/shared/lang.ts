@@ -64,5 +64,30 @@ const langColor:any = {
     "Roff": "#ECDEBE",
     "Scilab": "#CA0F21",
     "Rich Text Format": "#CCCCCC",
- };
- export default langColor
+};
+
+const langSearch = [ 
+    'All languages',
+    'Assembly',
+    'C#',
+    'C++',
+    'CSS',
+    'Dart',
+    'Dockerfile',
+    'EJS',
+    'HTML',
+    'Hack',
+    'Handlebars',
+    'Java',
+    'JavaScript',
+    'Markdown',
+    'PHP',
+    'Python',
+    'Ruby',
+    'SCSS',
+    'SVG',
+    'TypeScript',
+    'Vue',
+]
+
+export { langColor, langSearch }

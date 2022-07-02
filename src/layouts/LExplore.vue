@@ -3,6 +3,7 @@ import { useUser } from '../stores/user';
 import { exploreStore } from '../stores/explore'
 import { computed, onMounted, reactive, ref, watchEffect } from 'vue';
 import { alphaSort } from '../utils/sort'
+import { langSearch } from '../shared/lang'
 
 import IRepository from '../components/icons/explore/IRepository.vue'
 import IUser from '../components/icons/explore/IUser.vue'
@@ -94,6 +95,8 @@ const reposVisibleInit = ref(5)
 const step = ref(5)
 const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVisibleInit.value))
 
+const isDropDownLanguague = ref(false)
+
 </script>
 
 <template>
@@ -121,6 +124,15 @@ const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVi
                     </li>
                 </router-link>
             </ul>
+
+            <div class="dropdown_language relative text-sm mt-24">
+                <div class="border-2 border-[#888] rounded-lg bg-[#F3F4F6] p-2 cursor-pointer" @click="isDropDownLanguague = !isDropDownLanguague">
+                    <p>Language: {{ payload.language }}</p>
+                </div>
+                <div class="absolute top-10 left-0 bg-white rounded-lg z-10 overflow-y-scroll w-full cursor-pointer" v-if="isDropDownLanguague" style="max-height: 20rem;">
+                    <p v-for="(lang, index) in langSearch" :key="index" @click="payload.language = lang" class="p-2 hover:(bg-[#F3F4F6])" :class="{'text-red-500 bg-[#F3F4F6]' : lang === payload.language}">{{ lang }}</p>
+                </div>
+            </div>
         </div>
 
         <div class="repositories_view max-w-238 w-238 dark:bg-black">
@@ -214,5 +226,12 @@ ul a.router-link-active li{
     border-color: #cb72aa;
     color: #fff;
     box-shadow: inset 0 0 0 2em #cb72aa;
+}
+::-webkit-scrollbar {
+    width: 4px;
+    border-radius: 2rem;
+}
+::-webkit-scrollbar-thumb {
+    background: #cecece;
 }
 </style>

@@ -74,7 +74,7 @@ window.addEventListener('scroll', scrollFunction)
             <RouterLink to="/" class="flex items-center gap-1" router-link-exact-active exact><IHome />Home</RouterLink>
             <RouterLink to="/repositories" class="flex items-center gap-1"><IRepository />Repositories</RouterLink>
             <RouterLink to="/users" class="flex items-center gap-1"><IUsers />Users</RouterLink>
-            <RouterLink to="/explore" class="flex items-center gap-1"><IExplore />Explore</RouterLink>
+            <RouterLink to="/explore/repositories" class="flex items-center gap-1"><IExplore />Explore</RouterLink>
             <RouterLink to="/about" class="flex items-center gap-1"><IAbout />About</RouterLink>
         </div>
         <div class="flex items-center gap-3">

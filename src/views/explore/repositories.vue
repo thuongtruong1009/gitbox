@@ -1,5 +1,5 @@
 <script setup>
-import langColor from '../../shared/lang';
+import { langColor } from '../../shared/lang';
 import { getDate, getTime } from '../../utils/date';
 import { download, fork, generate } from '../../shared/action'
 

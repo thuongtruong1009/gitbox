@@ -5,7 +5,7 @@ import { useUser } from '../stores/user';
 import { useRepo } from '../stores/repo'
 
 import { getDate, getTime } from '../utils/date';
-import langColor from '../shared/lang';
+import { langColor } from '../shared/lang';
 import { alphaSort, sizeSort } from '../utils/sort'
 import RepoRequest from '../services/repo_request'
 
