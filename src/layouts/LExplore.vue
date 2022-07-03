@@ -4,6 +4,7 @@ import { exploreStore } from '../stores/explore'
 import { computed, onMounted, reactive, ref, watchEffect } from 'vue';
 import { alphaSort } from '../utils/sort'
 import { langSearch } from '../shared/lang'
+import { sortBy } from '../shared/sort'
 
 import IRepository from '../components/icons/explore/IRepository.vue'
 import IUser from '../components/icons/explore/IUser.vue'
@@ -14,6 +15,7 @@ import ISingleLine from '../components/icons/repos/ISingleLine.vue'
 import ISearch from '../components/icons/ISearch.vue';
 import IArrowLeft from '../components/icons/explore/IArrowLeft.vue'
 import IArrowRight from '../components/icons/explore/IArrowRight.vue'
+import ITick from '../components/icons/explore/ITick.vue'
 
 const user = useUser()
 const useExploreStore = exploreStore();
@@ -59,7 +61,6 @@ watchEffect(() => {
     }
 })
 
-
 watchEffect(() => {
     user.isLoading = true
     const fetchExplore = fetch(`https://api.github.com/search/${payload.searchType}?q=${payload.input}+language:${payload.language}&sort=${payload.sort}&order=${payload.order}&page=${payload.page}&per_page=${payload.per_page}`).then(res => res.json()).then(data => {
@@ -96,12 +97,22 @@ const step = ref(5)
 const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVisibleInit.value))
 
 const isDropDownLanguague = ref(false)
+const searchLanguage = (lang) => {
+    isDropDownLanguague.value = !isDropDownLanguague.value
+    payload.language = lang
+}
+
+const isDropDownSort = ref(false)
+const sortRepos = (sort) => {
+    isDropDownSort.value = !isDropDownSort.value
+    payload.sort = sort
+}
 
 </script>
 
 <template>
     <div class="repositories_layout mx-auto dark:bg-black flex justify-center gap-10 p-10">
-        <div>
+        <div class="dark:text-gray-200">
             <ul>
                 <router-link to="/explore/repositories" router-link-exact-active exact @click="searchNumber = 0">
                     <li>
@@ -125,12 +136,21 @@ const isDropDownLanguague = ref(false)
                 </router-link>
             </ul>
 
-            <div class="dropdown_language relative text-sm mt-24">
-                <div class="border-2 border-[#888] rounded-lg bg-[#F3F4F6] p-2 cursor-pointer" @click="isDropDownLanguague = !isDropDownLanguague">
+            <div class="dropdown_sort relative text-sm mt-24">
+                <div class="border-2 border-[#888] rounded-lg bg-[#F3F4F6] dark:bg-gray-700 p-2 cursor-pointer" @click="isDropDownSort = !isDropDownSort">
+                    <p>Sort: {{ payload.sort }}</p>
+                </div>
+                <div class="absolute top-12 left-0 bg-white dark:bg-gray-700 rounded-lg z-10 w-full cursor-pointer" v-if="isDropDownSort" style="max-height: 20rem;">
+                    <p v-for="(sort, index) in sortBy" :key="index" @click="sortRepos(sort)" class="p-2 flex items-center gap-1 hover:bg-[#F3F4F6] dark:hover:bg-blue-gray-600" :class="{'text-red-500 bg-[#F3F4F6] dark:bg-blue-gray-600' : sort === payload.sort}"><ITick class="opacity-0" :class="{'opacity-100' : sort.toLowerCase() === (payload.sort).toLowerCase()}" />{{ sort }}</p>
+                </div>
+            </div>
+
+            <div class="dropdown_language relative text-sm mt-5">
+                <div class="border-2 border-[#888] rounded-lg bg-[#F3F4F6] dark:bg-gray-700 p-2 cursor-pointer" @click="isDropDownLanguague = !isDropDownLanguague">
                     <p>Language: {{ payload.language }}</p>
                 </div>
-                <div class="absolute top-10 left-0 bg-white rounded-lg z-10 overflow-y-scroll w-full cursor-pointer" v-if="isDropDownLanguague" style="max-height: 20rem;">
-                    <p v-for="(lang, index) in langSearch" :key="index" @click="payload.language = lang" class="p-2 hover:(bg-[#F3F4F6])" :class="{'text-red-500 bg-[#F3F4F6]' : lang === payload.language}">{{ lang }}</p>
+                <div class="absolute top-12 left-0 bg-white dark:bg-gray-700 rounded-lg z-10 overflow-y-scroll w-full cursor-pointer" v-if="isDropDownLanguague" style="max-height: 20rem;">
+                    <p v-for="(lang, index) in langSearch" :key="index" @click="searchLanguage(lang)" class="p-2 flex items-center gap-1 hover:bg-[#F3F4F6] dark:hover:bg-blue-gray-600" :class="{'text-red-500 bg-[#F3F4F6] dark:bg-blue-gray-600' : lang === payload.language}"><ITick class="opacity-0" :class="{'opacity-100' : lang.toLowerCase() === (payload.language).toLowerCase()}" />{{ lang }}</p>
                 </div>
             </div>
         </div>
@@ -150,11 +170,11 @@ const isDropDownLanguague = ref(false)
                 <div class="text-xs text-red-500 font-semibold">
                     <p>{{ useExploreStore.reposTrending.total_count }} results match.</p>
                 </div>
-                <div class="flex items-center gap-5">
-                    <input type="text" name="search_repos" id="search_repos"
-                        class="px-5 rounded-3xl bg-[#F6F6F6] dark:(bg-gray-700 text-white) my-0.5 w-70 max-w-70 placeholder-opacity-50" v-model="queryInput" ref="vFocus"
+                <div class="flex items-center rounded-3xl p-2 bg-[#F6F6F6] dark:(bg-gray-700 text-white) text-sm">
+                    <input type="text"
+                        class="px-2 dark:(bg-gray-700 text-white) bg-[#F6F6F6] w-70 max-w-60 placeholder-opacity-50 placeholder-gray-500/50" v-model="queryInput" ref="vFocus"
                         @keyup.enter="search" placeholder="Enter some keywords..." />
-                    <div class="rounded-lg bg-[#F6F6F6] dark:bg-gray-700 cursor-pointer flex justify-center items-center w-10 h-10 text-[#9595A1] hover:text-black"
+                    <div class="dark:bg-gray-700 cursor-pointer flex justify-center items-center w-10 text-[#9595A1] dark:hover:text-white hover:text-black"
                         @click="search">
                         <ISearch />
                     </div>
