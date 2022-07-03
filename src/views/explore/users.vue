@@ -23,11 +23,11 @@ defineProps({
         v-for="trending in lists" :key="trending.id">
         <div class="flex">
             <div class="repo_avatar mr-3">
-                <img :src="trending.owner.avatar_url" alt="repo_img" class="min-w-13 h-13 rounded-full" />
+                <img :src="trending.avatar_url" alt="repo_img" class="min-w-13 h-13 rounded-full" />
             </div>
             <div class="repo_detail">
                 <a :href="trending.html_url">
-                    <h2 class="text-lg text-[#0969DA] font-medium">{{ trending.full_name }}</h2>
+                    <h2 class="text-lg text-[#0969DA] font-medium">{{ trending.login }}</h2>
                 </a>
                 <p class="text-sm dark:text-orange-500 font-medium opacity-80 my-3">{{ trending.description }}</p>
                 <div class="flex flex-wrap gap-1 my-2">
@@ -36,16 +36,16 @@ defineProps({
                         {{ topic }}
                     </p>
                 </div>
-                <p class="flex text-xs font-medium text-gray-400">
+                <!-- <p class="flex text-xs font-medium text-gray-400">
                     <span class="repo_license" v-if="trending.license">
                         <a :href="trending.license.url">{{ trending.license.spdx_id }} license</a>
                         <span class="mx-1.5">•</span>
                     </span>
                     <span class="repo_update_time">Last updated {{ getDate(trending.updated_at) }} - {{ getTime(trending.updated_at)}}</span>
-                </p>
+                </p> -->
             </div>
         </div>
-        <div>
+        <!-- <div>
             <div
                 class="repo_action flex justify-end items-end text-sm font-medium gap-3 absolute bottom-3 right-5">
                 <a :href="download(trending.html_url)" target="_blank">
@@ -73,7 +73,7 @@ defineProps({
                     {{ trending.forks_count }}
                 </p>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 

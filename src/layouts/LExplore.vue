@@ -4,7 +4,7 @@ import { exploreStore } from '../stores/explore'
 import { computed, onMounted, reactive, ref, watchEffect } from 'vue';
 import { alphaSort } from '../utils/sort'
 import { langSearch } from '../shared/lang'
-import { sortBy } from '../shared/sort'
+import { sortRepo, sortUser } from '../shared/sort'
 
 import IRepository from '../components/icons/explore/IRepository.vue'
 import IUser from '../components/icons/explore/IUser.vue'
@@ -28,7 +28,9 @@ const payload = reactive({
     page: 1,
     per_page: 30,
 
-    searchNumber: 0,
+    reposQuantity: 10,
+    followerQuantity: 10,
+
     searchType: 'repositories',
     hasFilter: true,
     filterMode: 'default',
@@ -47,54 +49,68 @@ onMounted(() => {
 })
 
 watchEffect(() => {
-    if(payload.searchNumber === 0){
+    if(payload.searchType === 'repositories'){
         payload.hasFilter = true;
-            payload.searchType = 'repositories';
+        user.isLoading = true
+        const fetchExplore = fetch(`https://api.github.com/search/${payload.searchType}?q=${payload.input}+language:${payload.language}&sort=${payload.sort}&order=${payload.order}&page=${payload.page}&per_page=${payload.per_page}`).then(res => res.json()).then(data => {
+            useExploreStore.reposSearch = data;
+            user.isLoading = false
+        })
     }
-    if(payload.searchNumber === 1){
-            payload.hasFilter = false;
-            payload.searchType = 'users';
-    }
-    if(payload.searchNumber === 2){
+    if(payload.searchType === 'users'){
         payload.hasFilter = false;
-        payload.searchType = 'issues';
+        user.isLoading = true
+        const fetchExplore = fetch(`https://api.github.com/search/${payload.searchType}?q=${payload.input}+repos:%3E${payload.reposQuantity}+followers:%3E${payload.followerQuantity}&sort=${payload.sort}&order=${payload.order}&page=${payload.page}&per_page=${payload.per_page}`).then(res => res.json()).then(data => {
+            useExploreStore.usersSearch = data;
+            user.isLoading = false
+        })
     }
-})
-
-watchEffect(() => {
-    user.isLoading = true
-    const fetchExplore = fetch(`https://api.github.com/search/${payload.searchType}?q=${payload.input}+language:${payload.language}&sort=${payload.sort}&order=${payload.order}&page=${payload.page}&per_page=${payload.per_page}`).then(res => res.json()).then(data => {
-        useExploreStore.reposTrending = data
-        user.isLoading = false
-    })
+    if(payload.searchType === 'issues'){
+        payload.hasFilter = false;
+        user.isLoading = true
+        const fetchExplore = fetch(`https://api.github.com/search/${payload.searchType}?q=${payload.input}+repos:>${payload.reposQuantity}+followers:>${payload.followerQuantity}&sort=${payload.sort}&order=${payload.order}&page=${payload.page}&per_page=${payload.per_page}`).then(res => res.json()).then(data => {
+            useExploreStore.issuesSearch = data;
+            user.isLoading = false
+        })
+    }
 })
 
 const reposComputed = computed(() => {
     switch (payload.filterMode) {
         case 'most_stars':
-            return (useExploreStore.reposTrending.items.sort((a, b) => a.stargazers_count - b.stargazers_count)).reverse();
+            return (useExploreStore.reposSearch.items.sort((a, b) => a.stargazers_count - b.stargazers_count)).reverse();
             break;
         case 'fewest_star':
-            return (useExploreStore.reposTrending.items.sort((a, b) => a.stargazers_count - b.stargazers_count));
+            return (useExploreStore.reposSearch.items.sort((a, b) => a.stargazers_count - b.stargazers_count));
             break;
         case 'most_fork':
-            return (useExploreStore.reposTrending.items.sort((a, b) => a.forks_count - b.forks_count)).reverse();
+            return (useExploreStore.reposSearch.items.sort((a, b) => a.forks_count - b.forks_count)).reverse();
             break;
         case 'fewest_fork':
-            return (useExploreStore.reposTrending.items.sort((a, b) => a.forks_count - b.forks_count));
+            return (useExploreStore.reposSearch.items.sort((a, b) => a.forks_count - b.forks_count));
             break;
         case 'z_a':
-            return alphaSort(useExploreStore.reposTrending.items, "name").reverse();
+            return alphaSort(useExploreStore.reposSearch.items, "name").reverse();
             break;
         default:
-            return alphaSort(useExploreStore.reposTrending.items, "name");
+            return alphaSort(useExploreStore.reposSearch.items, "name");
             break;
     }
 })
 
 const reposVisibleInit = ref(5)
 const step = ref(5)
-const reposVisibleComputed = computed(() => reposComputed.value.slice(0, reposVisibleInit.value))
+const reposVisibleComputed = computed(() => {
+    if(payload.searchType === 'repositories'){
+        return reposComputed.value.slice(0, reposVisibleInit.value)
+    }
+    if(payload.searchType === 'users'){
+        return useExploreStore.usersSearch.items.slice(0, reposVisibleInit.value)
+    }
+    if(payload.searchType === 'issues'){
+        return useExploreStore.issuesSearch.slice(0, reposVisibleInit.value)
+    }
+})
 
 const isDropDownLanguague = ref(false)
 const searchLanguage = (lang) => {
@@ -114,21 +130,21 @@ const sortRepos = (sort) => {
     <div class="repositories_layout mx-auto dark:bg-black flex justify-center gap-10 p-10">
         <div class="dark:text-gray-200">
             <ul>
-                <router-link to="/explore/repositories" router-link-exact-active exact @click="searchNumber = 0">
+                <router-link to="/explore/repositories" router-link-exact-active exact @click="payload.searchType = 'repositories'">
                     <li>
                         <IRepository />
                         <h5>Repositories</h5>
                     </li>
                 </router-link>
                 
-                <router-link to="/explore/users" @click="searchNumber = 1">
+                <router-link to="/explore/users" @click="payload.searchType = 'users'">
                     <li>
                         <IUser />
                         <h5>Users</h5>
                     </li>
                 </router-link>
 
-                <router-link to="/explore/issues" @click="searchNumber = 2">
+                <router-link to="/explore/issues" @click="payload.searchType = 'issues'">
                     <li>
                         <IIssue />
                         <h5>Issues</h5>
@@ -140,12 +156,15 @@ const sortRepos = (sort) => {
                 <div class="border-2 border-[#888] rounded-lg bg-[#F3F4F6] dark:bg-gray-700 p-2 cursor-pointer" @click="isDropDownSort = !isDropDownSort">
                     <p>Sort: {{ payload.sort }}</p>
                 </div>
-                <div class="absolute top-12 left-0 bg-white dark:bg-gray-700 rounded-lg z-10 w-full cursor-pointer" v-if="isDropDownSort" style="max-height: 20rem;">
-                    <p v-for="(sort, index) in sortBy" :key="index" @click="sortRepos(sort)" class="p-2 flex items-center gap-1 hover:bg-[#F3F4F6] dark:hover:bg-blue-gray-600" :class="{'text-red-500 bg-[#F3F4F6] dark:bg-blue-gray-600' : sort === payload.sort}"><ITick class="opacity-0" :class="{'opacity-100' : sort.toLowerCase() === (payload.sort).toLowerCase()}" />{{ sort }}</p>
+                <div v-if="payload.searchType === 'repositories' && isDropDownSort" class="absolute top-12 left-0 bg-white dark:bg-gray-700 rounded-lg z-10 w-full cursor-pointer"  style="max-height: 20rem;">
+                    <p v-for="(sort, index) in sortRepo" :key="index" @click="sortRepos(sort)" class="p-2 flex items-center gap-1 hover:bg-[#F3F4F6] dark:hover:bg-blue-gray-600" :class="{'text-red-500 bg-[#F3F4F6] dark:bg-blue-gray-600' : sort === payload.sort}"><ITick class="opacity-0" :class="{'opacity-100' : sort.toLowerCase() === (payload.sort).toLowerCase()}" />{{ sort }}</p>
+                </div>
+                <div v-if="payload.searchType === 'users' && isDropDownSort" class="absolute top-12 left-0 bg-white dark:bg-gray-700 rounded-lg z-10 w-full cursor-pointer" style="max-height: 20rem;">
+                    <p v-for="(sort, index) in sortRepo" :key="index" @click="sortRepos(sort)" class="p-2 flex items-center gap-1 hover:bg-[#F3F4F6] dark:hover:bg-blue-gray-600" :class="{'text-red-500 bg-[#F3F4F6] dark:bg-blue-gray-600' : sort === payload.sort}"><ITick class="opacity-0" :class="{'opacity-100' : sort.toLowerCase() === (payload.sort).toLowerCase()}" />{{ sort }}</p>
                 </div>
             </div>
 
-            <div class="dropdown_language relative text-sm mt-5">
+            <div class="dropdown_language relative text-sm mt-5" v-if="payload.searchType === 'repositories'">
                 <div class="border-2 border-[#888] rounded-lg bg-[#F3F4F6] dark:bg-gray-700 p-2 cursor-pointer" @click="isDropDownLanguague = !isDropDownLanguague">
                     <p>Language: {{ payload.language }}</p>
                 </div>
@@ -168,7 +187,7 @@ const sortRepos = (sort) => {
                     <option value="z_a">Alphabet Z to A</option>
                 </select>
                 <div class="text-xs text-red-500 font-semibold">
-                    <p>{{ useExploreStore.reposTrending.total_count }} results match.</p>
+                    <p>{{ useExploreStore.reposSearch.total_count || useExploreStore.usersSearch.total_count || 0 }} results match.</p>
                 </div>
                 <div class="flex items-center rounded-3xl p-2 bg-[#F6F6F6] dark:(bg-gray-700 text-white) text-sm">
                     <input type="text"
@@ -188,7 +207,7 @@ const sortRepos = (sort) => {
                 <div class="flex justify-between items-end py-2">
                     <div class="loadmore-tab">
                         <button class="fill_btn" @click="reposVisibleInit += step"
-                            v-if="reposVisibleInit < useExploreStore.reposTrending.items.length">Load more...</button>
+                            v-if="reposVisibleInit < useExploreStore.reposSearch.items.length">Load more...</button>
                     </div>
                     
                     <div class="flex flex-col items-center">

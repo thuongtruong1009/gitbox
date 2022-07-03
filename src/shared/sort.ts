@@ -1,3 +1,4 @@
-const sortBy = ['stars', 'forks', 'help-wanted-issues', 'updated']
+const sortRepo = ['stars', 'forks', 'help-wanted-issues', 'updated']
+const sortUser = ['followers', 'repositories', 'joined']
 
-export { sortBy }
+export { sortRepo, sortUser }
