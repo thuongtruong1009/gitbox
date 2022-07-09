@@ -9,6 +9,7 @@ import { langColor } from '../../shared/lang';
 import { getDate, getTime } from '../../utils/date';
 import { download, fork, generate } from '../../shared/action'
 
+import CInputRange from '../../components/CInputRange.vue'
 import IStar from '../../components/icons/repos/IStar.vue'
 import IFork from '../../components/icons/repos/IFork.vue'
 import IDownload from '../../components/icons/repos/IDownload.vue';
@@ -35,9 +36,6 @@ const payload = reactive({
     page: 1,
     per_page: 30,
 
-    reposQuantity: 10,
-    followerQuantity: 10,
-
     filterMode: 'default',
 })
 
@@ -55,7 +53,7 @@ onMounted(() => {
 
 watchEffect(() => {
     user.isLoading = true
-    const fetchExplore = fetch(`https://api.github.com/search/users?q=${payload.input}+repos:%3E${payload.reposQuantity}+followers:%3E${payload.followerQuantity}&sort=${payload.sort}&order=${payload.order}&page=${payload.page}&per_page=${payload.per_page}`).then(res => res.json()).then(data => {
+    const fetchExplore = fetch(`https://api.github.com/search/users?q=${payload.input}+repos:%3E${useExploreStore.limitRepoOwner}+followers:%3E${useExploreStore.limitFollowerOwner}&sort=${payload.sort}&order=${payload.order}&page=${payload.page}&per_page=${payload.per_page}`).then(res => res.json()).then(data => {
         useExploreStore.usersSearch = data;
         user.isLoading = false
     })
@@ -103,6 +101,8 @@ const sortRepos = (sort) => {
                     <p v-for="(sort, index) in sortUser" :key="index" @click="sortRepos(sort)" class="p-2 flex items-center gap-1 hover:bg-[#F3F4F6] dark:hover:bg-blue-gray-600" :class="{'text-red-500 bg-[#F3F4F6] dark:bg-blue-gray-600' : sort === payload.sort}"><ITick class="opacity-0" :class="{'opacity-100' : sort.toLowerCase() === (payload.sort).toLowerCase()}" />{{ sort }}</p>
                 </div>
             </div>
+
+            <CInputRange />
         </div>
 
         <div class="repositories_view max-w-238 w-238 dark:bg-black">

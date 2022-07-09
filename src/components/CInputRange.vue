@@ -1,5 +1,14 @@
 <script setup>
-import { onMounted, watchEffect } from 'vue'
+import { onMounted, ref, watchEffect } from 'vue'
+import { exploreStore } from '../stores/explore'
+
+const useExploreStore = exploreStore()
+const inputValue = ref(10)
+
+watchEffect(() => {
+  useExploreStore.changeLimitRepoOwner(inputValue.value)
+});
+
 onMounted(()=>{
     $(function() {
         $('.wrap').addClass('loaded');
@@ -8,7 +17,7 @@ onMounted(()=>{
             var buf = ((100 - val) / 4) + parseInt(val);
             $(this).css(
             'background',
-            'linear-gradient(to right, #cc181e 0%, #cc181e ' + val + '%, #777 ' + val + '%, #777 ' + buf + '%, #444 ' + buf + '%, #444 100%)'
+            'linear-gradient(to right, #8D53EC 0%, #8D53EC ' + val + '%, #777 ' + val + '%, #777 ' + buf + '%, #444 ' + buf + '%, #444 100%)'
             );
         });
     });
@@ -17,7 +26,7 @@ onMounted(()=>{
 
 <template>
     <div class="wrap loaded">
-        <input type="range" min="0" max="100" value="50" class="range" />
+        <input type="range" min="1" max="100" v-model="inputValue" class="range" />
     </div>
 </template>
 
@@ -49,7 +58,8 @@ onMounted(()=>{
   transition: 0.1s ease-in;
   width: 0;
 }
-.wrap:hover .range::-webkit-slider-thumb,
+/* .wrap:hover .range::-webkit-slider-thumb, */
+.wrap .range::-webkit-slider-thumb,
 .wrap.hover .range::-webkit-slider-thumb {
   width: 16px;
   height: 16px;

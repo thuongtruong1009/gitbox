@@ -24,14 +24,13 @@ import ISearch from '../../components/icons/ISearch.vue';
 import IArrowLeft from '../../components/icons/explore/IArrowLeft.vue'
 import IArrowRight from '../../components/icons/explore/IArrowRight.vue'
 import ITick from '../../components/icons/explore/ITick.vue'
-import CInputRange from '../../components/CInputRange.vue'
 
 const user = useUser()
 const useExploreStore = exploreStore();
 
 const payload = reactive({
-    input: 'tetris',
-    language: 'assembly',
+    input: 'github',
+    language: 'All languages',
     sort: 'stars',
     order: 'desc',
     page: 1,
@@ -40,7 +39,7 @@ const payload = reactive({
     filterMode: 'default',
 })
 
-const queryInput = ref("tetris");
+const queryInput = ref("github");
 const search = () => {
     if (queryInput.value) {
         payload.input = queryInput.value;
@@ -53,11 +52,11 @@ onMounted(() => {
 })
 
 watchEffect(() => {
-        user.isLoading = true
-        const fetchExplore = fetch(`https://api.github.com/search/repositories?q=${payload.input}+language:${payload.language}&sort=${payload.sort}&order=${payload.order}&page=${payload.page}&per_page=${payload.per_page}`).then(res => res.json()).then(data => {
-            useExploreStore.reposSearch = data;
-            user.isLoading = false
-        })
+    user.isLoading = true
+    const fetchExplore = fetch(`https://api.github.com/search/repositories?q=${payload.input}+language:${payload.language}&sort=${payload.sort}&order=${payload.order}&page=${payload.page}&per_page=${payload.per_page}`).then(res => res.json()).then(data => {
+        useExploreStore.reposSearch = data;
+        user.isLoading = false
+    })
 })
 
 const reposComputed = computed(() => {
@@ -131,22 +130,26 @@ const sortRepos = (sort) => {
                 <div class="border-2 border-[#888] rounded-lg bg-[#F3F4F6] dark:bg-gray-700 p-2 cursor-pointer" @click="isDropDownSort = !isDropDownSort">
                     <p>Sort: {{ payload.sort }}</p>
                 </div>
-                <div v-if="isDropDownSort" class="absolute top-12 left-0 bg-white dark:bg-gray-700 rounded-lg z-10 w-full cursor-pointer"  style="max-height: 20rem;">
-                    <p v-for="(sort, index) in sortRepo" :key="index" @click="sortRepos(sort)" class="p-2 flex items-center gap-1 hover:bg-[#F3F4F6] dark:hover:bg-blue-gray-600" :class="{'text-red-500 bg-[#F3F4F6] dark:bg-blue-gray-600' : sort === payload.sort}"><ITick class="opacity-0" :class="{'opacity-100' : sort.toLowerCase() === (payload.sort).toLowerCase()}" />{{ sort }}</p>
-                </div>
+                <Transition duration="550" name="nested">
+                    <div v-if="isDropDownSort" class="absolute top-12 left-0 bg-white dark:bg-gray-700 rounded-lg z-10 w-full cursor-pointer"  style="max-height: 20rem;">
+                        <p v-for="(sort, index) in sortRepo" :key="index" @click="sortRepos(sort)" class="p-2 flex items-center gap-1 hover:bg-[#F3F4F6] dark:hover:bg-blue-gray-600" :class="{'text-red-500 bg-[#F3F4F6] dark:bg-blue-gray-600' : sort === payload.sort}"><ITick class="opacity-0" :class="{'opacity-100' : sort.toLowerCase() === (payload.sort).toLowerCase()}" />{{ sort }}</p>
+                    </div>
+                </Transition>
             </div>
 
+        
             <div class="dropdown_language relative text-sm mt-5">
                 <div class="border-2 border-[#888] rounded-lg bg-[#F3F4F6] dark:bg-gray-700 p-2 cursor-pointer" @click="isDropDownLanguague = !isDropDownLanguague">
                     <p>Language: {{ payload.language }}</p>
                 </div>
-                <div class="absolute top-12 left-0 bg-white dark:bg-gray-700 rounded-lg z-10 overflow-y-scroll w-full cursor-pointer" v-if="isDropDownLanguague" style="max-height: 20rem;">
-                    <p v-for="(lang, index) in langSearch" :key="index" @click="searchLanguage(lang)" class="p-2 flex items-center gap-1 hover:bg-[#F3F4F6] dark:hover:bg-blue-gray-600" :class="{'text-red-500 bg-[#F3F4F6] dark:bg-blue-gray-600' : lang === payload.language}"><ITick class="opacity-0" :class="{'opacity-100' : lang.toLowerCase() === (payload.language).toLowerCase()}" />{{ lang }}</p>
-                </div>
+                <Transition duration="550" name="nested">
+                    <div class="absolute top-12 left-0 bg-white dark:bg-gray-700 rounded-lg z-10 overflow-y-scroll w-full cursor-pointer" v-if="isDropDownLanguague" style="max-height: 20rem;">
+                        <p v-for="(lang, index) in langSearch" :key="index" @click="searchLanguage(lang)" class="p-2 flex items-center gap-1 hover:bg-[#F3F4F6] dark:hover:bg-blue-gray-600" :class="{'text-red-500 bg-[#F3F4F6] dark:bg-blue-gray-600' : lang === payload.language}"><ITick class="opacity-0" :class="{'opacity-100' : lang.toLowerCase() === (payload.language).toLowerCase()}" />{{ lang }}</p>
+                    </div>
+                </Transition>
             </div>
-
-            <CInputRange />
         </div>
+        
 
         <div class="repositories_view max-w-238 w-238 dark:bg-black">
             <div class="filter_tab flex justify-between items-center pb-5 w-full">
@@ -312,5 +315,17 @@ ul a.router-link-active li{
 }
 ::-webkit-scrollbar-thumb {
     background: #cecece;
+}
+.nested-enter-active,
+.nested-leave-active {
+  transition: all 0.3s ease-in-out;
+}
+.nested-leave-active {
+  transition-delay: 0.1s;
+}
+.nested-enter-from,
+.nested-leave-to {
+  transform: translateY(30px);
+  opacity: 0;
 }
 </style>
