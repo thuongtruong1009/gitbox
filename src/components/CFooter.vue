@@ -523,7 +523,7 @@ import IGenerate from './icons/footer/IGenerate.vue';
                 ></div>
             </div>
             <div class="content z-2 flex justify-around items-end">
-                <div class="flex justify-center p-5 gap-3 text-base font-semibold text-white">
+                <div class="flex justify-center p-5 gap-3 text-sm font-semibold text-white">
                     <a href="https://github.com/thuongtruong1009/gitbox/fork">
                         <button class="btn-hover color-5">
                             <IFork />Fork
@@ -542,12 +542,12 @@ import IGenerate from './icons/footer/IGenerate.vue';
                 </div>
                 <div class="flex justify-center text-light-600 text-xs p-5">
                     <p>
-                        Copyright 2022
+                        Copyright 2022 - PRESENT
                         <a
                             href="https://github.com/thuongtruong1009"
                         >© thuongtruong1009</a>
                         <span class="text-red-500 mx-2">&bull;</span>
-                        <a href="https://docs.github.com/en/rest">Github API</a> | All rights reserved.
+                        <a href="https://docs.github.com/en/rest">Github API</a>
                     </p>
                 </div>
                 <div class="w-1/5"></div>

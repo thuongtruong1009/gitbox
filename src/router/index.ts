@@ -6,6 +6,11 @@ const routes = [
     name: 'Home',
     component: Home
   },
+  // {
+  //   path: '/:user',
+  //   name: 'Home',
+  //   component: Home
+  // },
   {
     path: '/about',
     name: 'About',
@@ -24,9 +29,24 @@ const routes = [
   {
     path: '/explore',
     name: 'Explore',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Explore.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../layouts/LExplore.vue'),
+    children: [
+      {
+        path: 'repositories',
+        component: () => import(/* webpackChunkName: "about" */ '../views/explore/repositories.vue'),
+      },
+      {
+        path: 'users',
+        component: () => import(/* webpackChunkName: "about" */ '../views/explore/users.vue'),
+      },
+      {
+        path: 'issues',
+        component: () => import(/* webpackChunkName: "about" */ '../views/explore/issues.vue'),
+      },
+    ],
   }
 ]
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes

@@ -90,7 +90,7 @@ const temp = (type: string) => {
                                     active.actor.login
                                 }}</a>
                                 {{ eventName(active.type) }}
-                                <a :href="`https://github.com/${active.actor.login}${active.repo.name}`"
+                                <a :href="`https://github.com/${active.repo.name}`"
                                     class="font-normal text-[#3490DC] dark:text-[#A78BFA]">{{ active.repo.name }}</a>
                             </h2>
                         </div>
