@@ -1,6 +1,11 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref } from 'vue';
 import { useUser } from '../stores/user';
+import ILink from './icons/other/ILink.vue';
+import IGithub from './icons/other/IGithub.vue';
+import ITwitter from './icons/other/ITwitter.vue';
+import IEmail from './icons/other/IEmail.vue';
+
 const store = useUser()
 
 const getTimeJoined = computed(() => {
@@ -19,12 +24,25 @@ const getTimeJoined = computed(() => {
         <div
             class="w-100 rounded-lg bg-[#41587B] dark:bg-white/30 text-white py-3 px-5 shadow-sm shadow-gray-700 m-1"
         >
-            <div class="text-lg font-medium">
-                <a :href="store.userData.html_url">
+            <div class="text-lg font-medium flex items-center gap-2">
+                <a :href="store.userData.html_url" target="_blank">
                     <h2>{{ store.userData.login }}</h2>
                 </a>
+                <span class="text-gray-500">&bull;</span>
+                <a :href="store.userData.blog" v-if="store.userData.blog" target="_blank">
+                    <ILink class="text-gray-400 hover:text-white"/>
+                </a>
+                <a :href="store.userData.html_url" target="_blank">
+                    <IGithub class="text-gray-400 hover:text-white"/>
+                </a>
+                <a :href="`https://twitter.com/${store.userData.twitter_username}`" v-if="store.userData.twitter_username" target="_blank">
+                    <ITwitter class="text-gray-400 hover:text-white"/>
+                </a>
+                <a :href="`https://twitter.com/${store.userData.twitter_username}`" v-if="store.userData.email" target="_blank">
+                    <IEmail class="text-gray-400 hover:text-white"/>
+                </a>
             </div>
-            <div class="text-xs text-[#98A4B5] pb-3">
+            <div class="text-xs text-[#98A4B5] py-3">
                 <p>{{ store.userData.bio }}</p>
             </div>
             <div class="text-xs font-medium">

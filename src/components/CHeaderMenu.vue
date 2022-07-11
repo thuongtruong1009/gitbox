@@ -64,19 +64,19 @@ window.addEventListener('scroll', scrollFunction)
 </script>
 
 <template>
-    <div class="header-container flex justify-between items-center bg-gradient-to-r from-[#5B79A2] to-[#2F456A] px-10 py-4 dark:bg-[#181818]"
+    <section class="header-container flex justify-between items-center bg-gradient-to-r from-[#5B79A2] to-[#2F456A] px-10 py-4 dark:bg-[#181818]"
         id="header">
         <div class="logo text-white cursor-pointer flex items-end gap-2 text-2xl font-semibold">
             <ILogo />
             <h1>{{ msg }}</h1>
         </div>
-        <div class="menu-tab flex gap-10 font-medium text-md text-[#98A4B5]">
+        <nav class="menu-tab flex gap-10 font-medium text-md text-[#98A4B5]">
             <RouterLink to="/" class="flex items-center gap-1" router-link-exact-active exact><IHome />Home</RouterLink>
             <RouterLink to="/repositories" class="flex items-center gap-1"><IRepository />Repositories</RouterLink>
             <RouterLink to="/users" class="flex items-center gap-1"><IUsers />Users</RouterLink>
             <RouterLink to="/explore/repositories" class="flex items-center gap-1"><IExplore />Explore</RouterLink>
             <RouterLink to="/about" class="flex items-center gap-1"><IAbout />About</RouterLink>
-        </div>
+        </nav>
         <div class="flex items-center gap-3">
             <input type="text" v-model="getNameInput" placeholder="Enter your username..."
                 class="px-5 py-2 text-white rounded-3xl bg-white/10 my-0.5 w-70 max-w-70" @click="saveNameInput"
@@ -88,7 +88,7 @@ window.addEventListener('scroll', scrollFunction)
                 <CDarkMode />
             </div>
         </div>
-    </div>
+    </section>
 </template>
 
 <style scoped>
