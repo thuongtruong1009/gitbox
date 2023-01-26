@@ -61,6 +61,33 @@ const langColor:any = {
     "TSQL": "#DAD8D8",
     "SQLPL": "#DAD8D8",
     "OpenEdge ABL": "#5CE600",
-    "Roff": "#ECDEBE"
- };
- export default langColor
+    "Roff": "#ECDEBE",
+    "Scilab": "#CA0F21",
+    "Rich Text Format": "#CCCCCC",
+};
+
+const langSearch = [ 
+    'All languages',
+    'Assembly',
+    'C#',
+    'C++',
+    'CSS',
+    'Dart',
+    'Dockerfile',
+    'EJS',
+    'HTML',
+    'Hack',
+    'Handlebars',
+    'Java',
+    'JavaScript',
+    'Markdown',
+    'PHP',
+    'Python',
+    'Ruby',
+    'SCSS',
+    'SVG',
+    'TypeScript',
+    'Vue',
+]
+
+export { langColor, langSearch }
